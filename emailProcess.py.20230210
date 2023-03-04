@@ -1,0 +1,128 @@
+from email import message
+from fileinput import filename
+from smtplib import SMTP_SSL
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.header import Header
+import smtplib
+import settings 
+from imbox import Imbox
+import zmail
+import shutil
+import datetime
+import time
+import os
+import imaplib
+
+from dicesDrawing import dicesDrawing
+
+
+def msgOk(msg):
+    return [True, msg]
+
+def msgErr(msg):
+    return [False, msg]
+
+def successMail():
+    return
+
+def failedMail(subject, content, attachment):
+    return 
+
+def getDicesDrawingPath(fileName) :
+    return 'dicesDrawing/input/' + fileName
+
+def rename(name):
+    return datetime.datetime.strftime(datetime.datetime.now(),r'%Y%m%d%H%M%S') + '_'+ name
+
+def diceDrawingProcess(msg) :
+    if msg.attachments:
+        for attachment in msg.attachments:
+            if attachment['filename'].endswith(('.png')) or attachment['filename'].endswith(('.jpg')):
+                with open(attachment['filename'], 'wb') as f:
+                    # 保存图片到当前目录
+                    f.write(attachment['content'].getvalue())
+                    f.close()
+
+                    # 图片根据时间重命名
+                    newName = rename(attachment['filename'])
+
+                    # 根据名字获取路径
+                    dicesDrawingPath =  getDicesDrawingPath(newName)
+
+                    # 将图片保存到骰子画输入目录
+                    # shutil.move(attachment['filename'],'dicesDrawing/input/')
+                    shutil.copyfile(attachment['filename'], dicesDrawingPath)
+                    os.remove(attachment['filename'])
+                    # print(f"remove file {attachment['filename']} !")
+
+                    # 获取骰子画
+                    ret = dicesDrawing.getDicesDrawing(dicesDrawingPath)
+                    if (ret[0] == False):
+                        break
+                    return {
+                        'subject':'获取骰子画成功！',
+                        'content_text':f'''获取骰子画成功，本幅画共需要：\r\n
+{ret[1][0]}行 * {ret[1][1]}列 = {ret[1][0]*ret[1][1]}个骰子！\r\n\r\n
+共有两个附件，其中.jpg文件为骰子画效果参考图，.xls文件为骰子分布。\r\n\r\n
+具体教程见：https://www.codehandicraft.com/dicesdrawingtutorial/ \r\n
+演示视频见：todo \r\n
+                                        ''',
+                        'attachments':[dicesDrawingPath[:-4] + "_out.xls",dicesDrawingPath[:-4] + "_out.jpg"]
+                    }
+            else :
+                pass
+            break # 目前只处理第一张图片
+    else:
+        pass
+    return {
+                'subject':'获取骰子画失败！',
+                'content_text':f'''请在附件中输入jpg或png格式的图片！\r\n\r\n具体教程见：todo \r\n演示视频见：todo \r\n''',
+            }
+
+def emailProcess():
+
+    print("\n\n" + datetime.datetime.strftime(datetime.datetime.now(),r'%Y.%m.%d %H:%M:%S : ') + "邮件自动回复已启动")
+
+    sender_qq = settings.sender_qq
+    pwd = settings.authorization_code
+    server = zmail.server(sender_qq, pwd)
+    print('login Success')
+    print('-----开始接收并处理邮件-----')
+
+    # while True:
+    #     imap = imaplib.IMAP4_SSL('imap.qq.com')
+    #     r, d = imap.login(sender_qq, pwd)
+    #     assert r == 'OK', 'login failed'
+    #     try:
+    #         imap.select('inbox')
+
+    #         result, data = imap.search(None, 'ALL')
+    #         # do things with imap
+    #     except imap.abort:
+    #         continue
+    #     imap.logout()
+        
+    while True:
+        try:
+            with Imbox('imap.qq.com', sender_qq, pwd, ssl=True) as imbox:
+                unread_mails = imbox.messages(unread=True)
+                for uid, messages in unread_mails:
+                    if messages.subject == "dices drawing" or messages.subject == "骰子画" or messages.subject == "色子画" :
+                        title = messages.subject
+                        sent_from = messages.sent_from
+                        print(datetime.datetime.strftime(datetime.datetime.now(),r'%Y.%m.%d %H:%M:%S : '), uid, '收到',sent_from,'的邮件，主题为：',title)
+
+                        mail = diceDrawingProcess(messages)
+                        
+                        server.send_mail(sent_from[0]['email'], mail)
+                        # smtp.sendmail(sender_qq, sent_from[0]['email'], msg.as_string())
+                        imbox.mark_seen(uid)
+                        print('send Success\n')
+        except :
+            print(datetime.datetime.strftime(datetime.datetime.now(),r'%Y.%m.%d %H:%M:%S : ') + "Error : except\n")
+            continue
+        # break;
+
+if __name__ == "__main__":
+    emailProcess()
