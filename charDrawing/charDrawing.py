@@ -44,6 +44,19 @@ def get_char_img(char_avg_img, pixel):
             return char_avg_img[i]
     return char_avg_img[len(char_avg_img) - 1]
 
+def custom_blur_demo(image):
+    kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]], np.float32) #锐化
+    image = cv2.filter2D(image, -1, kernel=kernel)
+
+    # # 使用拉普拉斯滤波进行锐化处理
+    # laplacian = cv2.Laplacian(image, cv2.CV_64F)
+
+    # # 将锐化后的图像与原图像进行加权融合，增强锐化效果
+    # image = cv2.addWeighted(image, 1.5, laplacian, -0.5, 0, image)
+
+    cv2.imwrite("_out.jpg", image)
+    return image
+
 def getCharDrawing(path, chars, edge = 200) :
     print(f"path={path}, chars={chars}, edge={edge}")
     # 字符_平均像素_字符图像
@@ -72,6 +85,8 @@ def getCharDrawing(path, chars, edge = 200) :
     img_height, img_width = img.shape
     ratio = edge / (img_width if img_height > img_width else img_height)
     img = cv2.resize(img, None, fx=ratio, fy=ratio)
+    img = custom_blur_demo(img)
+    cv2.imwrite(path[:-4] + "_out.jpg", img)
 
     # 根据图像计算所有骰子点数
     height, width = img.shape
@@ -94,5 +109,5 @@ def getCharDrawing(path, chars, edge = 200) :
     return msgOk([len(chars_ret), len(chars_ret[0])])
    
 if __name__ == "__main__":
-    getCharDrawing("./charDrawing/linghua-r.png", "我是神里绫华的狗", 300)
+    getCharDrawing("./charDrawing/linghua.jpg", "我是神里绫华的狗", 200)
 
