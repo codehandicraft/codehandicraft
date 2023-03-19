@@ -18,14 +18,6 @@ def msgErr(msg):
 def custom_blur_demo(image):
     kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]], np.float32) #锐化
     image = cv2.filter2D(image, -1, kernel=kernel)
-
-    # # 使用拉普拉斯滤波进行锐化处理
-    # laplacian = cv2.Laplacian(image, cv2.CV_64F)
-
-    # # 将锐化后的图像与原图像进行加权融合，增强锐化效果
-    # image = cv2.addWeighted(image, 1.5, laplacian, -0.5, 0, image)
-
-    # cv2.imwrite("_out.jpg", image)
     return image
 
 # 输出图像的宽度 = 空白部分的(ratio+1)倍
