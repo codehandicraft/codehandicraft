@@ -20,6 +20,7 @@ from dicesDrawing import dicesDrawing
 from charDrawing import charDrawing
 from dicesVideo import dicesVideo
 from reflexDrawing import reflexDrawing
+from shadowDrawing import shadowDrawing
 
 
 def msgOk(msg):
@@ -42,6 +43,9 @@ def getCharsDrawingPath(fileName) :
 
 def getReflexDrawingPath(fileName) :
     return 'reflexDrawing/input/' + fileName
+
+def getShadowDrawingPath(fileName) :
+    return 'shadowDrawing/input/' + fileName
 
 def getDicesVideoPath(fileName) :
     return 'dicesVideo/input/' + fileName
@@ -273,11 +277,86 @@ tips：{tips} \r\n
         break # 目前只处理第一张图片
     return failed_mail
 
+def shadowDrawingProcess(msg):
+    failed_mail = {'subject':f'获取{msg.subject}失败！',
+                    'content_text':f'''请在附件中输入jpg或png格式的图片！\r\n\r\n具体教程见：todo \r\n演示视频见：todo \r\n''',
+                    }
+    gradient = 5
+    if 'plain' not in msg.body or len(msg.body['plain']) <= 0 or msg.body['plain'][0] == '':
+        pass
+    else:
+        # plain = msg.body['plain'][0]
+        plain = msg.body['plain'][0].split('\r\n')
+        print("msg plain:", msg.body['plain'], "new plain=", plain)
+        if len(plain[0]) > 0:
+            gradient = int(plain[0])
+        if gradient < 3 or gradient > 15:
+            gradient = 5
+        
+    tips = "todo"
+    for attachment in msg.attachments:
+        if attachment['filename'].endswith(('.png')) or attachment['filename'].endswith(('.jpg')):
+            with open(attachment['filename'], 'wb') as f:
+                # 保存图片到当前目录
+                f.write(attachment['content'].getvalue())
+                f.close()
+
+                # 图片根据时间重命名
+                newName = rename(attachment['filename'])
+
+                # 根据名字获取路径
+                dicesDrawingPath =  getShadowDrawingPath(newName)
+
+                # 将输入图片保存到对应的输入目录
+                oldpath=attachment['filename']
+                os.system(f'mv \'{oldpath}\' \'{dicesDrawingPath}\'')
+                print(f"mv file {attachment['filename']} !")
+
+                # 获取结果
+                ret = shadowDrawing.getShadowDrawing(dicesDrawingPath, gradient)
+                if (ret[0] == False):
+                    break
+                return {
+                    'subject':f'获取{msg.subject}成功！',
+                    'content_text':f'''获取{msg.subject}成功：\r\n
+共有4个附件，分别为灰度图、灰度图边缘线条、灰度分层图、灰度条。\r\n\r\n
+具体教程见：todo \r\n
+演示视频见：todo \r\n
+tips：{tips} \r\n
+                                        ''',
+                        'attachments':[dicesDrawingPath[:-4] + "_out.jpg", 
+                                       dicesDrawingPath[:-4] + "_color.jpg",
+                                       dicesDrawingPath[:-4] + "_gray.jpg",
+                                       dicesDrawingPath[:-4] + "_canny.jpg"]
+                    }
+        else :
+            pass
+        break # 目前只处理第一张图片
+    return failed_mail
 
 def error_mail(error=''):
     return {
                 'subject':'获取失败！',
                 'content_text':f'''内部系统错误，错误信息[{error}]，请联系qq：1421204127进行处理\r\n''',
+            }
+
+def default_mail(error=''):
+    return {
+                'subject':'获取失败！！自动回复，如有打扰，请忽略',
+                'content_text':f'''目前已支持的教学如下：\r\n
+******************* 骰子画获取方法 *******************\r\n
+主题: 骰子画
+收件人: 1421204127@qq.com
+附件: jpg或png格式的图片
+正文: 
+效果演示: https://www.codehandicraft.com/reflexdrawingtutorial/ \r\n\r\n
+******************* 字符画获取方法 *******************\r\n
+主题: 字符画
+收件人: 1421204127@qq.com
+附件: jpg或png格式的图片
+正文: 
+效果演示: https://www.codehandicraft.com/reflexdrawingtutorial/ \r\n
+                                        ''',
             }
 
 def emailProcess():
@@ -314,14 +393,16 @@ def emailProcess():
                     print(datetime.datetime.strftime(datetime.datetime.now(),r'%Y.%m.%d %H:%M:%S : '), uid, '收到',sent_from,'的邮件，主题为：',title)
                     
                     # 根据标题处理结果，获得回执邮件
-                    if messages.subject == "dices drawing" or messages.subject == "骰子画" or messages.subject == "色子画" :
+                    if messages.subject == "骰子画":
                         mail = diceDrawingProcess(messages)
-                    elif messages.subject == "dices video" or messages.subject == "骰子动画" or messages.subject == "色子动画" :
+                    elif messages.subject == "骰子动画":
                         mail = diceVideoProcess(messages)
-                    elif messages.subject == "chars drawing" or messages.subject == "字符画":
+                    elif messages.subject == "字符画":
                         mail = charDrawingProcess(messages)
-                    elif messages.subject == "reflex drawing" or messages.subject == "反射画":
+                    elif messages.subject == "反射画":
                         mail = reflexDrawingProcess(messages)
+                    elif messages.subject == "光影画":
+                        mail = shadowDrawingProcess(messages)
                     else:
                         continue
 
