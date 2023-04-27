@@ -1,0 +1,3 @@
+2023-05-08 14:40:01 : gdims process not exist
+2023-05-08 14:40:01 : check gdims ok
+check_email_process.sh: line 8: log/codehandicraft.log.$(date +"%Y%m%d"): No such file or directory

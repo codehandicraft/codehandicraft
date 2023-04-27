@@ -9,5 +9,5 @@ if [ $exist -ne 1 ]; then
 fi
 echo "$ts : check gdims ok"
 
-# rm -rf ./*.jpg
-# rm -rf */input/20230216*
+rm -rf */input/$(date -d '-10days' +"%Y%m%d")*
+rm -rf log/codehandicraft.log.$(date -d '-10days' +"%Y%m%d")

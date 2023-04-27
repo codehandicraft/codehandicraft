@@ -29,7 +29,7 @@ def getReflexDrawing(path, angle = 270, ratio = 3):
     empty_img = np.zeros((img.shape[0] // ratio, img.shape[1], 3), np.uint8)
     empty_img.fill(255)
     img = np.concatenate([empty_img, img], axis=0)
-    cv2.imwrite(path[:-4] + "_temp.jpg", img)
+    # cv2.imwrite(path[:-4] + "_temp.jpg", img)
 
     # 创建目标图片，大小为2m*2m
     # m * n, m行n列
@@ -56,5 +56,5 @@ def getReflexDrawing(path, angle = 270, ratio = 3):
     # return msgOk("")
    
 if __name__ == "__main__":
-    getReflexDrawing("./test.png", 360)
+    getReflexDrawing("./out1.jpg", 270)
 

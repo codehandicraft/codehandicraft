@@ -115,7 +115,7 @@ def diceDrawingProcess(msg) :
 
     if msg.attachments:
         for attachment in msg.attachments:
-            if attachment['filename'].endswith(('.png')) or attachment['filename'].endswith(('.jpg')):
+            if attachment['filename'].endswith(('.png')) or attachment['filename'].endswith(('.jpg')) or attachment['filename'].endswith(('.jpeg')):
                 with open(attachment['filename'], 'wb') as f:
                     # 保存图片到当前目录
                     f.write(attachment['content'].getvalue())
@@ -155,32 +155,34 @@ tips：{tips} \r\n
         pass
     return {
                 'subject':'获取骰子画失败！',
-                'content_text':f'''请在附件中输入jpg或png格式的图片！\r\n\r\n具体教程见：todo \r\n演示视频见：todo \r\n''',
+                'content_text':f'''请在附件中输入jpg、png或jpeg格式的图片！\r\n\r\n具体教程见：todo \r\n演示视频见：todo \r\n''',
             }
 
 def charDrawingProcess(msg) :
     failed_mail = {'subject':'获取字符画失败！',
-                    'content_text':f'''请在附件中输入jpg或png格式的图片！并输入一行字符（2到10个字符，建议中文）！\r\n\r\n具体教程见：todo \r\n演示视频见：todo \r\n''',
+                    'content_text':f'''请在附件中输入jpg、png或jpeg格式的图片！并输入一行字符（2到10个字符，建议中文）！\r\n\r\n具体教程见：todo \r\n演示视频见：todo \r\n''',
                     }
     if 'plain' not in msg.body or len(msg.body['plain']) <= 0:
         return failed_mail
     else:
         # plain = msg.body['plain'][0]
-        plain = msg.body['plain'][0].split('\r\n')
+        # plain = msg.body['plain'][0].split('\n')
+        plain = [string.strip() for string in msg.body['plain'][0].split('\n') if string.strip()]
+        
         # re.split(r'\r\n', plain)
         # re.split('\n', plain)
         print("msg plain:", msg.body['plain'], "new plain=", plain)
         chars = plain[0]
-        if len(chars) < 2 or len(chars) > 10:
+        if len(chars) < 2 or len(chars) > 20:
             return failed_mail
         edge = 100
-        if len(plain) > 1:
+        if len(plain) > 1 and plain[1].isdigit():
             edge = int(plain[1])
             if edge < 20 or edge > 500:
                 edge = 100
     tips = "todo"
     for attachment in msg.attachments:
-        if attachment['filename'].endswith(('.png')) or attachment['filename'].endswith(('.jpg')):
+        if attachment['filename'].endswith(('.png')) or attachment['filename'].endswith(('.jpg')) or attachment['filename'].endswith(('.jpeg')):
             with open(attachment['filename'], 'wb') as f:
                 # 保存图片到当前目录
                 f.write(attachment['content'].getvalue())
@@ -219,7 +221,7 @@ tips：{tips} \r\n
 
 def reflexDrawingProcess(msg) :
     failed_mail = {'subject':f'获取{msg.subject}失败！',
-                    'content_text':f'''请在附件中输入jpg或png格式的图片！\r\n\r\n具体教程见：todo \r\n演示视频见：todo \r\n''',
+                    'content_text':f'''请在附件中输入jpg、png或jpeg格式的图片！\r\n\r\n具体教程见：todo \r\n演示视频见：todo \r\n''',
                     }
     ratio = 3
     angle = 270
@@ -229,18 +231,18 @@ def reflexDrawingProcess(msg) :
         # plain = msg.body['plain'][0]
         plain = msg.body['plain'][0].split('\r\n')
         print("msg plain:", msg.body['plain'], "new plain=", plain)
-        if len(plain[0]) > 0:
+        if len(plain[0]) > 0 and plain[0].isdigit():
             angle = int(plain[0])
         if angle < 80 or angle > 360:
             angle = 270
         
-        if len(plain) > 1 and len(plain[1]) > 0:
+        if len(plain) > 1 and len(plain[1]) > 0 and plain[1].isdigit():
             ratio = int(plain[1])
             if ratio < 1 or ratio > 100:
                 ratio = 3
     tips = "todo"
     for attachment in msg.attachments:
-        if attachment['filename'].endswith(('.png')) or attachment['filename'].endswith(('.jpg')):
+        if attachment['filename'].endswith(('.png')) or attachment['filename'].endswith(('.jpg')) or attachment['filename'].endswith(('.jpeg')):
             with open(attachment['filename'], 'wb') as f:
                 # 保存图片到当前目录
                 f.write(attachment['content'].getvalue())
@@ -279,7 +281,7 @@ tips：{tips} \r\n
 
 def shadowDrawingProcess(msg):
     failed_mail = {'subject':f'获取{msg.subject}失败！',
-                    'content_text':f'''请在附件中输入jpg或png格式的图片！\r\n\r\n具体教程见：todo \r\n演示视频见：todo \r\n''',
+                    'content_text':f'''请在附件中输入jpg、png或jpeg格式的图片！\r\n\r\n具体教程见：todo \r\n演示视频见：todo \r\n''',
                     }
     gradient = 5
     if 'plain' not in msg.body or len(msg.body['plain']) <= 0 or msg.body['plain'][0] == '':
@@ -288,14 +290,14 @@ def shadowDrawingProcess(msg):
         # plain = msg.body['plain'][0]
         plain = msg.body['plain'][0].split('\r\n')
         print("msg plain:", msg.body['plain'], "new plain=", plain)
-        if len(plain[0]) > 0:
+        if len(plain[0]) > 0 and plain[0].isdigit():
             gradient = int(plain[0])
         if gradient < 3 or gradient > 15:
             gradient = 5
         
     tips = "todo"
     for attachment in msg.attachments:
-        if attachment['filename'].endswith(('.png')) or attachment['filename'].endswith(('.jpg')):
+        if attachment['filename'].endswith(('.png')) or attachment['filename'].endswith(('.jpg')) or attachment['filename'].endswith(('.jpeg')):
             with open(attachment['filename'], 'wb') as f:
                 # 保存图片到当前目录
                 f.write(attachment['content'].getvalue())
@@ -340,25 +342,29 @@ def error_mail(error=''):
                 'content_text':f'''内部系统错误，错误信息[{error}]，请联系qq：1421204127进行处理\r\n''',
             }
 
-def default_mail(error=''):
+def default_mail(title, error=''):
     return {
                 'subject':'获取失败！！自动回复，如有打扰，请忽略',
-                'content_text':f'''目前已支持的教学如下：\r\n
-******************* 骰子画获取方法 *******************\r\n
-主题: 骰子画
-收件人: 1421204127@qq.com
-附件: jpg或png格式的图片
-正文: 
-效果演示: https://www.codehandicraft.com/reflexdrawingtutorial/ \r\n\r\n
-******************* 字符画获取方法 *******************\r\n
-主题: 字符画
-收件人: 1421204127@qq.com
-附件: jpg或png格式的图片
-正文: 
-效果演示: https://www.codehandicraft.com/reflexdrawingtutorial/ \r\n
-                                        ''',
+                'content_text':f'''主题错误：{title}\n
+目前支持的主题有：骰子画、字符画、反射画、光影画 \n
+骰子画：以 骰子画 为主题，jpg、png或jpeg格式的图片为附件，发送给 1421204127@qq.com \n
+字符画：以 字符画 为主题，任意一行文本为正文，jpg、png或jpeg格式的图片为附件，发送给 1421204127@qq.com \n
+反射画：以 反射画 为主题，jpg、png或jpeg格式的图片为附件，发送给 1421204127@qq.com \n
+光影画：以 光影画 为主题，jpg、png或jpeg格式的图片为附件，发送给 1421204127@qq.com \n
+''',
             }
-
+# ******************* 骰子画获取方法 *******************\r\n
+# 主题: 骰子画
+# 收件人: 1421204127@qq.com
+# 附件: jpg、png或jpeg格式的图片
+# 正文: 
+# 效果演示: https://www.codehandicraft.com/reflexdrawingtutorial/ \r\n\r\n
+# ******************* 字符画获取方法 *******************\r\n
+# 主题: 字符画
+# 收件人: 1421204127@qq.com
+# 附件: jpg、png或jpeg格式的图片
+# 正文: 
+# 效果演示: https://www.codehandicraft.com/reflexdrawingtutorial/ \r\n
 def emailProcess():
 
     print("\n\n" + datetime.datetime.strftime(datetime.datetime.now(),r'%Y.%m.%d %H:%M:%S : ') + "邮件自动回复已启动")
@@ -404,7 +410,7 @@ def emailProcess():
                     elif messages.subject == "光影画":
                         mail = shadowDrawingProcess(messages)
                     else:
-                        continue
+                        mail = default_mail(messages.subject)
 
                     # 发送邮件
                     print('start send mail')

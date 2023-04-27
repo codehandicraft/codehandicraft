@@ -104,10 +104,11 @@ def getCharDrawing(path, chars, edge = 200) :
 
     # 保存输出图片
     # imgOut = cv2.vconcat([cv2.hconcat([char_img for char_img in ral_imgs]) for ral_imgs in char_imgs_ret])
+    # imgOut = cv2.resize(imgOut, (img_height, width))
     # cv2.imwrite(path[:-4] + "_out.jpg", imgOut)
 
     return msgOk([len(chars_ret), len(chars_ret[0])])
    
 if __name__ == "__main__":
-    getCharDrawing("./charDrawing/linghua.jpg", "我是神里绫华的狗", 200)
+    getCharDrawing("./charDrawing/dog11.png", "我是妮露小姐的狗", 300)
 

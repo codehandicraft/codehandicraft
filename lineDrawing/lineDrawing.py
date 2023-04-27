@@ -7,8 +7,8 @@ from PIL import Image
 import numpy as np
 import cv2
 
-orgimg = 'linghua.png'
-outimg = 'test_gray.png'
+orgimg = 'naxida.jpg'
+outimg = '33.jpg'
 a = np.asarray(Image.open(orgimg).convert('L')).astype('float')
 
 ii= Image.open(orgimg).convert('1')
@@ -40,5 +40,5 @@ dz = np.sin(vec_el)                     # 光源对z轴的影响 对角线在z�
 
 b = 255 * (dx * uni_x + dy * uni_y + dz * uni_z) # 光源归一化
 b = b.clip(0, 255)                               # 为了避免数据越界，生成灰度值限制在0-255区间
-im = Image.fromarray(b.astype( 'uint8'))         # 图像更构 
+im = Image.fromarray(b.astype('uint8'))         # 图像更构 
 im.save(outimg)       # 保存图片
