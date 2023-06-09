@@ -56,5 +56,5 @@ def getReflexDrawing(path, angle = 270, ratio = 3):
     # return msgOk("")
    
 if __name__ == "__main__":
-    getReflexDrawing("./out1.jpg", 270)
+    getReflexDrawing("./out2.jpg", 270)
 

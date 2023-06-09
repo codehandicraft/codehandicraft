@@ -1,0 +1,8 @@
+*.o
+*.so
+*.a
+*.txt
+*.jpg
+*.log.*
+*.png
+*.log

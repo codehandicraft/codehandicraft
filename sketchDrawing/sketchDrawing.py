@@ -19,7 +19,7 @@ def custom_blur_demo(image):
     return image
 
 #读取图片
-image = cv2.imread("naxida2.jpg")
+image = cv2.imread("yinlang2.png")
 #将BGR图像转换为灰度
 gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
@@ -32,4 +32,4 @@ inverted_blurred = 255 - blurred
 pencil_sketch = cv2.divide(gray_image, inverted_blurred, scale=256.0)
 
 # pencil_sketch = custom_blur_demo(pencil_sketch)
-cv2.imwrite("out1.jpg", pencil_sketch)
+cv2.imwrite("out2.jpg", pencil_sketch)

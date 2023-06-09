@@ -1,0 +1,3411 @@
+
+
+2023.05.26 00:00:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:01:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:02:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:03:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:04:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:05:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:06:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:07:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:08:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:09:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:10:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:11:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:12:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:13:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:14:03 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+Traceback (most recent call last):
+  File "emailProcess.py", line 429, in <module>
+    emailProcess()
+  File "emailProcess.py", line 425, in emailProcess
+    continue
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imbox.py", line 49, in __exit__
+    self.logout()
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imbox.py", line 53, in logout
+    self.connection.logout()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 633, in logout
+    typ, dat = self._simple_command('LOGOUT')
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1205, in _simple_command
+    return self._command_complete(name, self._command(name, *args))
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1022, in _command_complete
+    typ, data = self._get_tagged_response(tag, expect_bye=logout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1148, in _get_tagged_response
+    self._get_response()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1050, in _get_response
+    resp = self._get_line()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1158, in _get_line
+    line = self.readline()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 314, in readline
+    line = self.file.readline(_MAXLINE + 1)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/socket.py", line 669, in readinto
+    return self._sock.recv_into(b)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1241, in recv_into
+    return self.read(nbytes, buffer)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1099, in read
+    return self._sslobj.read(len, buffer)
+TimeoutError: [Errno 60] Operation timed out
+
+
+2023.05.26 00:33:03 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:34:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:35:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:36:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:37:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:38:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:39:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:40:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:41:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 00:42:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+Traceback (most recent call last):
+  File "emailProcess.py", line 429, in <module>
+    emailProcess()
+  File "emailProcess.py", line 392, in emailProcess
+    with Imbox('imap.qq.com', sender_qq, pwd, ssl=True) as imbox:
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imbox.py", line 35, in __init__
+    self.connection = self.server.connect(username, password)
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imap.py", line 33, in connect
+    self.server.login(username, password)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 601, in login
+    typ, dat = self._simple_command('LOGIN', user, self._quote(password))
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1205, in _simple_command
+    return self._command_complete(name, self._command(name, *args))
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1022, in _command_complete
+    typ, data = self._get_tagged_response(tag, expect_bye=logout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1148, in _get_tagged_response
+    self._get_response()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1050, in _get_response
+    resp = self._get_line()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1158, in _get_line
+    line = self.readline()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 314, in readline
+    line = self.file.readline(_MAXLINE + 1)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/socket.py", line 669, in readinto
+    return self._sock.recv_into(b)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1241, in recv_into
+    return self.read(nbytes, buffer)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1099, in read
+    return self._sslobj.read(len, buffer)
+TimeoutError: [Errno 60] Operation timed out
+
+
+2023.05.26 10:14:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:15:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:16:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:17:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:18:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:19:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:20:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:21:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:22:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:23:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:24:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:25:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:26:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:27:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:28:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:29:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:30:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:31:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:32:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:33:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:34:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:35:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:36:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:37:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:38:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:39:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:40:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:41:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:42:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:43:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:44:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:45:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:46:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:47:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:48:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:49:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:50:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:51:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:52:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:53:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:54:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:55:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:56:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:57:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:58:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 10:59:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:00:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:01:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:02:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:03:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:04:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:05:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:06:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:07:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:08:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:09:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:10:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:11:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:12:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:13:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:14:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:15:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:16:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:17:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:18:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:19:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:20:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:21:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:22:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:23:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:24:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:25:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:26:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:27:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:28:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:29:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:30:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:31:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:32:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:33:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:34:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:35:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:36:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:37:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:38:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:39:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:40:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:41:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:42:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:43:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:44:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:45:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:46:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:47:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:48:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:49:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:50:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:51:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:52:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:53:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:54:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:55:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:56:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:57:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:58:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 11:59:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:00:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:01:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:02:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:03:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:04:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:05:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:06:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:07:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:08:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+Traceback (most recent call last):
+  File "emailProcess.py", line 429, in <module>
+    emailProcess()
+  File "emailProcess.py", line 425, in emailProcess
+    continue
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imbox.py", line 49, in __exit__
+    self.logout()
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imbox.py", line 52, in logout
+    self.connection.close()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 466, in close
+    typ, dat = self._simple_command('CLOSE')
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1205, in _simple_command
+    return self._command_complete(name, self._command(name, *args))
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1022, in _command_complete
+    typ, data = self._get_tagged_response(tag, expect_bye=logout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1148, in _get_tagged_response
+    self._get_response()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1050, in _get_response
+    resp = self._get_line()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1158, in _get_line
+    line = self.readline()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 314, in readline
+    line = self.file.readline(_MAXLINE + 1)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/socket.py", line 669, in readinto
+    return self._sock.recv_into(b)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1241, in recv_into
+    return self.read(nbytes, buffer)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1099, in read
+    return self._sslobj.read(len, buffer)
+TimeoutError: [Errno 60] Operation timed out
+
+
+2023.05.26 12:25:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:26:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:30:54 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:31:07 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:32:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:33:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:34:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:35:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:36:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:37:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:38:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:39:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:40:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:41:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:42:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:43:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:44:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:45:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:46:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:47:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:48:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:49:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:50:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+2023.05.26 12:50:45 :  b'1299' 收到 [{'name': '沁', 'email': '1092395872@qq.com'}] 的邮件，主题为： 字符画
+msg plain: ['凡人修仙传\r\n300'] new plain= ['凡人修仙传', '300']
+mv file media_result_20230526_a47e310e-3978-48a8-af02-a5d99243bfcf.png !
+path=charDrawing/input/20230526125045_media_result_20230526_a47e310e-3978-48a8-af02-a5d99243bfcf.png, chars=凡人修仙传, edge=300
+char=凡, avg=32
+char=人, avg=25
+char=修, avg=51
+char=仙, avg=46
+char=传, avg=40
+图像的文字规格为300*533
+start send mail
+send Success
+
+
+
+2023.05.26 12:51:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:52:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:53:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:54:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:55:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:56:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:57:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:58:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 12:59:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:00:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:01:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:02:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:03:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+2023.05.26 13:03:02 :  b'1300' 收到 [{'name': '沁', 'email': '1092395872@qq.com'}] 的邮件，主题为： 字符画
+msg plain: ['凡人修仙传\r\n250'] new plain= ['凡人修仙传', '250']
+mv file IMG_20230526_130200.png !
+path=charDrawing/input/20230526130302_IMG_20230526_130200.png, chars=凡人修仙传, edge=250
+char=凡, avg=32
+char=人, avg=25
+char=修, avg=51
+char=仙, avg=46
+char=传, avg=40
+图像的文字规格为250*444
+start send mail
+send Success
+
+
+
+2023.05.26 13:04:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:05:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:06:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:07:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:08:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:09:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+2023.05.26 13:09:12 :  b'1301' 收到 [{'name': '沁', 'email': '1092395872@qq.com'}] 的邮件，主题为： 字符画
+msg plain: ['凡人修仙传\r\n300'] new plain= ['凡人修仙传', '300']
+mv file 8f150b3d-58f8-4acb-9b12-c09f802a60ba(1).png !
+path=charDrawing/input/20230526130912_8f150b3d-58f8-4acb-9b12-c09f802a60ba(1).png, chars=凡人修仙传, edge=300
+char=凡, avg=32
+char=人, avg=25
+char=修, avg=51
+char=仙, avg=46
+char=传, avg=40
+图像的文字规格为300*533
+start send mail
+send Success
+
+
+
+2023.05.26 13:10:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:11:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:12:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:13:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:14:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:15:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:16:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:17:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:18:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:19:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:20:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:21:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:22:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:23:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:24:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:25:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:26:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:48:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:49:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:50:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:51:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:52:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:53:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:54:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:55:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:56:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:57:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:58:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 13:59:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:00:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:01:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:02:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:03:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:04:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:05:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:06:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:07:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:08:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:09:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:10:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:11:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:12:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:13:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:14:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:15:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:16:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:17:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:18:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:19:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:20:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:21:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:22:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:23:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:24:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:25:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:26:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:27:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:28:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:29:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:30:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:31:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:32:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:33:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:34:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:35:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:36:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:37:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:38:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:39:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:40:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:41:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:42:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:43:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:44:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:45:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:46:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:47:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:48:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:49:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:50:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:51:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:52:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:53:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:54:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:55:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:56:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:57:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:58:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 14:59:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:00:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:01:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:02:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:03:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:04:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:05:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:06:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:07:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:08:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:09:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:10:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:11:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:12:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:13:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:14:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:15:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:16:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:17:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:18:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:19:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:20:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:21:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:22:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:23:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:24:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:25:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:26:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:27:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:28:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:29:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:30:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:31:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:32:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:33:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:34:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:35:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:36:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:37:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:38:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:39:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:40:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:41:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:42:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:43:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:44:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:45:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:46:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:47:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:48:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:49:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:50:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:51:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:52:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:53:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:54:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:55:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:56:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:57:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:58:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 15:59:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:00:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:01:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:02:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:03:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:04:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:05:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:06:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:07:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:08:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:09:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:10:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:11:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:12:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:13:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:14:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:15:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:16:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:17:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:18:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:19:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:20:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:21:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:22:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:23:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:24:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:25:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:26:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:27:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:28:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:29:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:30:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:31:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:32:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:33:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:34:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:35:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:36:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:37:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:38:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:39:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:40:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:41:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:42:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:43:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:44:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:45:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:46:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:47:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:48:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:49:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:50:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:51:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:52:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:53:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:54:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:55:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:56:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:57:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:58:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 16:59:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:00:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:01:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:02:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:03:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:04:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:05:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+2023.05.26 17:05:25 :  b'1302' 收到 [{'name': '沁', 'email': '1092395872@qq.com'}] 的邮件，主题为： 字符画
+msg plain: ['凡人修仙传\r\n300'] new plain= ['凡人修仙传', '300']
+mv file IMG_20230526_170205.png !
+path=charDrawing/input/20230526170525_IMG_20230526_170205.png, chars=凡人修仙传, edge=300
+char=凡, avg=32
+char=人, avg=25
+char=修, avg=51
+char=仙, avg=46
+char=传, avg=40
+图像的文字规格为300*533
+start send mail
+send Success
+
+
+
+2023.05.26 17:06:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:07:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:08:03 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:09:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:10:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:11:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:12:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:13:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:14:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:15:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:16:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:17:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:18:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:19:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:20:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:21:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:22:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:23:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:24:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:25:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:26:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:27:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:28:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:29:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:30:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:31:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:32:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:33:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:34:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:35:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:36:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:37:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:38:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:39:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:40:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:41:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:42:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:43:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:44:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:45:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:46:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:47:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:48:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:49:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:50:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:51:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:52:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:53:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:54:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:55:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:56:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:57:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:58:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 17:59:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:00:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:01:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:02:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:03:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:04:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:05:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:06:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:07:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:08:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:09:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:10:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:11:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:12:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1022, in _command_complete
+    typ, data = self._get_tagged_response(tag, expect_bye=logout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1148, in _get_tagged_response
+    self._get_response()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1057, in _get_response
+    raise self.abort('unexpected tagged response: %r' % resp)
+imaplib.abort: unexpected tagged response: b'IOKM1 OK Success login ok'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "emailProcess.py", line 429, in <module>
+    emailProcess()
+  File "emailProcess.py", line 392, in emailProcess
+    with Imbox('imap.qq.com', sender_qq, pwd, ssl=True) as imbox:
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imbox.py", line 35, in __init__
+    self.connection = self.server.connect(username, password)
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imap.py", line 34, in connect
+    self.server.select()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 747, in select
+    typ, dat = self._simple_command(name, mailbox)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1205, in _simple_command
+    return self._command_complete(name, self._command(name, *args))
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1024, in _command_complete
+    raise self.abort('command: %s => %s' % (name, val))
+imaplib.abort: command: SELECT => unexpected tagged response: b'IOKM1 OK Success login ok'
+
+
+2023.05.26 18:13:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:14:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:15:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:16:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:17:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:18:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:19:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:20:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:21:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:22:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:23:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:24:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:25:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:26:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+Traceback (most recent call last):
+  File "emailProcess.py", line 429, in <module>
+    emailProcess()
+  File "emailProcess.py", line 425, in emailProcess
+    continue
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imbox.py", line 49, in __exit__
+    self.logout()
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imbox.py", line 53, in logout
+    self.connection.logout()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 633, in logout
+    typ, dat = self._simple_command('LOGOUT')
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1205, in _simple_command
+    return self._command_complete(name, self._command(name, *args))
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1022, in _command_complete
+    typ, data = self._get_tagged_response(tag, expect_bye=logout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1148, in _get_tagged_response
+    self._get_response()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1050, in _get_response
+    resp = self._get_line()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1158, in _get_line
+    line = self.readline()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 314, in readline
+    line = self.file.readline(_MAXLINE + 1)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/socket.py", line 669, in readinto
+    return self._sock.recv_into(b)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1241, in recv_into
+    return self.read(nbytes, buffer)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1099, in read
+    return self._sslobj.read(len, buffer)
+TimeoutError: [Errno 60] Operation timed out
+
+
+2023.05.26 18:56:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:57:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:58:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 18:59:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:00:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:01:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:02:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:03:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:04:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:05:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:06:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:07:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:08:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:09:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:10:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:11:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:12:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:13:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:14:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:40:03 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:41:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:42:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:43:03 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:44:03 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:45:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:46:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:47:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:48:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:49:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:50:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:51:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:52:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:53:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:54:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:55:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:56:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:57:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:58:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 19:59:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:00:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:01:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:02:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:03:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:04:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:05:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:06:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:07:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:08:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:09:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:10:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:11:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:12:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:13:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:14:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:15:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:16:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:17:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:18:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:19:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:20:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:21:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:22:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:23:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:24:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:25:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:26:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:27:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:28:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:29:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:30:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:31:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:32:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:33:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:34:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:35:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:36:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:37:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:38:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:39:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:40:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:41:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:42:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 20:43:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+Traceback (most recent call last):
+  File "emailProcess.py", line 429, in <module>
+    emailProcess()
+  File "emailProcess.py", line 425, in emailProcess
+    continue
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imbox.py", line 49, in __exit__
+    self.logout()
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imbox.py", line 53, in logout
+    self.connection.logout()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 633, in logout
+    typ, dat = self._simple_command('LOGOUT')
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1205, in _simple_command
+    return self._command_complete(name, self._command(name, *args))
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1022, in _command_complete
+    typ, data = self._get_tagged_response(tag, expect_bye=logout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1148, in _get_tagged_response
+    self._get_response()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1050, in _get_response
+    resp = self._get_line()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1158, in _get_line
+    line = self.readline()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 314, in readline
+    line = self.file.readline(_MAXLINE + 1)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/socket.py", line 669, in readinto
+    return self._sock.recv_into(b)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1241, in recv_into
+    return self.read(nbytes, buffer)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1099, in read
+    return self._sslobj.read(len, buffer)
+TimeoutError: [Errno 60] Operation timed out
+
+
+2023.05.26 21:01:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:02:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:03:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:04:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:05:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:06:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:07:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:08:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:09:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:10:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:11:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:12:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:13:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:14:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:15:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:16:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:17:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:18:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:19:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:20:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:21:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:22:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:23:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:24:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:25:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:26:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:27:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:28:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:29:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:30:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+Traceback (most recent call last):
+  File "emailProcess.py", line 429, in <module>
+    emailProcess()
+  File "emailProcess.py", line 392, in emailProcess
+    with Imbox('imap.qq.com', sender_qq, pwd, ssl=True) as imbox:
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imbox.py", line 35, in __init__
+    self.connection = self.server.connect(username, password)
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imap.py", line 33, in connect
+    self.server.login(username, password)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 601, in login
+    typ, dat = self._simple_command('LOGIN', user, self._quote(password))
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1205, in _simple_command
+    return self._command_complete(name, self._command(name, *args))
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1022, in _command_complete
+    typ, data = self._get_tagged_response(tag, expect_bye=logout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1148, in _get_tagged_response
+    self._get_response()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1050, in _get_response
+    resp = self._get_line()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1158, in _get_line
+    line = self.readline()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 314, in readline
+    line = self.file.readline(_MAXLINE + 1)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/socket.py", line 669, in readinto
+    return self._sock.recv_into(b)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1241, in recv_into
+    return self.read(nbytes, buffer)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1099, in read
+    return self._sslobj.read(len, buffer)
+TimeoutError: [Errno 60] Operation timed out
+
+
+2023.05.26 21:52:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:53:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:54:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:55:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:56:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:57:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:58:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 21:59:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 22:00:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 22:01:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 22:02:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 22:19:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 22:20:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 22:21:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 22:22:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 22:23:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 22:24:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 22:38:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 22:39:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 22:40:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 22:41:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 22:42:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 22:43:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+Traceback (most recent call last):
+  File "emailProcess.py", line 429, in <module>
+    emailProcess()
+  File "emailProcess.py", line 392, in emailProcess
+    with Imbox('imap.qq.com', sender_qq, pwd, ssl=True) as imbox:
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imbox.py", line 21, in __init__
+    self.server = ImapTransport(hostname, ssl=ssl, port=port,
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imap.py", line 18, in __init__
+    self.server = IMAP4_SSL(self.hostname, self.port, ssl_context=ssl_context)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1297, in __init__
+    IMAP4.__init__(self, host, port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 198, in __init__
+    self.open(host, port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1310, in open
+    IMAP4.open(self, host, port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 303, in open
+    self.sock = self._create_socket()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1301, in _create_socket
+    return self.ssl_context.wrap_socket(sock,
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 500, in wrap_socket
+    return self.sslsocket_class._create(
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1040, in _create
+    self.do_handshake()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1309, in do_handshake
+    self._sslobj.do_handshake()
+TimeoutError: [Errno 60] Operation timed out
+
+
+2023.05.26 23:00:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 23:01:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 23:02:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 23:03:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 23:04:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.26 23:05:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+Traceback (most recent call last):
+  File "emailProcess.py", line 429, in <module>
+    emailProcess()
+  File "emailProcess.py", line 392, in emailProcess
+    with Imbox('imap.qq.com', sender_qq, pwd, ssl=True) as imbox:
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imbox.py", line 21, in __init__
+    self.server = ImapTransport(hostname, ssl=ssl, port=port,
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imap.py", line 18, in __init__
+    self.server = IMAP4_SSL(self.hostname, self.port, ssl_context=ssl_context)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1297, in __init__
+    IMAP4.__init__(self, host, port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 198, in __init__
+    self.open(host, port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1310, in open
+    IMAP4.open(self, host, port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 303, in open
+    self.sock = self._create_socket()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1301, in _create_socket
+    return self.ssl_context.wrap_socket(sock,
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 500, in wrap_socket
+    return self.sslsocket_class._create(
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1040, in _create
+    self.do_handshake()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1309, in do_handshake
+    self._sslobj.do_handshake()
+TimeoutError: [Errno 60] Operation timed out
