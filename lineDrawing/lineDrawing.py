@@ -7,8 +7,8 @@ from PIL import Image
 import numpy as np
 import cv2
 
-orgimg = 'naxida.jpg'
-outimg = '33.jpg'
+orgimg = 'yinlang2.png'
+outimg = 'out2.jpg'
 a = np.asarray(Image.open(orgimg).convert('L')).astype('float')
 
 ii= Image.open(orgimg).convert('1')

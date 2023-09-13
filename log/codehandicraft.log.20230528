@@ -1,0 +1,125 @@
+
+
+2023.05.28 00:00:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.28 00:01:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.28 00:02:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.28 00:03:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.28 00:04:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.28 19:33:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.28 19:34:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.28 19:35:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.28 19:36:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.28 19:37:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.28 19:38:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+Traceback (most recent call last):
+  File "emailProcess.py", line 429, in <module>
+    emailProcess()
+  File "emailProcess.py", line 425, in emailProcess
+    continue
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imbox.py", line 49, in __exit__
+    self.logout()
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imbox.py", line 52, in logout
+    self.connection.close()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 466, in close
+    typ, dat = self._simple_command('CLOSE')
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1205, in _simple_command
+    return self._command_complete(name, self._command(name, *args))
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1022, in _command_complete
+    typ, data = self._get_tagged_response(tag, expect_bye=logout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1148, in _get_tagged_response
+    self._get_response()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1050, in _get_response
+    resp = self._get_line()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1158, in _get_line
+    line = self.readline()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 314, in readline
+    line = self.file.readline(_MAXLINE + 1)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/socket.py", line 669, in readinto
+    return self._sock.recv_into(b)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1241, in recv_into
+    return self.read(nbytes, buffer)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1099, in read
+    return self._sslobj.read(len, buffer)
+TimeoutError: [Errno 60] Operation timed out
+
+
+2023.05.28 20:06:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.28 20:07:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.28 20:46:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.28 20:47:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.28 21:57:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.28 21:58:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.28 21:59:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.28 22:00:00 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----

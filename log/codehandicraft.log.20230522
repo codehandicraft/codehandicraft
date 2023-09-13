@@ -1,0 +1,346 @@
+
+
+2023.05.22 11:38:26 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+2023.05.22 11:38:28 :  b'1289' 收到 [{'name': '沁', 'email': '1092395872@qq.com'}] 的邮件，主题为： 字符画
+msg plain: ['英雄形态的宵宫姐姐登场'] new plain= ['英雄形态的宵宫姐姐登场']
+mv file IMG_20230522_113524.jpg !
+path=charDrawing/input/20230522113828_IMG_20230522_113524.jpg, chars=英雄形态的宵宫姐姐登场, edge=100
+char=英, avg=41
+char=雄, avg=53
+char=形, avg=41
+char=态, avg=44
+char=的, avg=46
+char=宵, avg=38
+char=宫, avg=34
+char=姐, avg=52
+char=姐, avg=52
+char=登, avg=42
+char=场, avg=49
+图像的文字规格为156*100
+start send mail
+send Success
+
+2023.05.22 11:45:18 :  b'1290' 收到 [{'name': '沁', 'email': '1092395872@qq.com'}] 的邮件，主题为： 字符画
+msg plain: ['英雄形态的宵宫姐姐登场\r\n300'] new plain= ['英雄形态的宵宫姐姐登场', '300']
+mv file IMG_20230522_113524.jpg !
+path=charDrawing/input/20230522114518_IMG_20230522_113524.jpg, chars=英雄形态的宵宫姐姐登场, edge=300
+char=英, avg=41
+char=雄, avg=53
+char=形, avg=41
+char=态, avg=44
+char=的, avg=46
+char=宵, avg=38
+char=宫, avg=34
+char=姐, avg=52
+char=姐, avg=52
+char=登, avg=42
+char=场, avg=49
+图像的文字规格为469*300
+start send mail
+send Success
+
+2023.05.22 11:55:33 :  b'1291' 收到 [{'name': '沁', 'email': '1092395872@qq.com'}] 的邮件，主题为： 字符画
+msg plain: ['英雄形态的宵宫姐姐登场\r\n300'] new plain= ['英雄形态的宵宫姐姐登场', '300']
+mv file IMG_20230522_115419.jpg !
+path=charDrawing/input/20230522115533_IMG_20230522_115419.jpg, chars=英雄形态的宵宫姐姐登场, edge=300
+char=英, avg=41
+char=雄, avg=53
+char=形, avg=41
+char=态, avg=44
+char=的, avg=46
+char=宵, avg=38
+char=宫, avg=34
+char=姐, avg=52
+char=姐, avg=52
+char=登, avg=42
+char=场, avg=49
+图像的文字规格为432*300
+start send mail
+send Success
+
+2023.05.22 12:11:17 :  b'1292' 收到 [{'name': '沁', 'email': '1092395872@qq.com'}] 的邮件，主题为： 字符画
+msg plain: ['英雄形态的宵宫姐姐登场\r\n300'] new plain= ['英雄形态的宵宫姐姐登场', '300']
+mv file IMG_20230522_121022.jpg !
+path=charDrawing/input/20230522121117_IMG_20230522_121022.jpg, chars=英雄形态的宵宫姐姐登场, edge=300
+char=英, avg=41
+char=雄, avg=53
+char=形, avg=41
+char=态, avg=44
+char=的, avg=46
+char=宵, avg=38
+char=宫, avg=34
+char=姐, avg=52
+char=姐, avg=52
+char=登, avg=42
+char=场, avg=49
+图像的文字规格为300*400
+start send mail
+send Success
+
+Traceback (most recent call last):
+  File "emailProcess.py", line 429, in <module>
+    emailProcess()
+  File "emailProcess.py", line 392, in emailProcess
+    with Imbox('imap.qq.com', sender_qq, pwd, ssl=True) as imbox:
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imbox.py", line 21, in __init__
+    self.server = ImapTransport(hostname, ssl=ssl, port=port,
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imap.py", line 18, in __init__
+    self.server = IMAP4_SSL(self.hostname, self.port, ssl_context=ssl_context)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1297, in __init__
+    IMAP4.__init__(self, host, port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 198, in __init__
+    self.open(host, port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1310, in open
+    IMAP4.open(self, host, port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 303, in open
+    self.sock = self._create_socket()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1301, in _create_socket
+    return self.ssl_context.wrap_socket(sock,
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 500, in wrap_socket
+    return self.sslsocket_class._create(
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1040, in _create
+    self.do_handshake()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/ssl.py", line 1309, in do_handshake
+    self._sslobj.do_handshake()
+TimeoutError: [Errno 60] Operation timed out
+
+
+2023.05.22 12:40:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+2023.05.22 12:53:01 :  b'1293' 收到 [{'name': '沁', 'email': '1092395872@qq.com'}] 的邮件，主题为： 字符画
+msg plain: ['八重神子是我女朋友\r\n300'] new plain= ['八重神子是我女朋友', '300']
+mv file IMG_20230522_125144.jpg !
+path=charDrawing/input/20230522125301_IMG_20230522_125144.jpg, chars=八重神子是我女朋友, edge=300
+char=八, avg=22
+char=重, avg=45
+char=神, avg=46
+char=子, avg=24
+char=是, avg=41
+char=我, avg=52
+char=女, avg=33
+char=朋, avg=51
+char=友, avg=35
+图像的文字规格为300*400
+start send mail
+send Success
+
+2023.05.22 13:02:36 :  b'1294' 收到 [{'name': '沁', 'email': '1092395872@qq.com'}] 的邮件，主题为：   字符画
+start send mail
+send Success
+
+2023.05.22 13:03:58 :  b'1295' 收到 [{'name': '沁', 'email': '1421204127@qq.com'}] 的邮件，主题为： 字符画
+msg plain: ['八重神子是我女朋友\r\n300'] new plain= ['八重神子是我女朋友', '300']
+mv file IMG_20230522_130119.jpg !
+path=charDrawing/input/20230522130358_IMG_20230522_130119.jpg, chars=八重神子是我女朋友, edge=300
+char=八, avg=22
+char=重, avg=45
+char=神, avg=46
+char=子, avg=24
+char=是, avg=41
+char=我, avg=52
+char=女, avg=33
+char=朋, avg=51
+char=友, avg=35
+图像的文字规格为300*400
+start send mail
+send Success
+
+
+
+2023.05.22 20:01:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+2023.05.22 20:01:03 :  b'1297' 收到 [{'name': '沁', 'email': '1092395872@qq.com'}] 的邮件，主题为： 字符画
+msg plain: ['八重是我女朋友\r\n300'] new plain= ['八重是我女朋友', '300']
+mv file IMG_20230522_195925.jpg !
+path=charDrawing/input/20230522200103_IMG_20230522_195925.jpg, chars=八重是我女朋友, edge=300
+char=八, avg=22
+char=重, avg=45
+char=是, avg=41
+char=我, avg=52
+char=女, avg=33
+char=朋, avg=51
+char=友, avg=35
+图像的文字规格为300*374
+start send mail
+send Success
+
+
+
+2023.05.22 21:36:41 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+2023.05.22 21:36:43 :  b'1298' 收到 [{'name': '沁', 'email': '1092395872@qq.com'}] 的邮件，主题为： 字符画
+msg plain: ['八重是我女朋友\r\n200'] new plain= ['八重是我女朋友', '200']
+mv file IMG_20230522_195925.jpg !
+path=charDrawing/input/20230522213643_IMG_20230522_195925.jpg, chars=八重是我女朋友, edge=200
+char=八, avg=22
+char=重, avg=45
+char=是, avg=41
+char=我, avg=52
+char=女, avg=33
+char=朋, avg=51
+char=友, avg=35
+图像的文字规格为200*249
+start send mail
+send Success
+
+
+
+2023.05.22 21:38:45 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:39:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:40:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:41:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:42:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:43:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:44:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:45:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:46:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:47:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:48:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:49:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:50:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:51:02 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:52:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:53:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:54:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:55:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:56:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:57:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:58:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 21:59:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 22:00:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 22:01:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 22:02:01 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+
+
+2023.05.22 22:03:24 : 邮件自动回复已启动
+login Success
+-----开始接收并处理邮件-----
+Traceback (most recent call last):
+  File "emailProcess.py", line 429, in <module>
+    emailProcess()
+  File "emailProcess.py", line 392, in emailProcess
+    with Imbox('imap.qq.com', sender_qq, pwd, ssl=True) as imbox:
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imbox.py", line 21, in __init__
+    self.server = ImapTransport(hostname, ssl=ssl, port=port,
+  File "/Users/moshaocong/Library/Python/3.8/lib/python/site-packages/imbox/imap.py", line 18, in __init__
+    self.server = IMAP4_SSL(self.hostname, self.port, ssl_context=ssl_context)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1297, in __init__
+    IMAP4.__init__(self, host, port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 198, in __init__
+    self.open(host, port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1310, in open
+    IMAP4.open(self, host, port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 303, in open
+    self.sock = self._create_socket()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 1300, in _create_socket
+    sock = IMAP4._create_socket(self)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/imaplib.py", line 293, in _create_socket
+    return socket.create_connection((host, self.port))
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/python3.8/socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
