@@ -3,6 +3,10 @@
 *.a
 *.txt
 *.jpg
+*.mp4
 *.log.*
 *.png
 *.log
+.html
+.DS_Store
+.zip
