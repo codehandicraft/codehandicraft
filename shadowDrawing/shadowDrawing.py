@@ -5,8 +5,8 @@ import os
 import sys
 import tqdm
 from PIL import Image, ImageDraw, ImageFont
-
-diceImg = [0,]
+sys.path.append("../")
+import util
 
 def msgOk(msg):
     return [True, msg]
@@ -68,8 +68,10 @@ def getShadowDrawing(path, gradient=5) :
     cv2.imwrite(path[:-4] + "_gray.jpg", gray_img)
 
     # Canny算子
-    Canny = cv2.Canny(gray_img, 50, 150)
-    cv2.imwrite(path[:-4] + "_canny.jpg", 255-Canny)
+    canny_img = 255 - cv2.Canny(gray_img, 50, 150)
+    cv2.imwrite(path[:-4] + "_canny.jpg", canny_img)
+    canny_img = util.under_pixel_to_dst(canny_img, 200, 200)
+    util.imwrite(path, "_canny_under", canny_img)
 
     minVal, maxVal, minLoc, maxLoc = cv2.minMaxLoc(gray_img)
     print(minVal, maxVal)
@@ -88,6 +90,8 @@ def getShadowDrawing(path, gradient=5) :
     gray_img = (gray_img - minVal) // ((maxVal - minVal) / gradient) * ((maxVal - minVal) / gradient) + minVal
     cv2.imwrite(path[:-4] + "_out.jpg", gray_img)
 
+    # Canny = cv2.Canny(gray_img, 50, 150)
+    # cv2.imwrite(path[:-4] + "_canny_res.jpg", 255-Canny)
     # # 溶解
     # kernel = np.ones((3,3), np.uint8)
     # gray_dilation =cv2.erode(gray_img, kernel)
@@ -101,12 +105,11 @@ def getShadowDrawing(path, gradient=5) :
     # for mm in range(Canny.shape[0]):
     #     for nn in range(Canny.shape[1]):
     #         if Canny[mm, nn] == 0:
-    #             Canny[mm, nn]=200
+    #             Canny[mm, nn]=170
     # cv2.imwrite(path[:-4] + "_canny-res.jpg", (Canny))
-    
 
     return msgOk([len(gray_img), len(gray_img[0])])
    
 if __name__ == "__main__":
-    getShadowDrawing("./naxida_test.jpg", 5)
+    getShadowDrawing("./hutao.jpg", 4)
 

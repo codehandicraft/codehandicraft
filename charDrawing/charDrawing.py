@@ -57,7 +57,27 @@ def custom_blur_demo(image):
     cv2.imwrite("_out.jpg", image)
     return image
 
-def getCharDrawing(path, chars, edge = 200) :
+def gen_html(path, img_color, chars_ret):
+    html_head = '''<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>字符画(由B站莫少Kilig提供技术支持)</title> 
+</head> 
+<body style="background-color:rgb(0,0,0);font-size:1px">'''
+    with open(path[:-4] + "_out.html", 'w+') as file:   
+        lines = [html_head,'\n']
+        for i in range(len(chars_ret)):
+            for j in range(len(chars_ret[i])): 
+                line = f'<text style="color:rgb({img_color[i, j][2]},{img_color[i, j][1]},{img_color[i, j][0]})">{chars_ret[i][j]} </text>'
+                lines.append(line)
+            lines.append('<br>\n')
+        lines.append('</body>\n</html>')
+        file.writelines(lines) 
+    print("gen html char result ok")
+    return path[:-4] + "_out.html"
+
+def getCharDrawing(path, chars, edge = 200, is_color = False) :
     print(f"path={path}, chars={chars}, edge={edge}")
     # 字符_平均像素_字符图像
     char_avg_img = []
@@ -76,6 +96,7 @@ def getCharDrawing(path, chars, edge = 200) :
     
     # 处理输入图片，灰度并归一化
     img = cv2.imread(path, 0)
+    img_color = cv2.imread(path)
     if (img is None):
         print("找不到待处理图片")
         return msgErr("找不到待处理图片")
@@ -85,17 +106,29 @@ def getCharDrawing(path, chars, edge = 200) :
     img_height, img_width = img.shape
     ratio = edge / (img_width if img_height > img_width else img_height)
     img = cv2.resize(img, None, fx=ratio, fy=ratio)
+    img_color = cv2.resize(img_color, None, fx=ratio, fy=ratio)
     img = custom_blur_demo(img)
     cv2.imwrite(path[:-4] + "_out.jpg", img)
 
     # 根据图像计算所有骰子点数
     height, width = img.shape
     char_imgs_ret = [[0 for _ in range(width)] for _ in range(height)]
+    color_char_imgs_ret = [[0 for _ in range(width)] for _ in range(height)]
     chars_ret = [[0 for _ in range(width)] for _ in range(height)]
     print(f"图像的文字规格为{len(chars_ret)}*{len(chars_ret[0])}")
     for i in range(len(chars_ret)):
         for j in range(len(chars_ret[i])):
             chars_ret[i][j], _, char_imgs_ret[i][j] = get_char_img(char_avg_img, img[i, j])
+            # 彩色字符画
+            if is_color:
+                color_char_img = np.zeros((30, 30, 3), np.uint8)
+                color_BGR = img_color[i, j]
+                color_char_imgs_ret[i][j] = cv2AddChineseText(color_char_img, chars_ret[i][j], (0, 0), tuple([color_BGR[2], color_BGR[1], color_BGR[0]]), 30)
+            # util.imwrite(path, f"_color_{chars_ret[i][j]}_{j}_{j}.jpg", color_char_imgs_ret[i][j])
+
+    print("get char result ok, start to write txt and img")
+    # 生成html文件
+    gen_html(path, img_color, chars_ret)
 
     # 保存文字结果
     with open(path[:-4] + "_out.txt", 'w+') as file:    
@@ -107,8 +140,14 @@ def getCharDrawing(path, chars, edge = 200) :
     # imgOut = cv2.resize(imgOut, (img_height, width))
     # cv2.imwrite(path[:-4] + "_out.jpg", imgOut)
 
+    # 保存输出图片
+    if is_color:
+        imgOut = cv2.vconcat([cv2.hconcat([char_img for char_img in ral_imgs]) for ral_imgs in color_char_imgs_ret])
+        # imgOut = cv2.resize(imgOut, (img_height, width))
+        cv2.imwrite(path[:-4] + "_color_out.jpg", imgOut)
+
     return msgOk([len(chars_ret), len(chars_ret[0])])
    
 if __name__ == "__main__":
-    getCharDrawing("./charDrawing/dog11.png", "我是妮露小姐的狗", 300)
+    getCharDrawing("./charDrawing/xinhai2.png", "我是珊瑚宫心海的狗", 200, False)
 
