@@ -1,6 +1,10 @@
 import cv2
+import os
 
-img = cv2.imread('2.jpg')
-cv2.imshow("shenghe", img)
+def pointDrawingProcess(str):
+    print(f"point drawing {str}")
+    return "ok"
 
-cv2.waitKey(0)
+
+dd = {"点画":"pointDrawing"}
+print(eval(dd["点画"]+"Process")(dd["点画"]))

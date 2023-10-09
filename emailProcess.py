@@ -25,7 +25,18 @@ from dicesVideo import dicesVideo
 from reflexDrawing import reflexDrawing
 from shadowDrawing import shadowDrawing
 from dragonScaleBinding import dragonScaleBinding
+from sketchDrawing import sketchDrawing
+from pointDrawing import pointDrawing
 
+PROCESS_DICT = {
+    # "骰子画": "dicesDrawing",
+    # "字符画": "charDrawing",
+    # "反射画": "reflexDrawing",
+    # "光影画": "shadowDrawing",
+    # "龙鳞": "dragonScaleBinding",
+    "点画": "pointDrawing",
+    "线稿": "sketchDrawing",
+}
 
 def msgOk(msg):
     return [True, msg]
@@ -346,7 +357,8 @@ tips：{tips} \r\n
                         'attachments':[dicesDrawingPath[:-4] + "_out.jpg", 
                                        dicesDrawingPath[:-4] + "_color.jpg",
                                        dicesDrawingPath[:-4] + "_gray.jpg",
-                                       dicesDrawingPath[:-4] + "_canny.jpg"]
+                                       dicesDrawingPath[:-4] + "_canny.jpg",
+                                       dicesDrawingPath[:-4] + "_canny_under.jpg"]
                     }
         else :
             pass
@@ -356,22 +368,32 @@ tips：{tips} \r\n
 def dragonScaleBindingProcess(msg):
     failed_mail = {'subject':f'获取{msg.subject}失败！',
                     'content_text':f'''请在附件中输入 至少两张 jpg、png或jpeg格式的图片！\r\n
-请不要使用 超大附件 发送邮件！！！暂不支持解析超大附件，如果提示使用超大附件，说明图片太大，缩小图片。每张图片一般在1~2M\r\n\r\n
-具体教程见：todo\r\n
+请不要使用 超大附件 发送邮件！！！暂不支持解析超大附件，如果提示使用超大附件，说明图片太大，缩小图片。每张图片一般在1~2M
+尽量不要使用png格式，占用的空间较大。可以把封面图片改为jpg格式（直接改） \r\n''',
+                    }
+    tips_info = '''请不要使用 超大附件 发送邮件！！！暂不支持解析超大附件，如果提示使用超大附件，说明图片太大，缩小图片。每张图片一般在1~2M'''
+    other_info = '''具体教程见： 
+    B站 : https://b23.tv/gSzDvHg
+    抖音 : https://v.douyin.com/ietQup6d/
 演示视频见：
     B站 : https://b23.tv/Vg0DEyl
-    抖音 : https://v.douyin.com/ieFfGbph/ \r\n''',
-                    }
+    抖音 : https://v.douyin.com/ieFfGbph/'''
     
     input_file_list = []
     param_int_list = []
     is_use_default_param = False
     if 'plain' not in msg.body or len(msg.body['plain']) <= 0 or msg.body['plain'][0] == '':
         msg.body['plain'][0] = ''
+        print("msg plain is empty")
     else:
         # plain = msg.body['plain'][0]
+        print("msg plain:", msg.body['plain'])
         plain = msg.body['plain'][0].split('\r\n')
-        print("msg plain:", msg.body['plain'], "\nnew plain=", plain)
+        print("new plain=", plain)
+        if len(plain) == 1:
+            plain = plain[0].split('\n')
+            print("size=1, use '\\n' split. new plain=", plain)
+
         param_list = plain
         for param in param_list:
             if len(param) > 0 and param.isdigit():
@@ -390,7 +412,7 @@ def dragonScaleBindingProcess(msg):
 
     file_index = 0
     for attachment in msg.attachments:
-        if attachment['filename'].endswith(('.png')) or attachment['filename'].endswith(('.jpg')) or attachment['filename'].endswith(('.jpeg')):
+        if attachment['filename'].endswith(('.png')) or attachment['filename'].endswith(('.PNG')) or attachment['filename'].endswith(('.jpg')) or attachment['filename'].endswith(('.JPG')) or attachment['filename'].endswith(('.jpeg')):
             with open(attachment['filename'], 'wb') as f:
                 oldpath=attachment['filename']
 
@@ -412,14 +434,17 @@ def dragonScaleBindingProcess(msg):
                 input_file_list.append(dicesDrawingPath)
         else:
             print(f"fail to parse file: {attachment['filename']}")
-            return failed_mail
+            # return failed_mail
+            return get_fail_mail(msg, f"不支持该文件格式: {attachment['filename']}，目前支持的文件格式为jpg、png、jpeg", tips_info, other_info)
     if len(input_file_list) < 2:
         print(f'input_file_list = {input_file_list} < 2, will return failed_mail')
-        return failed_mail
+        return get_fail_mail(msg, f"附件中的图片个数小于2，请在附件中输入至少两张jpg、png或jpeg格式的图片！", tips_info, other_info)
+        # return failed_mail
     # 获取结果
     ret = dragonScaleBinding.getDragonScaleBinding(input_file_list, param_int_list)
     if (ret[0] == False):
-        return failed_mail
+        return get_fail_mail(msg, ret[1], tips_info, other_info)
+        # return failed_mail
     else:
         img_size_cm = ret[1][0]
         out_path_list = ret[1][1]
@@ -428,7 +453,7 @@ def dragonScaleBindingProcess(msg):
         return {
             'subject':f'获取{msg.subject}成功！',
             'content_text':f'''获取{msg.subject}成功：
-服务生效时间一般在10-22点\r\n
+服务生效时间一般在10-22点，做之前可以先看看下面的tips \r\n
 采用的输入参数为：{h_w_split_cover[0]} {h_w_split_cover[1]} {h_w_split_cover[2]} {h_w_split_cover[3]} {h_w_split_cover[4]}
 如果与你的输入不一致，可能输入参数有误，使用的是默认参数，请检查输入参数！（一共4个参数，每个参数为正整数，且单独占一行）\r\n
 共有{len(base_path_list)}个附件，其中需要打印的图片有{len(base_path_list)-1}张，即『 0_page_img_ 』开头的图片。。。\r\n
@@ -436,19 +461,24 @@ def dragonScaleBindingProcess(msg):
 每张图片的打印尺寸为： {img_size_cm[0]}厘米 * {img_size_cm[1]}厘米 ，打印前请确认尺寸是否正确！！！\r\n
 预计成品需要打印纸张{h_w_split_cover[2]-h_w_split_cover[3]}张，其中前后封面会使用2页(一张)。。。\r\n
 其中最后一张图片为连成一体的效果预览图：{base_path_list[-1]}。\r\n\r\n
-具体教程见：todo \r\n
+具体教程见：
+    B站 : https://b23.tv/gSzDvHg
+    抖音 : https://v.douyin.com/ietQup6d/
 效果视频见：
     B站 : https://b23.tv/Vg0DEyl
     抖音 : https://v.douyin.com/ieFfGbph/
-    多多点赞转发支持下吧  \^O^/ 
+多多点赞转发支持下吧  \^O^/ 
 \r\n
 tips：
+0、因为成本较高，先简单A4黑白打印前四张图片（手动裁剪白边之后）试试效果，之后再彩色打印进行正式的制作。（主要看误差如何）
 1、粘贴时以固体胶为主，白乳胶为辅（空白部分粘贴到卷轴上时需要用少量白乳胶辅助粘贴）
 2、成品卷轴卷起来的时候不要太紧，否则对折的纸张可能会有挤压的痕迹
 3、最后的裁剪图片以封面图片的清晰度为基准，觉得结果图片清晰度不够的话可以使用微信小程序bigjpg放大（二次元图片）
 4、请不要使用 超大附件 发送邮件！！！当前邮件服务接收不到超大附件，如果提示使用超大附件，说明图片太大，缩小图片。每张图片一般在1~2M
 5、如果存在空白内容页，说明对应图片的格式或名字不符合要求，请替换
-6、每一行参数都需要为整数，暂不支持小数 \r\n
+6、每一行参数都需要为整数，暂不支持小数
+7、如果有部分内容页为空白，可能是程序无法加载的图片格式，可以把这些图片发送到QQ重新保存一下，再发送过来；也可能是附件图片个数不够
+\r\n
                                 ''',
                 'attachments':out_path_list
             }
@@ -456,10 +486,128 @@ tips：
     return failed_mail
     
 
+def get_plain_param(msg):
+    '''解析邮件正文参数'''
+    param_int_list = []
+    if 'plain' not in msg.body or len(msg.body['plain']) <= 0 or msg.body['plain'][0] == '':
+        msg.body['plain'][0] = ''
+        print("msg plain is empty")
+    else:
+        # plain = msg.body['plain'][0]
+        print("msg plain:", msg.body['plain'])
+        plain = msg.body['plain'][0].split('\r\n')
+        print("new plain=", plain)
+        if len(plain) == 1:
+            plain = plain[0].split('\n')
+            print("size=1, use '\\n' split. new plain=", plain)
+
+        param_list = plain
+        for param in param_list:
+            if len(param) > 0 and param.isdigit():
+                param_int_list.append(int(param))
+            else:
+                break
+    print(f"get param success: {param_int_list}")
+    return param_int_list
+
+def get_img_file(msg, dir_path):
+    '''解析邮件附件图片到新的目录中'''
+    input_file_list = []
+
+    # 新建用户目录 
+    ts_ms_str = str(int(time.time() * 1000) % 1000) + '_' + str(random.randint(100000, 999999))
+    new_dir = f'{dir_path}/input/{rename(ts_ms_str)}/'
+    util.create_dir(new_dir)
+
+    # 附件提取到新目录中
+    file_index = 0
+    for attachment in msg.attachments:
+        path_pair = os.path.splitext(attachment['filename'])
+        if len(path_pair) > 1 and path_pair[1].lower() in ['.png', '.jpg', '.jpeg']:
+            with open(attachment['filename'], 'wb') as f:
+                # 保存图片到当前目录
+                oldpath=attachment['filename']
+                f.write(attachment['content'].getvalue())
+                f.close()
+
+                # 根据名字获取路径
+                dicesDrawingPath = new_dir + str(file_index) + os.path.splitext(oldpath)[1]
+                file_index += 1
+                # 将输入图片保存到对应的输入目录
+                shutil.move(oldpath, dicesDrawingPath)
+                print(f"mv file {oldpath} to {dicesDrawingPath} !")
+                input_file_list.append(dicesDrawingPath)
+        else:
+            print(f"fail to parse file: {attachment['filename']}")
+            return []
+    return input_file_list
+
+def get_fail_mail(msg, fail_reason='', tips_info='无', other_info='无'):
+    fail_mail = {'subject':f'获取{msg.subject}失败！(自动发送,请勿回复)',
+                    'content_text':f"************* 失败原因 *************\r\n{fail_reason}\r\n\r\n"
+                                    f"************* 提示信息 *************\r\n{tips_info}\r\n\r\n"
+                                    f"************* 其他信息 *************\r\n{other_info}\r\n\r\n",
+                    }
+    print(f"{fail_mail=}")
+    return fail_mail
+
+def get_succ_mail(msg, in_param_list, out_path_list):
+    succ_mail = {
+        'subject':f'获取{msg.subject}成功！(自动发送,请勿回复)',
+        'content_text':f'''获取{msg.subject}成功：
+服务生效时间一般在10-22点 \r\n
+输入参数为{in_param_list}，如果与预期的参数不同，则使用的是默认参数
+\r\n                ''',
+            'attachments':out_path_list
+        }
+    return succ_mail
+
+def sketchDrawingProcess(msg):
+    failed_mail = get_fail_mail(msg)
+    
+    # 解析参数和输入附件
+    param_int_list = get_plain_param(msg)
+    input_file_list = get_img_file(msg, 'sketchDrawing')
+    if not input_file_list:
+        print(f'input_file_list is empty, will return failed_mail')
+        return failed_mail
+
+    # 获取结果
+    ret = sketchDrawing.getSketchDrawing(input_file_list, param_int_list)
+    if (ret[0] == False):
+        return failed_mail
+        
+    # 返回结果
+    in_param_list = ret[1]['in_param_list']
+    out_path_list = ret[1]['out_path_list']
+    base_path_list = [os.path.basename(path) for path in out_path_list]
+    return get_succ_mail(msg, in_param_list, out_path_list)
+
+def pointDrawingProcess(msg):
+    failed_mail = get_fail_mail(msg)
+    
+    # 解析参数和输入附件
+    param_int_list = get_plain_param(msg)
+    input_file_list = get_img_file(msg, 'pointDrawing')
+    if not input_file_list:
+        print(f'input_file_list is empty, will return failed_mail')
+        return failed_mail
+
+    # 获取结果
+    ret = pointDrawing.getPointDrawing(input_file_list, param_int_list)
+    if (ret[0] == False):
+        return failed_mail
+        
+    # 返回结果
+    in_param_list = ret[1]['in_param_list']
+    out_path_list = ret[1]['out_path_list']
+    base_path_list = [os.path.basename(path) for path in out_path_list]
+    return get_succ_mail(msg, in_param_list, out_path_list)
+
 def error_mail(error=''):
     return {
                 'subject':'获取失败！',
-                'content_text':f'''内部系统错误，错误信息[{error}]，请私信博主进行处理\r\n''',
+                'content_text':f'''内部系统错误，错误信息[{error}]，建议使用qq邮箱发送邮件。请私信博主进行处理\r\n''',
             }
 
 def default_mail(title, error=''):
@@ -485,6 +633,7 @@ def default_mail(title, error=''):
 # 附件: jpg、png或jpeg格式的图片
 # 正文: 
 # 效果演示: https://www.codehandicraft.com/reflexdrawingtutorial/ \r\n
+
 def emailProcess():
 
     print("\n\n" + datetime.datetime.strftime(datetime.datetime.now(),r'%Y.%m.%d %H:%M:%S : ') + "邮件自动回复已启动")
@@ -517,7 +666,8 @@ def emailProcess():
                     title = messages.subject
                     sent_from = messages.sent_from
                     print(datetime.datetime.strftime(datetime.datetime.now(),r'%Y.%m.%d %H:%M:%S : '), uid, '收到',sent_from,'的邮件，主题为：',title)
-                    
+                    print(f"messages: {messages.__dict__.keys()}")
+
                     # 根据标题处理结果，获得回执邮件
                     if "骰子画" in messages.subject:
                         mail = diceDrawingProcess(messages)
@@ -531,6 +681,12 @@ def emailProcess():
                         mail = shadowDrawingProcess(messages)
                     elif "龙鳞" in messages.subject:
                         mail = dragonScaleBindingProcess(messages)
+                    elif "线稿" in messages.subject:
+                        mail = sketchDrawingProcess(messages)
+                    elif "点画" in messages.subject:
+                        mail = pointDrawingProcess(messages)
+                    # elif messages.subject in PROCESS_DICT.keys():
+                        # mail = eval(PROCESS_DICT[messages.subject] + "Process")(messages)
                     else:
                         mail = default_mail(messages.subject)
 

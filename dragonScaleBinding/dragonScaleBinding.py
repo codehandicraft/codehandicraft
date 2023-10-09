@@ -6,17 +6,22 @@ import sys
 sys.path.append("../")
 import util
 import os
+import math
 from pointDrawing import pointDrawing
 from reflexDrawing import reflexDrawing
 
-
 def crop_img(img1, h, w):
+    print(f"crop_img: img_shape={img1.shape[:2]}, h={h}, w={w}")
+    h = int(h * 100)
+    w = int(w * 100)
+    gcd = math.gcd(h, w)
+    h //= gcd
+    w //= gcd
     img1_new_h = min(img1.shape[0] // h, img1.shape[1] // w) * h
     img1_new_w = min(img1.shape[0] // h, img1.shape[1] // w) * w
-    img1 = img1[(img1.shape[0]-img1_new_h)//2: img1.shape[0]-(img1.shape[0]-img1_new_h) //
-                2, (img1.shape[1]-img1_new_w)//2: img1.shape[1]-(img1.shape[1]-img1_new_w)//2]
+    img1 = img1[(img1.shape[0]-img1_new_h)//2: (img1.shape[0]-img1_new_h)//2 + img1_new_h, (img1.shape[1]-img1_new_w)//2: (img1.shape[1]-img1_new_w)//2 + img1_new_w]
+    print(f"crop_img: img_shape={img1.shape[:2]}, gcd_h={h}, gcd_w={w}")
     return img1
-
 
 def split_img_w(img1, num):
     split_img1 = []
@@ -51,6 +56,7 @@ def getDragonScaleBinding(input_file_list, param_int_list):
         split_num = 34
         cover_num = 10
         is_singl_img = 0
+        is_fill_blank_img = 0
         if len(param_int_list) < 4:
             print("parma num < 4, use default param")
         else:
@@ -60,6 +66,8 @@ def getDragonScaleBinding(input_file_list, param_int_list):
             cover_num = param_int_list[3]
             if len(param_int_list) > 4:
                 is_singl_img = param_int_list[4]
+            if len(param_int_list) > 5:
+                is_fill_blank_img = param_int_list[5]
     except Exception as e:
         print(f"parse param error: {e}")
         return util.msgErr(f"{e}")
@@ -156,7 +164,10 @@ def getDragonScaleBinding(input_file_list, param_int_list):
             # return util.msgErr(f"找不到待处理图片{content_path}") 
         print(f"{content_path} origion shape={content_img.shape}")
         # 统一宽高比例
-        content_img = crop_img(content_img, h, int((w/(split_num))*(2*cover_num-1)))
+        if is_fill_blank_img:
+            content_img = util.unify_h_w_ratio_by_fill_blank(content_img, h, (w/(split_num))*(2*cover_num-1))
+        else:
+            content_img = crop_img(content_img, h, (w/(split_num))*(2*cover_num-1))
         print(f"{content_path} after   shape={content_img.shape}")
         # 通过等比例缩放 统一高度
         m1, n1, _ = content_img.shape
@@ -227,19 +238,21 @@ def getDragonScaleBinding(input_file_list, param_int_list):
     else:
         print("page out img save ok")
 
-    print([img_size_cm, out_path_list, [h,w,split_num,cover_num,is_singl_img]])
-    return util.msgOk([img_size_cm, out_path_list, [h,w,split_num,cover_num,is_singl_img]])
+    print([img_size_cm, out_path_list, [h,w,split_num,cover_num,is_singl_img,is_fill_blank_img]])
+    return util.msgOk([img_size_cm, out_path_list, [h,w,split_num,cover_num,is_singl_img,is_fill_blank_img]])
 
 
 if __name__ == "__main__":
-    input_path_list = ['./input/20230913080022_236_634115/0.jpg', './input/20230913080022_236_634115/1.jpg']
-    # input_para_list = [32, 68, 34, 12, 0]
+    input_path_list = ['./zhongli/0.jpg', './zhongli/1.png']
+    input_path_list = ['./input/20231007204728_636_966957/0.jpg', './input/20231007204728_636_966957/1.jpg']
+    input_para_list = [10, 26, 12, 3]
     # ['27', '32', '34', '10']
     # input_para_list = [27,32,34,10]
-    plain= ['10', '135', '45', '20']
-    input_para_list = [int(param) for param in plain]
+    # plain= ['10', '135', '45', '20']
+    # input_para_list = [int(param) for param in plain]
     for i in range(30):
-        path = f"./input/20230913080022_236_634115/{i}.jpg"
+        path = f"./zhongli/_frame_{i}.jpg"
+        path = f"./input/20231007204728_636_966957/{i}.jpg"
         content_img = cv2.imread(path)
         if content_img is None:
             continue

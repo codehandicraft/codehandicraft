@@ -5,11 +5,22 @@
 from PIL import Image
 import numpy as np
 import cv2
+import sys
+sys.path.append("../")
+import util
 
 # 获得矩形的宽或高
-
-
 def get_min_0_len(img, is_col):
+    """
+    找到图片中全为0的连续序列的最大长度
+    
+    Args:
+        img: numpy数组类型，表示待处理的图片
+        is_col: int类型，表示图片的列数，如果is_col为1，则表示列数，如果is_col为0，则表示行数
+    
+    Returns:
+        int类型，表示图片中全为0的连续序列的最大长度
+    """
     raw = 0
     col = 1
     if is_col == 1:
@@ -29,8 +40,6 @@ def get_min_0_len(img, is_col):
     return min_len
 
 # 将一个黑色矩形缩小为一个像素点，并淡化
-
-
 def reset_point(img, ral_len, col_len, point_pixel=180):
     if point_pixel == 0:
         point_pixel = 1
@@ -57,8 +66,6 @@ def week_img(img, point_pixel):
     return img
 
 # 图像旋转（以任意点为中心旋转）
-
-
 def image_rotate(src, rotate=0):
     h, w = src.shape
     M = cv2.getRotationMatrix2D((w//2, h//2), rotate, 1)
@@ -105,33 +112,52 @@ def crop_empty(img, src_pixel=255):
 
     return img
 
+def getPointDrawing(path_list, para_list):
+    # 解析参数
+    para_list = util.merge_param(para_list, [350, 205, 1])
+    print(f"input param list={para_list}")
+    new_size = para_list[0]
+    week_pixel = para_list[1]
+    ratio = para_list[2]
+    if len(path_list) < 1:
+        return util.msgErr("path_list is empty")
+    path = path_list[0]
+    out_path_list = []
 
-def getPointDrawing(path, ratio=1, point_pixel=180, new_size=80):
+    # 统一高度
+    gray_img = cv2.imread(path, 0)
+    gray_img = util.resize_img(gray_img, 1500)
+    # gray_img = cv2.resize(gray_img, None, fx=0.5, fy=0.5)
+    util.imwrite(path, '', gray_img)
+
+    # 图片旋转
     pil_img = Image.open(path)
-    pil_img = pil_img.rotate(-45, expand=1, fillcolor=(255, 255, 255, 255))
+    # pil_img = pil_img.rotate(-45, expand=1, fillcolor=255)
+    pil_img = pil_img.rotate(-90, expand=1, fillcolor=255)
     pil_img.save(path[:-4] + "_1.jpg")
     gray_img = cv2.imread(path[:-4] + "_1.jpg", 0)
     gray_img = crop_empty(gray_img)
     cv2.imwrite(path[:-4] + "_1.jpg", gray_img)
     m, n = pil_img.size
-    print(m, n)
+    print(f"旋转后图片尺寸={pil_img.size}")
+
+    # 点阵化
     # new_size = 100
     resize_pil_img = pil_img.resize((new_size, new_size * n // m))
-    print(m/new_size)
+    print(f"缩放比例={m/new_size}")
     point_img = resize_pil_img.convert('1')
-    point_img = point_img.resize((ratio * m, ratio * n))
+    point_img = point_img.resize((ratio * m, ratio * n))    # ratio为图片放大比例
 
     # PIL图像转cv2图像
     cv_img = cv2.cvtColor(np.asarray(
         point_img.convert("L")), cv2.COLOR_BGR2BGRA)
     cv_img = cv2.cvtColor(cv_img, cv2.COLOR_BGR2GRAY)
     cv_img = crop_empty(cv_img)
-    cv2.imwrite(path[:-4] + "_temp.jpg", cv_img)
+    out_path_list.append(util.imwrite(path, "_out", cv_img))
+    print("out img is ok")
 
     # point_img.save(path[:-4] + "_1.jpg")
-
     # resize_img2 = point_img.resize((ratio * m, ratio * n))
-
     # resize_img2.save(path[:-4] + "_temp.jpg")
 
     col_len = m//new_size
@@ -145,21 +171,23 @@ def getPointDrawing(path, ratio=1, point_pixel=180, new_size=80):
     # ral_len = get_min_0_len(cv_img, 0)
     # col_len = get_min_0_len(cv_img, 1)
 
-    gray_img = cv2.imread(path[:-4] + "_temp.jpg", 0)
+    # 溶解
+    gray_img = cv2.imread(path[:-4] + "_out.jpg", 0)
     kernel = np.ones((m//new_size//3*2+1, m//new_size//3*2+1), np.uint8)
     gray_img = cv2.dilate(gray_img, kernel)
-    week_pixel = 210
+
+    # 淡化
     gray_img = week_img(gray_img, week_pixel)
-    # gray_img = image_rotate(gray_img,-45)
-    gray_img = change_pixel(gray_img, week_pixel-1, 255)
-    cv2.imwrite(path[:-4] + "_temp2.jpg", gray_img)
-    print(f"save temp jpg OK!")
+    # gray_img = change_pixel(gray_img, week_pixel-1, 255)
+    out_path_list.append(util.imwrite(path, "_week", gray_img))
+    print(f"save week img jpg OK!")
 
-    print(gray_img.shape)
+    print(f"{out_path_list=}")
 
-    # cv2.imwrite(path[:-4] + "_out.jpg", cv_img)
-    return
+    return util.msgOk({"out_path_list":out_path_list, "in_param_list":para_list})
 
 
 if __name__ == "__main__":
-    getPointDrawing("./out2_out.jpg", 1, 180, 400)
+    path_list = ["./1.jpg"]
+    para_list = [300, 205]
+    getPointDrawing(path_list, para_list)

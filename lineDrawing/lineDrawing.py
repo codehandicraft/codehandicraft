@@ -6,13 +6,16 @@
 from PIL import Image 
 import numpy as np
 import cv2
+import sys
+sys.path.append("../")
+import util
 
-orgimg = 'yinlang2.png'
-outimg = 'out2.jpg'
+orgimg = 'li.jpg'
+outimg = 'li_out.jpg'
 a = np.asarray(Image.open(orgimg).convert('L')).astype('float')
 
 ii= Image.open(orgimg).convert('1')
-ii.save("01.jpg") 
+ii.save("li_1.jpg") 
 # img = cv2.cvtColor(ii, cv2.COLOR_RGB2BGR)
 # cv2.imwrite("01.jpg", img)
 
@@ -42,3 +45,8 @@ b = 255 * (dx * uni_x + dy * uni_y + dz * uni_z) # 光源归一化
 b = b.clip(0, 255)                               # 为了避免数据越界，生成灰度值限制在0-255区间
 im = Image.fromarray(b.astype('uint8'))         # 图像更构 
 im.save(outimg)       # 保存图片
+
+print("under to dst")
+img = cv2.imread(outimg, 0)
+img = util.under_pixel_to_dst(img, 200, 0)
+cv2.imwrite("li_under_pixel.jpg", img)
