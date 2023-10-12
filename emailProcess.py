@@ -478,6 +478,7 @@ tips：
 5、如果存在空白内容页，说明对应图片的格式或名字不符合要求，请替换
 6、每一行参数都需要为整数，暂不支持小数
 7、如果有部分内容页为空白，可能是程序无法加载的图片格式，可以把这些图片发送到QQ重新保存一下，再发送过来；也可能是附件图片个数不够
+8、如果内容图片被裁剪，是因为正文参数和图片的尺寸不匹配。图方便可以再额外增加两行数字：第五行写0，第六行写1。这样就不会被裁剪了，但会有白边。
 \r\n
                                 ''',
                 'attachments':out_path_list
@@ -643,6 +644,8 @@ def emailProcess():
     server = zmail.server(sender_qq, pwd)
     print('login Success')
     print('-----开始接收并处理邮件-----')
+    delete_days_ago = datetime.date.fromtimestamp(time.time() - 60 * 24 * 60 * 60)
+    print(f"{delete_days_ago=}")
 
     # while True:
     #     imap = imaplib.IMAP4_SSL('imap.qq.com')
@@ -656,7 +659,7 @@ def emailProcess():
     #     except imap.abort:
     #         continue
     #     imap.logout()
-        
+
     while True:
         with Imbox('imap.qq.com', sender_qq, pwd, ssl=True) as imbox:
             try:
@@ -706,6 +709,22 @@ def emailProcess():
                 imbox.mark_seen(uid)
                 continue
             # break;
+
+            # 删除旧邮件
+            inbox_messages_before=imbox.messages(date__lt=delete_days_ago)
+            for uid, messages in inbox_messages_before:
+                try:
+                    title = messages.subject
+                    sent_from = messages.sent_from
+                    receivedate = time.strftime("%Y%m%d %H:%M:%S", time.strptime(messages.date[0:24], '%a, %d %b %Y %H:%M:%S'))
+                    if int(receivedate[:8]) > int(datetime.datetime.strftime(delete_days_ago, r'%Y%m%d')):
+                        break
+                    print(datetime.datetime.strftime(datetime.datetime.now(),r'%Y.%m.%d %H:%M:%S'), "删除邮件：",uid, f'在 {receivedate} 收到',sent_from,'的邮件，主题为：',title)
+                    imbox.delete(uid)
+                except Exception as e:
+                    print(datetime.datetime.strftime(datetime.datetime.now(),r'%Y.%m.%d %H:%M:%S : ') + f"Error : {e}\n")
+                    print(f"删除邮件：{uid=}, {messages.sent_from=}")
+                    imbox.delete(uid)
 
 if __name__ == "__main__":
     emailProcess()
