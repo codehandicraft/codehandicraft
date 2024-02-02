@@ -43,6 +43,8 @@ def getSketchDrawing(path_list, para_list=[127,0]):
         print("找不到待处理图片")
         return util.msgErr("找不到待处理图片")
     # 将BGR图像转换为灰度
+    # image = util.crop_white_border(image)
+    # util.imwrite(path, '_crop', image)
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     ################### 黑白图像使用，将小于252像素的设置为0 ###################
@@ -90,6 +92,7 @@ def getSketchDrawing(path_list, para_list=[127,0]):
     return util.msgOk(out_msg)
 
 if __name__ == "__main__":
-    path_list = ["./input/20231008213132_539_101423/0.png"]
+    path_list = ["./rmgz.jpg"]
+    # path_list = ["./input/20231008213132_539_101423/0.png"]
     para_list = [235, 0]
     getSketchDrawing(path_list, para_list)

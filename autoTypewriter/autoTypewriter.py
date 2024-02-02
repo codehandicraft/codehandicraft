@@ -55,6 +55,6 @@ def autoTypewriter(input_file_list, param_int_list):
 
 
 if __name__ == "__main__":
-    input_path_list = ['./1_out.txt']
+    input_path_list = ['./tp.txt']
     # input_path_list = ['./demo.txt']
     autoTypewriter(input_path_list, [])

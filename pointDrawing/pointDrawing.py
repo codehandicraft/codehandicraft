@@ -132,8 +132,8 @@ def getPointDrawing(path_list, para_list):
 
     # 图片旋转
     pil_img = Image.open(path)
-    # pil_img = pil_img.rotate(-45, expand=1, fillcolor=255)
-    pil_img = pil_img.rotate(-90, expand=1, fillcolor=255)
+    pil_img = pil_img.rotate(-60, expand=1, fillcolor=255)
+    # pil_img = pil_img.rotate(-90, expand=1, fillcolor=255)
     pil_img.save(path[:-4] + "_1.jpg")
     gray_img = cv2.imread(path[:-4] + "_1.jpg", 0)
     gray_img = crop_empty(gray_img)
@@ -170,11 +170,17 @@ def getPointDrawing(path_list, para_list):
     # 将图像中的每个黑色矩形缩小为一个像素点，并淡化
     # ral_len = get_min_0_len(cv_img, 0)
     # col_len = get_min_0_len(cv_img, 1)
+    
+    gray_img = cv2.imread(path[:-4] + "_out.jpg", 0)
+    # only week
+    gray_img2 = gray_img.copy()
+    _img = week_img(gray_img2, 242)
+    util.imwrite(path, "_only_week", _img)
 
     # 溶解
-    gray_img = cv2.imread(path[:-4] + "_out.jpg", 0)
     kernel = np.ones((m//new_size//3*2+1, m//new_size//3*2+1), np.uint8)
     gray_img = cv2.dilate(gray_img, kernel)
+    util.imwrite(path, "_dilate", gray_img)
 
     # 淡化
     gray_img = week_img(gray_img, week_pixel)
@@ -188,6 +194,7 @@ def getPointDrawing(path_list, para_list):
 
 
 if __name__ == "__main__":
-    path_list = ["./1.jpg"]
-    para_list = [300, 205]
+    path_list = ["./hh2.jpg"]
+    para_list = [350, 240]      # point
+    # para_list = [320, 215]    # line
     getPointDrawing(path_list, para_list)

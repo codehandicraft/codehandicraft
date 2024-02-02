@@ -1,7 +1,10 @@
+import re  
 import cv2
 import os
 import numpy as np
 import math
+import xlwt
+from PIL import Image, ImageDraw, ImageFont
 
 # height, width = img.shape[:2] 
 
@@ -24,9 +27,11 @@ def get_square_img(img):
     return img
 
 # 获得指定shape的空白图片
-def get_empty_img(shape):
+def get_empty_img(shape, one_channel = True):
     empty_img = np.zeros(shape, np.uint8)
     empty_img.fill(255)
+    if not one_channel:
+        empty_img = cv2.cvtColor(empty_img, cv2.COLOR_GRAY2BGR)  
     return empty_img
 
 def msgOk(msg):
@@ -69,8 +74,10 @@ def crop_empty(img, src_pixel=255):
 import cv2  
   
 def crop_white_border(img):  
-    # 转换为灰度图像  
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  
+    gray = img 
+    # 转换为灰度图像 
+    if img.ndim != 2:
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  
       
     # 二值化处理  
     ret, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)  
@@ -119,7 +126,7 @@ def unify_size(imgs):
     return imgs
 
 # 填充空白图片，达到指定长宽比
-def unify_h_w_ratio_by_fill_blank(img, h, w):
+def unify_h_w_ratio_by_fill_blank(img, h, w, color=[255, 255, 255]):
     # 约分
     h,w = get_gcd(h, w)
     print(f"fill_blank: img_shape={img.shape[:2]}, h={h}, w={w}")
@@ -136,7 +143,7 @@ def unify_h_w_ratio_by_fill_blank(img, h, w):
     bottom = math.floor((new_h - img.shape[0]) / 2)
     left = math.ceil((new_w - img.shape[1]) / 2)
     right = math.floor((new_w - img.shape[1]) / 2)
-    img = cv2.copyMakeBorder(img, top, bottom, left, right, cv2.BORDER_CONSTANT, value=[255, 255, 255])
+    img = cv2.copyMakeBorder(img, top, bottom, left, right, cv2.BORDER_CONSTANT, value=color)
 
     return img
 
@@ -156,8 +163,8 @@ def resize_img(img, dst_h):
     return cv2.resize(img, (w * dst_h // h, dst_h))
 
 def get_gcd(h, w):
-    h = int(h * 100)
-    w = int(w * 100)
+    h = int(h * 10)
+    w = int(w * 10)
     gcd = math.gcd(h, w)
     h //= gcd
     w //= gcd
@@ -176,3 +183,139 @@ def merge_param(input_param, default_param):
     for i in range(len(input_param)):
         default_param[i] = input_param[i]
     return default_param
+
+def get_file_size_MB(path):
+    return os.path.getsize(path)/2**20
+def get_out_file_list(file_path_list):
+    if len(file_path_list) == 0:
+        return []
+    left, right = 0, 0
+    sum_size = 0
+    out_file_list = []
+    MAX_FILE_SIZE_MB = 40
+    for file_path in file_path_list:
+        file_size = get_file_size_MB(file_path)
+        if file_size >= MAX_FILE_SIZE_MB:
+            print(f"{file_path=} size={file_size} too big")
+            return []
+        sum_size += file_size
+        if sum_size >= MAX_FILE_SIZE_MB:
+            print(f'{left=}, {right=}, {sum_size=}MB')
+            out_file_list.append(file_path_list[left:right])
+            left = right
+            sum_size = file_size
+        right += 1
+    print(f'{left=}, {right=}, {sum_size=}MB')
+    out_file_list.append(file_path_list[left:right])
+    return out_file_list
+
+def save_list_to_xls(char_list, path, sheet_name = 'sheet1'):
+    dicesDrawingXls = xlwt.Workbook(encoding='utf-8')
+    sheet=dicesDrawingXls.add_sheet(sheet_name)
+
+    style = xlwt.XFStyle()
+    # 设置字体颜色为白色  
+    font = xlwt.Font()
+    font.colour_index = 9  # 设置字体颜色为白色
+    style.font = font
+    # 设置填充颜色为黑色  
+    pattern = xlwt.Pattern()  
+    pattern.pattern = xlwt.Pattern.SOLID_PATTERN  # 填充类型为纯色填充  
+    pattern.pattern_fore_colour = xlwt.Style.colour_map['black']  # 填充颜色为黑色  
+    style.pattern = pattern
+
+    for i in range(len(char_list)):
+        for j in range(len(char_list[i])):
+            if i>255 or j>255:
+                break
+            # 60表示一个衡量单位，然后再乘以设置的单位数
+            sheet.row(i).height_mismatch = True
+            sheet.row(i).height = 4 * 60
+            # 一个中文等于两个英文等于两个字符，2为字符数，256表示一个衡量单位
+            sheet.col(j).width = 2 * 256
+            sheet.write(i,j,char_list[i][j],style)
+    dicesDrawingXls.save(path)
+
+    print(f"gen xls char result ok, {path=}")
+    return path
+
+
+# 顺时针旋转angle角度，缺失背景白色（255, 255, 255）填充
+def rotate_bound_white_bg(image, angle, color=(255, 255, 255)):
+    # 判断是否为单通道图像 
+    is_single_channel = False 
+    if image.ndim == 2:
+        image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)  
+        is_single_channel = True
+        imwrite("yz2_temp.jpg", '', image)
+
+    # grab the dimensions of the image and then determine the
+    # center
+    (h, w) = image.shape[:2]
+    (cX, cY) = (w // 2, h // 2)
+ 
+    # grab the rotation matrix (applying the negative of the
+    # angle to rotate clockwise), then grab the sine and cosine
+    # (i.e., the rotation components of the matrix)
+    # -angle位置参数为角度参数负值表示顺时针旋转; 1.0位置参数scale是调整尺寸比例（图像缩放参数），建议0.75
+    M = cv2.getRotationMatrix2D((cX, cY), -angle, 1.0)
+    cos = np.abs(M[0, 0])
+    sin = np.abs(M[0, 1])
+ 
+    # compute the new bounding dimensions of the image
+    nW = int((h * sin) + (w * cos))
+    nH = int((h * cos) + (w * sin))
+ 
+    # adjust the rotation matrix to take into account translation
+    M[0, 2] += (nW / 2) - cX
+    M[1, 2] += (nH / 2) - cY
+ 
+    # perform the actual rotation and return the image
+    # borderValue 缺失背景填充色彩，此处为白色，可自定义
+    image = crop_white_border(cv2.warpAffine(image, M, (nW, nH), borderValue=color))
+    if is_single_channel:
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  
+
+    return image
+
+# 顺时针旋转
+def rotate_img(image, angle, fillcolor=255):
+    path = 'temp.jpg'
+    cv2.imwrite(path, image)
+    pil_img = Image.open(path)
+    if image.ndim == 2:
+        pil_img = pil_img.rotate(-angle, expand=1, fillcolor=fillcolor)
+    else:
+        pil_img = pil_img.rotate(-angle, expand=1, fillcolor=(255,255,255))
+    # pil_img = pil_img.rotate(-90, expand=1, fillcolor=255)
+    pil_img.save(path)
+    gray_img = cv2.imread(path)
+    if image.ndim == 2:
+        gray_img = cv2.imread(path, 0)
+    # gray_img = crop_white_border(gray_img)
+    gray_img = crop_empty(gray_img)
+    return gray_img
+  
+def str_to_int(input_str):  
+    # 使用正则表达式匹配数字部分  
+    numbers = re.findall(r'\d+', input_str)  
+      
+    # 如果找到数字，则返回转换后的整数；否则返回None  
+    if numbers:  
+        return int(numbers[0])  
+    else:  
+        return -1
+  
+def cv2AddChineseText(img, text, position=(0, 0), textColor=(255, 255, 255), textSize=30):
+    if (isinstance(img, np.ndarray)):  # 判断是否OpenCV图片类型
+        img = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+    # 创建一个可以在给定图像上绘图的对象
+    draw = ImageDraw.Draw(img)
+    # 字体的格式
+    # fontStyle = ImageFont.truetype("./charDrawing/simsun.ttc", textSize, encoding="utf-8")
+    fontStyle = ImageFont.truetype("/System/Library/Fonts/Hiragino Sans GB.ttc", textSize, encoding="utf-8")
+    # fontStyle.set_variation_by_name("bold")
+    # 绘制文本
+    draw.text(position, text, textColor, font=fontStyle)
+    # 转换回OpenCV格式
+    return cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR)

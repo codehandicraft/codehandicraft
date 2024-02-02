@@ -12,8 +12,8 @@ from reflexDrawing import reflexDrawing
 
 def crop_img(img1, h, w):
     print(f"crop_img: img_shape={img1.shape[:2]}, h={h}, w={w}")
-    h = int(h * 100)
-    w = int(w * 100)
+    h = int(h * 10)
+    w = int(w * 10)
     gcd = math.gcd(h, w)
     h //= gcd
     w //= gcd
@@ -64,8 +64,16 @@ def getDragonScaleBinding(input_file_list, param_int_list):
             w = param_int_list[1]
             split_num = param_int_list[2]
             cover_num = param_int_list[3]
+            if h<=0 or w<=0 or split_num<=0 or cover_num<=0:
+                print("parma error, exist <= 0, use default param")
+                h = 30
+                w = 68
+                split_num = 34
+                cover_num = 10
+                is_singl_img = 0
+                is_fill_blank_img = 0
             if len(param_int_list) > 4:
-                is_singl_img = param_int_list[4]
+                is_singl_img = 1 if param_int_list[4]==1 else 0
             if len(param_int_list) > 5:
                 is_fill_blank_img = param_int_list[5]
     except Exception as e:
@@ -79,7 +87,7 @@ def getDragonScaleBinding(input_file_list, param_int_list):
     img2 = cv2.imread(path2)
     if img1 is None or img2 is None:
         print("找不到待处理图片")
-        return util.msgErr("找不到待处理图片")
+        return util.msgErr("找不到待处理图片。请修改图片格式重新发送，比如将图片发送到qq中重新保存一下。")
     # height, width = img.shape[:2]
     print(f"before img1's shape:{img1.shape}, img2's shape:{img2.shape}")
     img1 = crop_img(img1, h, w)
@@ -107,7 +115,6 @@ def getDragonScaleBinding(input_file_list, param_int_list):
     other_img1 = split_img1[cover_num:]
     util.imwrite(path1, '_split_cover', cover_img1)
     print(f"other_img1 size = {len(other_img1)}")
-    # TODO 视频需要
     # TODO 视频需要
     # fill_img = util.get_empty_img((height, split_width//5, 3)) # TODO 视频需要
     # split_img_all = []# TODO 视频需要
@@ -217,7 +224,7 @@ def getDragonScaleBinding(input_file_list, param_int_list):
             page_img2 = cv2.hconcat([other_img2[i], content_img_list[2 * i + 1], util.get_empty_img((height, split_width, 3))])
             # page_img2 画点，用于区分粘贴部分 
             for j in range(6):
-                cv2.circle(page_img2, (page_img2.shape[1]-split_width, page_img2.shape[0]//5*j), 3, 0, -1)
+                cv2.circle(page_img2, (page_img2.shape[1]-split_width, page_img2.shape[0]//5*j), 2, 0, -1)
             # print(page_img.shape, page_img2.shape)
         if i == 0:
             img_size_cm = [page_img.shape[0]/ratio, page_img.shape[1]/ratio]
@@ -243,16 +250,17 @@ def getDragonScaleBinding(input_file_list, param_int_list):
 
 
 if __name__ == "__main__":
-    input_path_list = ['./zhongli/0.jpg', './zhongli/1.png']
-    input_path_list = ['./input/20231007204728_636_966957/0.jpg', './input/20231007204728_636_966957/1.jpg']
-    input_para_list = [10, 26, 12, 3]
+    # input_path_list = ['./zhongli/0.jpg', './zhongli/1.png']
+    input_path_list = []
+    # input_path_list = ['./input/20231024130113_783_641609/0.jpg', './input/20231024130113_783_641609/1.jpg']
+    input_para_list = [30, 60, 30, 10]
     # ['27', '32', '34', '10']
     # input_para_list = [27,32,34,10]
     # plain= ['10', '135', '45', '20']
     # input_para_list = [int(param) for param in plain]
     for i in range(30):
-        path = f"./zhongli/_frame_{i}.jpg"
-        path = f"./input/20231007204728_636_966957/{i}.jpg"
+        # path = f"./zhongli/_frame_{i}.jpg"
+        path = f"./input/20231024130113_783_641609/{i}.jpg"
         content_img = cv2.imread(path)
         if content_img is None:
             continue

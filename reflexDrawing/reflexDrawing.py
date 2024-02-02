@@ -41,9 +41,10 @@ def getReflexDrawing(path, angle = 270, ratio = 3):
     if (img is None):
         print("找不到待处理图片")
         return msgErr("找不到待处理图片")
+    # img = util.rotate_img(img, 4)   #预旋转
     img = cv2.flip(img, 0)
     print(img.shape)
-    # img = cv2.resize(img, None, fx=0.5, fy=0.5)
+    img = cv2.resize(img, None, fx=0.5, fy=0.5)
     # 去除白边
     img = util.crop_empty(img)
     out_path = util.imwrite(path, '_resize', img)
@@ -74,6 +75,7 @@ def getReflexDrawing(path, angle = 270, ratio = 3):
                 newimg[y, x, :] = img[y2, x2, :]
     # 标记圆心
     cv2.circle(newimg, (m, m), 3, (0, 0, 0), -1)   
+    # newimg = util.crop_empty(newimg)
     # newimg = util.crop_white_border(newimg)
 
     # 保存输出图片
@@ -84,5 +86,5 @@ def getReflexDrawing(path, angle = 270, ratio = 3):
     # return msgOk("")
 
 if __name__ == "__main__":
-    getReflexDrawing("./1.jpg", 360, 3.5)
+    getReflexDrawing("./zlys2.jpg", 340, 3.5)
 

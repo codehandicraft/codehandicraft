@@ -4,6 +4,9 @@ import numpy as np
 import os
 import sys
 import tqdm
+import sys
+sys.path.append("../")
+import util
 
 diceImg = [0,]
 
@@ -61,6 +64,7 @@ def getDicesVideo(path, diceNumOfLine = 100) :
     # 1.要创建的视频文件名称 2.编码器 3.帧率 4.size
     videoWrite = cv2.VideoWriter(path[:-4] + "_out.mp4", cv2.VideoWriter_fourcc(*'XVID'), fps, (1920, 1080))   
     
+    ratio = frame_counter//44
     # 对原视频每一帧进行骰子画处理，合并为新视频
     # for i in tqdm.tqdm(range(0, frame_counter)):
     i = 0
@@ -69,7 +73,11 @@ def getDicesVideo(path, diceNumOfLine = 100) :
         (_, frame) = vedio_capture.read()   
         if frame is None:
             break
-        getDicesDrawing((width // 20, height // 20), frame, videoWrite)
+        # getDicesDrawing((width // 20, height // 20), frame, videoWrite)
+        for n in range(100):
+            if i == ratio * n:
+                cv2.imwrite(f'_frame_{n}.jpg', frame)
+
         i += 1
     
     videoWrite.release()
@@ -104,12 +112,12 @@ def getDicesDrawing(size, img, videoWrite) :
     return msgOk([len(diceNum), len(diceNum[0])])
 
 if __name__ == "__main__":
-    for i in range(1, 7) :
-        # print(os.getcwd())
-        diceImg.append(cv2.imread(os.getcwd() + f"/dicesDrawing/resources/dice{i}.jpg", 0))
-        if diceImg[i] is None :
-            print("找不到骰子图片")
-            exit(0)
-        print('骰子size=', diceImg[i].shape)
-    getDicesVideo("./test.mp4", 100)
+    # for i in range(1, 7) :
+    #     # print(os.getcwd())
+    #     diceImg.append(cv2.imread(os.getcwd() + f"/dicesDrawing/resources/dice{i}.jpg", 0))
+    #     if diceImg[i] is None :
+    #         print("找不到骰子图片")
+    #         exit(0)
+    #     print('骰子size=', diceImg[i].shape)
+    getDicesVideo("./zhongli.mp4", 100)
 

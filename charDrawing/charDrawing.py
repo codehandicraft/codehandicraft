@@ -3,6 +3,9 @@ import xlwt
 import numpy as np
 import os
 import sys
+sys.path.append("../")
+import math
+import util
 import tqdm
 from PIL import Image, ImageDraw, ImageFont
 
@@ -21,7 +24,9 @@ def cv2AddChineseText(img, text, position=(0, 0), textColor=(255, 255, 255), tex
     # 创建一个可以在给定图像上绘图的对象
     draw = ImageDraw.Draw(img)
     # 字体的格式
-    fontStyle = ImageFont.truetype("./charDrawing/simsun.ttc", textSize, encoding="utf-8")
+    # fontStyle = ImageFont.truetype("./charDrawing/simsun.ttc", textSize, encoding="utf-8")
+    fontStyle = ImageFont.truetype("/System/Library/Fonts/Hiragino Sans GB.ttc", textSize, encoding="utf-8")
+    # fontStyle.set_variation_by_name("bold")
     # 绘制文本
     draw.text(position, text, textColor, font=fontStyle)
     # 转换回OpenCV格式
@@ -77,19 +82,50 @@ def gen_html(path, img_color, chars_ret):
     print("gen html char result ok")
     return path[:-4] + "_out.html"
 
-def getCharDrawing(path, chars, edge = 200, is_color = False) :
+def unify_h_w_ratio_by_crop_img(img1, h, w):
+    print(f"crop_img: before img_shape={img1.shape[:2]}, h={h}, w={w}")
+    img1_new_h = min(img1.shape[0] // h, img1.shape[1] // w) * h
+    img1_new_w = min(img1.shape[0] // h, img1.shape[1] // w) * w
+
+    left = math.ceil((img1.shape[0]-img1_new_h) / 2)
+    right = left + img1_new_h
+    top = math.ceil((img1.shape[1]-img1_new_w)/2)
+    bottom = top + img1_new_w
+
+    # img1 = img1[(img1.shape[0]-img1_new_h)//2: img1.shape[0]-(img1.shape[0]-img1_new_h) //
+    #             2, (img1.shape[1]-img1_new_w)//2: img1.shape[1]-(img1.shape[1]-img1_new_w)//2]
+    img1 = img1[left:right, top:bottom]
+    print(f"crop_img: after  img_shape={img1.shape[:2]}, h={h}, w={w}, {img1_new_h=}, {img1_new_w=}")
+    return img1
+
+def getCharDrawing(path, chars, edge = 200, is_color = False, is_white_back = False, char_BGR_color = []) :
     print(f"path={path}, chars={chars}, edge={edge}")
+    # 打印文字解释原理
+    line_list = ["\n"*19]
+    for i in [1,2,5,10,17,25]:
+        line_list.append((" "*10 + "   ".join([char*i for char in chars]) + '\n') * i + "\n"*65)
+    with open(path[:-4] + "_demo.txt", 'w+') as file:    
+        # lines = [''.join(line) + "\n" for line in line_list]
+        file.writelines(line_list) 
+    
     # 字符_平均像素_字符图像
     char_avg_img = []
     for char in chars:
         img = np.zeros((30, 30), np.uint8)
-        char_imgs = cv2AddChineseText(img, char, (0, 0), (255, 255, 255), 30)
+        text_color = (255, 255, 255)
+        if is_white_back:
+            img.fill(255)
+            text_color = (0, 0, 0)
+        char_imgs = cv2AddChineseText(img, char, (0, 0), text_color, 30)
         # cv2.imwrite(path[:-4] + f"_{char}.jpg", char_imgs)
         
         print(f"char={char}, avg={int(np.mean(char_imgs))}")
         char_avg_img.append([char, np.mean(char_imgs), char_imgs])
     # 允许存在空字符
-    char_avg_img.append(["　", 1, cv2.cvtColor(np.zeros((30, 30), np.uint8), cv2.COLOR_RGB2BGR)])
+    if is_white_back:
+        char_avg_img.append(["　", 255, cv2.cvtColor(np.ones((30, 30), np.uint8), cv2.COLOR_RGB2BGR)])
+    else:
+        char_avg_img.append(["　", 1, cv2.cvtColor(np.zeros((30, 30), np.uint8), cv2.COLOR_RGB2BGR)])
 
     # 对字符的平均像素进行排序、归一化处理
     char_avg_img = char_normalize(char_avg_img)
@@ -102,6 +138,11 @@ def getCharDrawing(path, chars, edge = 200, is_color = False) :
         return msgErr("找不到待处理图片")
     cv2.normalize(img, img, 0, 255, cv2.NORM_MINMAX)
 
+    # 保存为A3纸大小：297mm × 420mm，一个图片为3*3mm, 则文字list为 99个 * 140个
+    if edge == 99:
+        img = unify_h_w_ratio_by_crop_img(img, edge, 140)
+    elif edge == 140:
+        img = unify_h_w_ratio_by_crop_img(img, edge, 99)
     # 图片规格处理
     img_height, img_width = img.shape
     ratio = edge / (img_width if img_height > img_width else img_height)
@@ -114,7 +155,9 @@ def getCharDrawing(path, chars, edge = 200, is_color = False) :
     height, width = img.shape
     char_imgs_ret = [[0 for _ in range(width)] for _ in range(height)]
     color_char_imgs_ret = [[0 for _ in range(width)] for _ in range(height)]
+    red_color_char_imgs_ret = [[0 for _ in range(width)] for _ in range(height)]
     chars_ret = [[0 for _ in range(width)] for _ in range(height)]
+    chinese_char_num = 0  # 汉字字符数量
     print(f"图像的文字规格为{len(chars_ret)}*{len(chars_ret[0])}")
     for i in range(len(chars_ret)):
         for j in range(len(chars_ret[i])):
@@ -124,11 +167,20 @@ def getCharDrawing(path, chars, edge = 200, is_color = False) :
                 color_char_img = np.zeros((30, 30, 3), np.uint8)
                 color_BGR = img_color[i, j]
                 color_char_imgs_ret[i][j] = cv2AddChineseText(color_char_img, chars_ret[i][j], (0, 0), tuple([color_BGR[2], color_BGR[1], color_BGR[0]]), 30)
+            if len(char_BGR_color):
+                color_char_img = np.zeros((30, 30, 3), np.uint8)
+                color_BGR = char_BGR_color
+                red_color_char_imgs_ret[i][j] = cv2AddChineseText(color_char_img, chars_ret[i][j], (0, 0), tuple([color_BGR[2], color_BGR[1], color_BGR[0]]), 30)
+                pass
+            if chars_ret[i][j] != '　':
+                chinese_char_num += 1
             # util.imwrite(path, f"_color_{chars_ret[i][j]}_{j}_{j}.jpg", color_char_imgs_ret[i][j])
 
-    print("get char result ok, start to write txt and img")
+    print(f"get char result ok, {chinese_char_num=}. start to write txt and img")
     # 生成html文件
     gen_html(path, img_color, chars_ret)
+    # 生成xls文件
+    util.save_list_to_xls(chars_ret, path[:-4] + "_out.xls")
 
     # 保存文字结果
     with open(path[:-4] + "_out.txt", 'w+') as file:    
@@ -136,18 +188,56 @@ def getCharDrawing(path, chars, edge = 200, is_color = False) :
         file.writelines(lines) 
 
     # 保存输出图片
-    # imgOut = cv2.vconcat([cv2.hconcat([char_img for char_img in ral_imgs]) for ral_imgs in char_imgs_ret])
+    imgOut = cv2.vconcat([cv2.hconcat([char_img for char_img in ral_imgs]) for ral_imgs in char_imgs_ret])
     # imgOut = cv2.resize(imgOut, (img_height, width))
-    # cv2.imwrite(path[:-4] + "_out.jpg", imgOut)
+    out_path = util.imwrite(path, "_out", imgOut)
+    if edge == 99 or edge == 140:
+        out_path_img = cv2.imread(out_path, 0)
+        img_week = util.upwards_pixel_to_dst(out_path_img, 100, 100)
+        week_path = util.imwrite(path, "_week", img_week)
+        print(f"{edge=}, get week result ok, {week_path=}")
+
 
     # 保存输出图片
     if is_color:
         imgOut = cv2.vconcat([cv2.hconcat([char_img for char_img in ral_imgs]) for ral_imgs in color_char_imgs_ret])
         # imgOut = cv2.resize(imgOut, (img_height, width))
         cv2.imwrite(path[:-4] + "_color_out.jpg", imgOut)
+    if len(char_BGR_color):
+        imgOut = cv2.vconcat([cv2.hconcat([char_img for char_img in ral_imgs]) for ral_imgs in red_color_char_imgs_ret])
+        # imgOut = cv2.resize(imgOut, (img_height, width))
+        cv2.imwrite(path[:-4] + "_red_color_out.jpg", imgOut)
 
     return msgOk([len(chars_ret), len(chars_ret[0])])
-   
+
+def char_file_to_img(path, char_size=30, is_white_back=False):
+    # 打开字符文件
+    with open(path, 'r') as file:
+        lines = file.readlines()
+        # 读取字符文件
+        char_imgs_ret = []
+        for line in lines:
+            line_char_imgs = []
+            for char in line:
+                if char == "\n":
+                    continue
+                if char == "　":
+                    line_char_imgs.append(cv2.cvtColor(np.ones((char_size, char_size), np.uint8), cv2.COLOR_RGB2BGR))
+                else:
+                    img = np.zeros((char_size, char_size), np.uint8)
+                    text_color = (255, 255, 255)
+                    if is_white_back:
+                        img.fill(255)
+                        text_color = (0, 0, 0)
+                    line_char_imgs.append(cv2AddChineseText(img, char, (0, 0), text_color, char_size))
+            char_imgs_ret.append(line_char_imgs)
+        print(f"文字个数为{len(char_imgs_ret)}*{len(char_imgs_ret[0])}")
+        print(f"图片尺寸为{char_size*len(char_imgs_ret)}*{char_size*len(char_imgs_ret[0])}")
+        imgOut = cv2.vconcat([cv2.hconcat([char_img for char_img in ral_imgs]) for ral_imgs in char_imgs_ret])
+        cv2.imwrite(path[:-4] + f"_file_to_img{char_size}_out.jpg", imgOut)
+                                                          
+
 if __name__ == "__main__":
-    getCharDrawing("./charDrawing/xinhai2.png", "我是珊瑚宫心海的狗", 200, False)
+    getCharDrawing("./charDrawing/hh2.jpg", "我是神里绫人的狗", 150, False, False, [])
+    # getCharDrawing("./charDrawing/hh_char.jpg", "我是藿藿大人的狗", 100, False, False, [100, 100, 255])
 

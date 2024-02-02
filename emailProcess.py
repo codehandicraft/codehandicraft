@@ -396,10 +396,20 @@ def dragonScaleBindingProcess(msg):
 
         param_list = plain
         for param in param_list:
-            if len(param) > 0 and param.isdigit():
-                param_int_list.append(int(param))
+            if len(param) == 0:
+                continue
+            digit = util.str_to_int(param)
+            if digit != -1:
+                param_int_list.append(int(digit))
             else:
                 break
+
+            # if len(param) > 0 and param.isdigit():
+            #     param_int_list.append(int(param))
+            # elif len(param) == 0:
+            #     continue
+            # else:
+            #     break
         if len(param_int_list) < 4:
             is_use_default_param = True 
             print(f'param num < 4, will use default param')
@@ -453,9 +463,9 @@ def dragonScaleBindingProcess(msg):
         return {
             'subject':f'获取{msg.subject}成功！',
             'content_text':f'''获取{msg.subject}成功：
-服务生效时间一般在10-22点，做之前可以先看看下面的tips \r\n
-采用的输入参数为：{h_w_split_cover[0]} {h_w_split_cover[1]} {h_w_split_cover[2]} {h_w_split_cover[3]} {h_w_split_cover[4]}
-如果与你的输入不一致，可能输入参数有误，使用的是默认参数，请检查输入参数！（一共4个参数，每个参数为正整数，且单独占一行）\r\n
+【重要！！！】有任何问题请先看完下面的tips \r\n
+采用的输入参数为：【{h_w_split_cover[0]} {h_w_split_cover[1]} {h_w_split_cover[2]} {h_w_split_cover[3]} {h_w_split_cover[4]} {h_w_split_cover[5]}】
+如果与你的输入不一致，可能输入参数有误，使用的是默认参数，请检查输入参数！（一共6个参数，每个参数为正整数，且单独占一行）\r\n
 共有{len(base_path_list)}个附件，其中需要打印的图片有{len(base_path_list)-1}张，即『 0_page_img_ 』开头的图片。。。\r\n
 需要预留粘贴的卷轴尺寸为：{h_w_split_cover[0]}厘米 * {h_w_split_cover[1]}厘米。。。 \r\n
 每张图片的打印尺寸为： {img_size_cm[0]}厘米 * {img_size_cm[1]}厘米 ，打印前请确认尺寸是否正确！！！\r\n
@@ -470,7 +480,7 @@ def dragonScaleBindingProcess(msg):
 多多点赞转发支持下吧  \^O^/ 
 \r\n
 tips：
-0、因为成本较高，先简单A4黑白打印前四张图片（手动裁剪白边之后）试试效果，之后再彩色打印进行正式的制作。（主要看误差如何）
+0、因为成本较高，先简单A4黑白打印前几张图片（手动裁剪白边之后）试试效果，之后再彩色打印进行正式的制作。（主要看误差如何）
 1、粘贴时以固体胶为主，白乳胶为辅（空白部分粘贴到卷轴上时需要用少量白乳胶辅助粘贴）
 2、成品卷轴卷起来的时候不要太紧，否则对折的纸张可能会有挤压的痕迹
 3、最后的裁剪图片以封面图片的清晰度为基准，觉得结果图片清晰度不够的话可以使用微信小程序bigjpg放大（二次元图片）
@@ -479,6 +489,14 @@ tips：
 6、每一行参数都需要为整数，暂不支持小数
 7、如果有部分内容页为空白，可能是程序无法加载的图片格式，可以把这些图片发送到QQ重新保存一下，再发送过来；也可能是附件图片个数不够
 8、如果内容图片被裁剪，是因为正文参数和图片的尺寸不匹配。图方便可以再额外增加两行数字：第五行写0，第六行写1。这样就不会被裁剪了，但会有白边。
+9、如果封面图片被裁剪，是前两行参数和图片的尺寸不匹配导致的，请按需修改前两行参数。
+10、服务生效时间一般在10-22点
+解释下各个参数的意思:
+    假设前四行参数各位A、B、C、D，那么封面图片的高宽比=A:B；内容图片的高宽比=A:(2D-1)B/C；其中内容图片的个数=C-D-1
+    另外，
+    可选的第五行参数为是否单面打印（0或1，默认为0不进行单面打印）；
+    可选的第六行参数为内容图片通过切割还是填充空白统一尺寸（0或1，默认为0通过切割进行统一尺寸）。
+
 \r\n
                                 ''',
                 'attachments':out_path_list
@@ -644,7 +662,7 @@ def emailProcess():
     server = zmail.server(sender_qq, pwd)
     print('login Success')
     print('-----开始接收并处理邮件-----')
-    delete_days_ago = datetime.date.fromtimestamp(time.time() - 60 * 24 * 60 * 60)
+    delete_days_ago = datetime.date.fromtimestamp(time.time() - 30 * 24 * 60 * 60)
     print(f"{delete_days_ago=}")
 
     # while True:
@@ -661,6 +679,7 @@ def emailProcess():
     #     imap.logout()
 
     while True:
+        time.sleep(10)
         with Imbox('imap.qq.com', sender_qq, pwd, ssl=True) as imbox:
             try:
                 unread_mails = imbox.messages(unread=True)
@@ -668,10 +687,21 @@ def emailProcess():
                     # 邮件信息
                     title = messages.subject
                     sent_from = messages.sent_from
+                    if sent_from[0]['email'] == 'dragon_0417@qq.com':
+                        sent_from[0]['email'] = '1063068121@qq.com'
                     print(datetime.datetime.strftime(datetime.datetime.now(),r'%Y.%m.%d %H:%M:%S : '), uid, '收到',sent_from,'的邮件，主题为：',title)
                     print(f"messages: {messages.__dict__.keys()}")
 
                     # 根据标题处理结果，获得回执邮件
+                    is_skip = False
+                    for black_word in ['撤回', '回复', '自动', '失败', '成功', '邮箱']:
+                        if black_word in title:
+                            imbox.mark_seen(uid)
+                            print(f'{black_word} in title:{messages.subject}, will skip\n')
+                            is_skip = True
+                            break
+                    if is_skip:
+                        continue
                     if "骰子画" in messages.subject:
                         mail = diceDrawingProcess(messages)
                     elif "骰子动画" in messages.subject:
@@ -682,7 +712,7 @@ def emailProcess():
                         mail = reflexDrawingProcess(messages)
                     elif "光影画" in messages.subject:
                         mail = shadowDrawingProcess(messages)
-                    elif "龙鳞" in messages.subject:
+                    elif "龙鳞" in messages.subject or "龙麟" in messages.subject:
                         mail = dragonScaleBindingProcess(messages)
                     elif "线稿" in messages.subject:
                         mail = sketchDrawingProcess(messages)
@@ -695,7 +725,23 @@ def emailProcess():
 
                     # 发送邮件
                     print('start send mail')
-                    server.send_mail(sent_from[0]['email'], mail)
+                    if 'attachments' in mail.keys():
+                        attachments_list = util.get_out_file_list(mail.get('attachments', []))
+                        list_size = len(attachments_list)
+                        if list_size == 0:
+                            mail = error_mail("邮件结果过大，请降低图片大小")
+                            server.send_mail(sent_from[0]['email'], mail)
+                        mail_subject = mail['subject']
+                        for i in range(list_size):
+                            mail['subject'] = mail_subject + f'({i+1}/{list_size})'
+                            mail['attachments'] = attachments_list[i]
+                            server.send_mail(sent_from[0]['email'], mail)
+                            print(f'({i+1}/{list_size}) send Success：{attachments_list[i]}')
+                            print(mail)
+                    else:
+                        server.send_mail(sent_from[0]['email'], mail)
+                        print(mail)
+
                     imbox.mark_seen(uid)
                     print('send Success\n')
             except Exception as e:
@@ -711,20 +757,21 @@ def emailProcess():
             # break;
 
             # 删除旧邮件
-            inbox_messages_before=imbox.messages(date__lt=delete_days_ago)
-            for uid, messages in inbox_messages_before:
-                try:
-                    title = messages.subject
-                    sent_from = messages.sent_from
-                    receivedate = time.strftime("%Y%m%d %H:%M:%S", time.strptime(messages.date[0:24], '%a, %d %b %Y %H:%M:%S'))
-                    if int(receivedate[:8]) > int(datetime.datetime.strftime(delete_days_ago, r'%Y%m%d')):
-                        break
-                    print(datetime.datetime.strftime(datetime.datetime.now(),r'%Y.%m.%d %H:%M:%S'), "删除邮件：",uid, f'在 {receivedate} 收到',sent_from,'的邮件，主题为：',title)
-                    imbox.delete(uid)
-                except Exception as e:
-                    print(datetime.datetime.strftime(datetime.datetime.now(),r'%Y.%m.%d %H:%M:%S : ') + f"Error : {e}\n")
-                    print(f"删除邮件：{uid=}, {messages.sent_from=}")
-                    imbox.delete(uid)
+            # inbox_messages_before=imbox.messages(date__lt=delete_days_ago)
+            # print(f"inbox_messages_before={inbox_messages_before}")
+            # for uid, messages in inbox_messages_before:
+            #     try:
+            #         title = messages.subject
+            #         sent_from = messages.sent_from
+            #         receivedate = time.strftime("%Y%m%d %H:%M:%S", time.strptime(messages.date[0:24], '%a, %d %b %Y %H:%M:%S'))
+            #         if int(receivedate[:8]) > int(datetime.datetime.strftime(delete_days_ago, r'%Y%m%d')):
+            #             break
+            #         print(datetime.datetime.strftime(datetime.datetime.now(),r'%Y.%m.%d %H:%M:%S'), "删除邮件：",uid, f'在 {receivedate} 收到',sent_from,'的邮件，主题为：',title)
+            #         imbox.delete(uid)
+            #     except Exception as e:
+            #         print(datetime.datetime.strftime(datetime.datetime.now(),r'%Y.%m.%d %H:%M:%S : ') + f"Error : {e}\n")
+            #         print(f"删除邮件：{uid=}, {messages.sent_from=}")
+            #         imbox.delete(uid)
 
 if __name__ == "__main__":
     emailProcess()

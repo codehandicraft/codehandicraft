@@ -111,5 +111,5 @@ def getShadowDrawing(path, gradient=5) :
     return msgOk([len(gray_img), len(gray_img[0])])
    
 if __name__ == "__main__":
-    getShadowDrawing("./hutao.jpg", 4)
+    getShadowDrawing("./rm.jpg", 3)
 
