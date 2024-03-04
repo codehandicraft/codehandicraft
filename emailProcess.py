@@ -393,6 +393,9 @@ def dragonScaleBindingProcess(msg):
         if len(plain) == 1:
             plain = plain[0].split('\n')
             print("size=1, use '\\n' split. new plain=", plain)
+        if len(plain) == 1:
+            plain = plain[0].split('&nbsp;')
+            print("size=1, use '&nbsp;' split. new plain=", plain)
 
         param_list = plain
         for param in param_list:
