@@ -25,12 +25,12 @@ def getDoubleDrawing(path1, path2, num):
     print(f"normal img path1={path1}, reflex img path2={path2}, num={num}")
 
     # 处理第二张图片，得到反射画
-    ret = reflexDrawing.getReflexDrawing(path2, 180)
-    if ret[0] == False:
-        print("getReflexDrawing falied")
-        return util.msgErr("获取反射画失败")
-    reflex_img_path = ret[1][2]
-    # out_path = util.imwrite(reflex_img_path, '_reflex', img_out)
+    # ret = reflexDrawing.getReflexDrawing(path2, 180)
+    # if ret[0] == False:
+    #     print("getReflexDrawing falied")
+    #     return util.msgErr("获取反射画失败")
+    reflex_img_path = path2
+    # # out_path = util.imwrite(reflex_img_path, '_reflex', img_out)
 
     # 处理输入图片，灰度并归一化
     normal_img = cv2.imread(path1)
@@ -40,11 +40,11 @@ def getDoubleDrawing(path1, path2, num):
         print("找不到待处理图片")
         return util.msgErr("找不到待处理图片")
     reflex_img = util.crop_white_border(reflex_img)
-    normal_img = util.crop_white_border(normal_img)
+    normal_img = util.crop_empty(normal_img)
     print(f"图片灰度 ok, {normal_img.shape}, {reflex_img.shape}")
 
     normal_img = cv2.rotate(normal_img, cv2.ROTATE_90_CLOCKWISE)
-    reflex_img = cv2.rotate(reflex_img, cv2.ROTATE_90_COUNTERCLOCKWISE)
+    # reflex_img = cv2.rotate(reflex_img, cv2.ROTATE_90_COUNTERCLOCKWISE)
     print(f"图片旋转 ok, {normal_img.shape}, {reflex_img.shape}")
 
     # 通过等比例缩放 统一高度
@@ -82,32 +82,37 @@ def getDoubleDrawing(path1, path2, num):
     imgs = [] 
     m1, n1, _ = normal_img.shape
     m2, n2, _ = reflex_img.shape
-    empty_img = np.zeros((m1, 10, 3), np.uint8)  # 填充像素宽度空白
+    empty_img = np.zeros((m1, 20, 3), np.uint8)  # 填充像素宽度空白
     empty_img.fill(255)
+    util.imwrite(path1, f"_empty", empty_img)
     for i in range(num):
         y_ratio1 = 1 + (i / num)
         img1 = normal_img[:, i * n1 // num : (i + 1) * n1 // num - 1, :]
         img1 = cv2.resize(img1, None, fx=1, fy=y_ratio1)
         imgs.append(img1)
+        util.imwrite(path1, f"_{i}", img1)
         imgs.append(empty_img)
 
         y_ratio2 = 1 + 1 - (i / num)
         img2 = reflex_img[:, i * n2 // num : (i + 1) * n2 // num - 1, :]
         img2 = cv2.resize(img2, None, fx=1, fy=y_ratio2)
         imgs.append(img2)
+        util.imwrite(path2, f"_{i}", img2)
         if i != num -1:
             imgs.append(empty_img)
     
     # 通过填充空白统一宽高
-    imgs = util.unify_size(imgs)
+    imgs = util.unify_size_h(imgs)
     print(f"统一尺寸 ok, {imgs[0].shape}")
 
     img_out = cv2.hconcat(imgs)
     out_path = util.imwrite(path1, '_out', img_out)
     print(f"完成拼接 ok, {img_out.shape}, out_path={out_path}")
 
+    dst_img = util.under_pixel_to_dst(img_out, 240, 240)
+    out_path = util.imwrite(path1, '_week', dst_img)
     return
 
 if __name__ == "__main__":
     # getDoubleDrawing("./1.jpg", "./2.jpg", 10)
-    getDoubleDrawing("./sis.jpg", "./bro.jpg", 10)
+    getDoubleDrawing("./hh1.jpg", "./hh2_reflex.jpg", 15)
