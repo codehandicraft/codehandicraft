@@ -9,12 +9,6 @@ from PIL import Image, ImageDraw, ImageFont
 sys.path.append("../")
 import util
 
-def msgOk(msg):
-    return [True, msg]
-
-def msgErr(msg):
-    return [False, msg]
-
 def custom_blur_demo(image):
     kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]], np.float32) #锐化
     image = cv2.filter2D(image, -1, kernel=kernel)
@@ -29,7 +23,7 @@ def getCircleDrawing(path, circle_num = 12, thickness = 2, week_pixel=220):
     img = cv2.imread(path, 0)
     if (img is None):
         print("找不到待处理图片")
-        return msgErr("找不到待处理图片")
+        return util.msgErr("找不到待处理图片")
     _, img = cv2.threshold(img,60,255,cv2.THRESH_OTSU)
     img = custom_blur_demo(img)
     cv2.imwrite(path[:-4] + "_tmp.jpg", img)
@@ -62,11 +56,11 @@ def getCircleDrawing(path, circle_num = 12, thickness = 2, week_pixel=220):
     cv2.circle(dst_img, certer_point, thickness, 0, -1)   
     cv2.imwrite(path[:-4] + "_out.jpg", dst_img)
 
-    # # 顺时针旋转
-    # dst_img = util.rotate_img(dst_img, 45)
-    # _, dst_img = cv2.threshold(dst_img,160,255,cv2.THRESH_OTSU)
-    # out_path = util.imwrite(path, '_rotate', dst_img)
-    # print(f"顺时针旋转成功")
+    # 顺时针旋转
+    rotate_img = util.rotate_img(dst_img, 45)
+    _, rotate_img = cv2.threshold(rotate_img,160,255,cv2.THRESH_OTSU)
+    out_path = util.imwrite(path, '_rotate', rotate_img)
+    print(f"顺时针旋转成功")
 
     dst_img = util.under_pixel_to_dst(dst_img, week_pixel, week_pixel)
     # 标记圆心
@@ -74,9 +68,21 @@ def getCircleDrawing(path, circle_num = 12, thickness = 2, week_pixel=220):
     cv2.imwrite(path[:-4] + "_week.jpg", dst_img)
     print(f"图像淡化成功, {week_pixel=}")
 
-    return msgOk([len(dst_img), len(dst_img[0])])
+    # 顺时针旋转
+    dst_img = util.rotate_img(dst_img, 45)
+    out_path = util.imwrite(path, '_week_rotate', dst_img)
+    print(f"顺时针旋转成功")
+
+    return util.msgOk([len(dst_img), len(dst_img[0])])
     # return msgOk("")
 
 if __name__ == "__main__":
-    getCircleDrawing("./zlys4.jpg", 105, 2, 240)
+    getCircleDrawing("./huahuo2.jpg", 105, 2, 240)
+    
+    # img = cv2.imread('huahuoa_out_week.jpg', 0)  
+    # print(img.shape) 
+    # img = cv2.copyMakeBorder(img, 100, 100, 0, 0, cv2.BORDER_CONSTANT, value=[255, 255, 255])
+    # print(img.shape)
+    # cv2.imwrite("huahuoa_out_week2.jpg", img)
+
 

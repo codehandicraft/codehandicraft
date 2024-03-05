@@ -54,7 +54,7 @@ def getSketchDrawing(path_list, para_list=[127,0]):
     print("set gray_image ok")
     util.imwrite(path, '_gray', gray_image)
 
-    # gray_image = cv2.resize(gray_image, None, fx=0.1, fy=0.1)
+    # gray_image = cv2.resize(gray_image, None, fx=0.5, fy=0.5)
     util.imwrite(path, '_resize', gray_image)
     print(gray_image.shape)
 
@@ -92,7 +92,7 @@ def getSketchDrawing(path_list, para_list=[127,0]):
     return util.msgOk(out_msg)
 
 if __name__ == "__main__":
-    path_list = ["./rmgz.jpg"]
+    path_list = ["./huahuo4.jpg"]
     # path_list = ["./input/20231008213132_539_101423/0.png"]
     para_list = [235, 0]
     getSketchDrawing(path_list, para_list)

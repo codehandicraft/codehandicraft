@@ -126,13 +126,15 @@ def getPointDrawing(path_list, para_list):
 
     # 统一高度
     gray_img = cv2.imread(path, 0)
-    gray_img = util.resize_img(gray_img, 1500)
+    print(f"图片原始尺寸={gray_img.shape}")
+    gray_img = crop_empty(gray_img)
+    # gray_img = util.resize_img(gray_img, 1500)
     # gray_img = cv2.resize(gray_img, None, fx=0.5, fy=0.5)
     util.imwrite(path, '', gray_img)
 
     # 图片旋转
     pil_img = Image.open(path)
-    pil_img = pil_img.rotate(-60, expand=1, fillcolor=255)
+    pil_img = pil_img.rotate(-45, expand=1, fillcolor=255)
     # pil_img = pil_img.rotate(-90, expand=1, fillcolor=255)
     pil_img.save(path[:-4] + "_1.jpg")
     gray_img = cv2.imread(path[:-4] + "_1.jpg", 0)
@@ -175,7 +177,7 @@ def getPointDrawing(path_list, para_list):
     # only week
     gray_img2 = gray_img.copy()
     _img = week_img(gray_img2, 242)
-    util.imwrite(path, "_only_week", _img)
+    util.imwrite(path, f"_only_week_{week_pixel}", _img)
 
     # 溶解
     kernel = np.ones((m//new_size//3*2+1, m//new_size//3*2+1), np.uint8)
@@ -185,7 +187,7 @@ def getPointDrawing(path_list, para_list):
     # 淡化
     gray_img = week_img(gray_img, week_pixel)
     # gray_img = change_pixel(gray_img, week_pixel-1, 255)
-    out_path_list.append(util.imwrite(path, "_week", gray_img))
+    out_path_list.append(util.imwrite(path, f"_week_{week_pixel}", gray_img))
     print(f"save week img jpg OK!")
 
     print(f"{out_path_list=}")
@@ -194,7 +196,7 @@ def getPointDrawing(path_list, para_list):
 
 
 if __name__ == "__main__":
-    path_list = ["./hh2.jpg"]
-    para_list = [350, 240]      # point
+    path_list = ["./hte4.jpg"]
+    para_list = [470, 240]      # point
     # para_list = [320, 215]    # line
     getPointDrawing(path_list, para_list)
