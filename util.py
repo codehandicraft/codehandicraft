@@ -128,6 +128,10 @@ def resize_img(img, dst_h):
     h, w = img.shape[:2]
     return cv2.resize(img, (w * dst_h // h, dst_h))
 
+def resize_img_w(img, dst_w):
+    h, w = img.shape[:2]
+    return cv2.resize(img, (dst_w, h * dst_w // w))
+
 # 通过填充空白，统一尺寸
 def unify_size(imgs):
     print("unify size start")
