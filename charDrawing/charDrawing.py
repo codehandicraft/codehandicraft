@@ -99,7 +99,7 @@ def unify_h_w_ratio_by_crop_img(img1, h, w):
     return img1
 
 def getCharDrawing(path, chars, edge = 200, is_color = False, is_white_back = False, char_BGR_color = []) :
-    print(f"path={path}, chars={chars}, edge={edge}")
+    print(f"path={path}, chars={chars}, edge={edge}, is_color={is_color}")
     # 打印文字解释原理
     line_list = ["\n"*19]
     for i in [1,2,5,10,17,25]:
@@ -166,6 +166,14 @@ def getCharDrawing(path, chars, edge = 200, is_color = False, is_white_back = Fa
             if is_color:
                 color_char_img = np.zeros((30, 30, 3), np.uint8)
                 color_BGR = img_color[i, j]
+                if i==192 and j==151:
+                    chars_ret[i][j] = '流'
+                elif i==192 and j==152:
+                    chars_ret[i][j] = '萤'
+                elif i==193 and j==151:
+                    chars_ret[i][j] = '死'
+                elif i==193 and j==152:
+                    chars_ret[i][j] = '了'
                 color_char_imgs_ret[i][j] = cv2AddChineseText(color_char_img, chars_ret[i][j], (0, 0), tuple([color_BGR[2], color_BGR[1], color_BGR[0]]), 30)
             if len(char_BGR_color):
                 color_char_img = np.zeros((30, 30, 3), np.uint8)
