@@ -9,6 +9,9 @@ from PIL import Image, ImageDraw, ImageFont
 # height, width = img.shape[:2] 
 
 def under_pixel_to_dst(img, src_pixel, dst_pixel):
+    # 灰度图
+    if img.ndim != 2:
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     for mm in range(img.shape[0]):
         for nn in range(img.shape[1]):
             if img[mm, nn] < src_pixel:
@@ -99,6 +102,32 @@ def crop_white_border(img):
       
     return crop_img
 
+# 统一图片的高度 = 最大高度
+def unify_h(imgs):
+    max_h = 0
+    max_w = 0
+    min_h, min_w = imgs[0].shape[:2]
+    for img in imgs:
+        h, w= img.shape[:2]
+        if h > max_h:
+            max_h = h
+        if w > max_w:
+            max_w = w
+        
+        if h < min_h:
+            min_h = h
+        if w < min_w:
+            min_w = w
+    print(f"unify_size: max_h={max_h}, max_w={max_w}, {min_h=}")
+
+    for i in range(len(imgs)):
+        imgs[i] = resize_img(imgs[i], max_h)
+
+# 等比例缩放图片，使高度=dst_h
+def resize_img(img, dst_h):
+    h, w = img.shape[:2]
+    return cv2.resize(img, (w * dst_h // h, dst_h))
+
 # 通过填充空白，统一尺寸
 def unify_size(imgs):
     print("unify size start")
@@ -120,6 +149,34 @@ def unify_size(imgs):
         right = math.floor((max_w - w) / 2)
         print(f"ori_shape={imgs[i].shape}, h={h}, w={w}, top={top}, bottom={bottom}")
 
+        imgs[i] = cv2.copyMakeBorder(imgs[i], top, bottom, left, right, cv2.BORDER_CONSTANT, value=[255, 255, 255])
+        # imgs[i] = cv2.copyMakeBorder(imgs[i], top, bottom, 0, 0, cv2.BORDER_CONSTANT, value=[255, 255, 255])
+        print(imgs[i].shape)
+
+    return imgs
+
+# 通过填充上下空白，统一高度
+def unify_size_h(imgs):
+    print("unify size start")
+    max_h = 0
+    max_w = 0
+    for img in imgs:
+        h, w= img.shape[:2]
+        if h > max_h:
+            max_h = h
+        if w > max_w:
+            max_w = w
+    print(f"max_h={max_h}, max_w={max_w}")
+    
+    for i in range(len(imgs)):
+        h, w = imgs[i].shape[:2]
+        top = math.ceil((max_h - h) / 2)
+        bottom = math.floor((max_h - h) / 2)
+        left = math.ceil((max_w - w) / 2)
+        right = math.floor((max_w - w) / 2)
+        print(f"ori_shape={imgs[i].shape}, h={h}, w={w}, top={top}, bottom={bottom}")
+
+        # imgs[i] = cv2.copyMakeBorder(imgs[i], top, bottom, left, right, cv2.BORDER_CONSTANT, value=[255, 255, 255])
         imgs[i] = cv2.copyMakeBorder(imgs[i], top, bottom, 0, 0, cv2.BORDER_CONSTANT, value=[255, 255, 255])
         print(imgs[i].shape)
 
@@ -157,10 +214,6 @@ def unify_h_w_ratio_by_crop_img(img1, h, w):
     img1 = img1[(img1.shape[0]-img1_new_h)//2: img1.shape[0]-(img1.shape[0]-img1_new_h) //
                 2, (img1.shape[1]-img1_new_w)//2: img1.shape[1]-(img1.shape[1]-img1_new_w)//2]
     return img1
-
-def resize_img(img, dst_h):
-    h, w = img.shape[:2]
-    return cv2.resize(img, (w * dst_h // h, dst_h))
 
 def get_gcd(h, w):
     h = int(h * 10)
@@ -319,3 +372,19 @@ def cv2AddChineseText(img, text, position=(0, 0), textColor=(255, 255, 255), tex
     draw.text(position, text, textColor, font=fontStyle)
     # 转换回OpenCV格式
     return cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR)
+
+
+# 裁剪为指定h:w比例
+def crop_img(img1, h, w):
+    print(f"crop_img: img_shape={img1.shape[:2]}, h={h}, w={w}")
+    h = int(h * 10)
+    w = int(w * 10)
+    gcd = math.gcd(h, w)
+    h //= gcd
+    w //= gcd
+    img1_new_h = min(img1.shape[0] // h, img1.shape[1] // w) * h
+    img1_new_w = min(img1.shape[0] // h, img1.shape[1] // w) * w
+    img1 = img1[(img1.shape[0]-img1_new_h)//2: (img1.shape[0]-img1_new_h)//2 + img1_new_h, (img1.shape[1]-img1_new_w)//2: (img1.shape[1]-img1_new_w)//2 + img1_new_w]
+    print(f"crop_img: img_shape={img1.shape[:2]}, gcd_h={h}, gcd_w={w}")
+    return img1
+    
