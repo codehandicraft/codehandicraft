@@ -31,19 +31,6 @@ def emailProcess():
     delete_days_ago = datetime.date.fromtimestamp(time.time() - 30 * 24 * 60 * 60)
     print(f"{delete_days_ago=}")
 
-    # while True:
-    #     imap = imaplib.IMAP4_SSL('imap.qq.com')
-    #     r, d = imap.login(sender_qq, pwd)
-    #     assert r == 'OK', 'login failed'
-    #     try:
-    #         imap.select('inbox')
-
-    #         result, data = imap.search(None, 'ALL')
-    #         # do things with imap
-    #     except imap.abort:
-    #         continue
-    #     imap.logout()
-
     while True:
         time.sleep(10)
         with Imbox('imap.qq.com', sender_qq, pwd, ssl=True) as imbox:
