@@ -8,6 +8,14 @@ from PIL import Image, ImageDraw, ImageFont
 
 # height, width = img.shape[:2] 
 
+# 比week_pixel暗的设置为week_pixel
+def week_img(path, ori_img, week_pixel):
+    dst_img = 255 - ori_img
+    _, dst_img = cv2.threshold(dst_img, 255-week_pixel, 255-week_pixel, cv2.THRESH_BINARY)
+    dst_img = 255 - dst_img
+    print(f"图像淡化成功, {week_pixel=}")
+    return imwrite(path, f"_week_{week_pixel}", dst_img)
+
 def under_pixel_to_dst(img, src_pixel, dst_pixel):
     # 灰度图
     if img.ndim != 2:
@@ -42,6 +50,12 @@ def msgOk(msg):
 
 def msgErr(msg):
     return [False, msg]
+
+def gen_new_path(path, suffix, file_type=""):
+    path_pair = os.path.splitext(path)
+    if file_type == "":
+        file_type = path_pair[1]
+    return path_pair[0] + suffix + file_type
 
 def imwrite(path, suffix, img):
     path_pair = os.path.splitext(path)
@@ -101,6 +115,50 @@ def crop_white_border(img):
     crop_img = img[rect[1]:rect[1]+rect[3], rect[0]:rect[0]+rect[2]]  
       
     return crop_img
+
+# 裁剪图片，达到指定长宽比
+def unify_size_by_crop_img(imgs):
+    max_h = 0
+    max_w = 0
+    min_h, min_w = imgs[0].shape[:2]
+    for img in imgs:
+        h, w= img.shape[:2]
+        if h > max_h:
+            max_h = h
+        if w > max_w:
+            max_w = w
+        
+        if h < min_h:
+            min_h = h
+        if w < min_w:
+            min_w = w
+    print(f"unify_size: max_h={max_h}, max_w={max_w}, {min_h=}")
+
+    for i in range(len(imgs)):
+        # 统一高度
+        imgs[i] = resize_img(imgs[i], max_h)
+    
+    min_h, min_w = imgs[0].shape[:2]
+    for img in imgs:
+        h, w= img.shape[:2]
+        if h > max_h:
+            max_h = h
+        if w > max_w:
+            max_w = w
+        
+        if h < min_h:
+            min_h = h
+        if w < min_w:
+            min_w = w
+    
+    for i in range(len(imgs)):
+        img1 = imgs[i]
+        img1_new_h = img1.shape[0]
+        img1_new_w = min_w
+        # 统一宽度
+        imgs[i] = img1[(img1.shape[0]-img1_new_h)//2: img1.shape[0]-(img1.shape[0]-img1_new_h) //
+                2, (img1.shape[1]-img1_new_w)//2: img1.shape[1]-(img1.shape[1]-img1_new_w)//2]
+
 
 # 统一图片的高度 = 最大高度
 def unify_h(imgs):
@@ -226,6 +284,9 @@ def get_gcd(h, w):
     h //= gcd
     w //= gcd
     return h, w
+
+def check_directory_exists(directory_path):
+    return os.path.exists(directory_path) and os.path.isdir(directory_path)
 
 def create_dir(path):
     try:

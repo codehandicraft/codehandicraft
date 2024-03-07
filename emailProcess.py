@@ -27,6 +27,7 @@ from shadowDrawing import shadowDrawing
 from dragonScaleBinding import dragonScaleBinding
 from sketchDrawing import sketchDrawing
 from pointDrawing import pointDrawing
+from rasterBar import rasterBar
 
 PROCESS_DICT = {
     # "骰子画": "dicesDrawing",
@@ -522,6 +523,12 @@ def get_plain_param(msg):
         if len(plain) == 1:
             plain = plain[0].split('\n')
             print("size=1, use '\\n' split. new plain=", plain)
+        if len(plain) == 1:
+            plain = plain[0].split('&nbsp;')
+            print("size=1, use '&nbsp;' split. new plain=", plain)
+        if len(plain) == 1:
+            plain = plain[0].split(' ')
+            print("size=1, use '&nbsp;' split. new plain=", plain)
 
         param_list = plain
         for param in param_list:
@@ -535,6 +542,9 @@ def get_plain_param(msg):
 def get_img_file(msg, dir_path):
     '''解析邮件附件图片到新的目录中'''
     input_file_list = []
+    input_dir = f'{dir_path}/input/'
+    if not util.check_directory_exists(input_dir):
+        util.create_dir(input_dir)
 
     # 新建用户目录 
     ts_ms_str = str(int(time.time() * 1000) % 1000) + '_' + str(random.randint(100000, 999999))
@@ -545,7 +555,7 @@ def get_img_file(msg, dir_path):
     file_index = 0
     for attachment in msg.attachments:
         path_pair = os.path.splitext(attachment['filename'])
-        if len(path_pair) > 1 and path_pair[1].lower() in ['.png', '.jpg', '.jpeg']:
+        if len(path_pair) > 1 and path_pair[1].lower() in ['.png', '.jpg', '.jpeg', '.webp']:
             with open(attachment['filename'], 'wb') as f:
                 # 保存图片到当前目录
                 oldpath=attachment['filename']
@@ -573,12 +583,13 @@ def get_fail_mail(msg, fail_reason='', tips_info='无', other_info='无'):
     print(f"{fail_mail=}")
     return fail_mail
 
-def get_succ_mail(msg, in_param_list, out_path_list):
+def get_succ_mail(msg, in_param_list, out_path_list, other_info=''):
     succ_mail = {
         'subject':f'获取{msg.subject}成功！(自动发送,请勿回复)',
         'content_text':f'''获取{msg.subject}成功：
-服务生效时间一般在10-22点 \r\n
-输入参数为{in_param_list}，如果与预期的参数不同，则使用的是默认参数
+服务生效时间一般在工作日的10-22点 \r\n
+输入参数为{in_param_list}，如果与预期的参数不同，则使用的是默认参数 \r\n
+{other_info}
 \r\n                ''',
             'attachments':out_path_list
         }
@@ -625,6 +636,26 @@ def pointDrawingProcess(msg):
     out_path_list = ret[1]['out_path_list']
     base_path_list = [os.path.basename(path) for path in out_path_list]
     return get_succ_mail(msg, in_param_list, out_path_list)
+
+def rasterBarProcess(msg):
+    # 解析参数和输入附件
+    param_int_list = get_plain_param(msg)
+    input_file_list = get_img_file(msg, 'rasterBar')
+    if len(input_file_list) <= 1:
+        print(f'input_file_list is empty, will return failed_mail')
+        return get_fail_mail(msg, '输入图片数量小于2', '至少上传两张图片；图片不要用超大附件发送；图片不要放在正文中')
+
+    # 获取结果
+    ret = rasterBar.getRasterBar(input_file_list, param_int_list)
+    if (ret[0] == False):
+        return get_fail_mail(msg, ret[1])
+        
+    # 返回结果
+    in_param_list = ret[1]['in_param_list']
+    out_path_list = ret[1]['out_path_list']
+    tip_info = ret[1]['tip_info']
+    base_path_list = [os.path.basename(path) for path in out_path_list]
+    return get_succ_mail(msg, in_param_list, out_path_list, tip_info)
 
 def error_mail(error=''):
     return {
@@ -674,7 +705,6 @@ def emailProcess():
     #     assert r == 'OK', 'login failed'
     #     try:
     #         imap.select('inbox')
-
     #         result, data = imap.search(None, 'ALL')
     #         # do things with imap
     #     except imap.abort:
@@ -721,6 +751,8 @@ def emailProcess():
                         mail = sketchDrawingProcess(messages)
                     elif "点画" in messages.subject:
                         mail = pointDrawingProcess(messages)
+                    elif "光栅条" in messages.subject:
+                        mail = rasterBarProcess(messages)
                     # elif messages.subject in PROCESS_DICT.keys():
                         # mail = eval(PROCESS_DICT[messages.subject] + "Process")(messages)
                     else:
