@@ -13,7 +13,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 def getRasterBar(path_list, para_list):
     # 解析参数
-    para_list = util.merge_param(para_list, [100, 1, 0])
+    para_list = util.merge_param(para_list, [100, 1, 1])
     print(f"input param list={para_list}")
     # 光栅个数
     raster_num = para_list[0]
@@ -67,12 +67,39 @@ def getRasterBar(path_list, para_list):
     return util.msgOk({
             "out_path_list":out_path_list, 
             "in_param_list":para_list, 
-            "tip_info":f"预计共有2张图片附件，一张为拼接好的图片，一张为光栅条",
+            "tip_info":f"""预计共有2张图片附件，一张为拼接好的图片，一张为光栅条
+两张图片的打印尺寸必须相同，其中拼接的图片可以直接用普通纸打印，光栅条的处理方式有两种：
+1、光栅条用普通纸打印，然后通过裁纸刀将白色部分裁掉
+2、光栅条用透明菲林片打印，然后直接就可使用
+
+tips:
+1、建议图片的个数在2-4之间，图片个数过多效果并不好，因为遮挡的部分过多
+2、每个参数用一个空格隔开，或者每个参数各占一行
+3、每一行参数都需要为整数，暂不支持小数
+
+解释下各个参数的意思:
+    目前支持的参数共有3个，列如：100 1 1
+    第一个参数为光栅条的个数。（100表示每张图片会被分割成100份）
+    第二个参数（可选）为1时表示竖向条纹，为0时为纵向条纹
+    第三个参数（可选）为1时表示填充空白统一图片尺寸，为0时为裁剪图片
+            """,
         })
 
 
 # 多张图片交叉合成一张
 def merge_img_list(img_list, pixel_num, is_h):
+    """
+    将多张图片拼接成一张光栅画
+    
+    Args:
+        img_list (list): 图片列表，每个元素为一张图片，格式为numpy数组
+        pixel_num (int): 拼接每个小图的像素数
+        is_h (bool): 是否为竖条纹光栅画，True为竖条纹，False为横条纹
+    
+    Returns:
+        numpy.ndarray: 拼接后的光栅画，格式为numpy数组
+    
+    """
     raster_img = img_list[0]
     img_height = raster_img.shape[0]
     img_width = raster_img.shape[1]
@@ -93,6 +120,7 @@ def merge_img_list(img_list, pixel_num, is_h):
         i = 0
         j = 0
         while (i + 1) * pixel_num <= img_height:
+            # print(f"{j=},{raster_img.shape=}, {img_list[j].shape=}, ")
             raster_img[i * pixel_num : (i + 1) * pixel_num, :] = img_list[j][i * pixel_num : (i + 1) * pixel_num, :]
             j = (j + 1) % len(img_list)
             i += 1
@@ -103,6 +131,21 @@ def merge_img_list(img_list, pixel_num, is_h):
 
 # 生成光栅条纹PNG图片
 def gen_raster_png_img(out_path, stripe_width, image_height, image_width, img_num, is_h):
+    """
+    生成带有黑白条纹的PNG图片。
+    
+    Args:
+        out_path (str): 输出的图片路径。
+        stripe_width (int): 条纹宽度。
+        image_height (int): 图片高度。
+        image_width (int): 图片宽度。
+        img_num (int): 图片数量。
+        is_h (bool): 是否为水平条纹。
+    
+    Returns:
+        None
+    
+    """
     # 设置条纹的宽度和图像的总尺寸
     # stripe_width = 50  # 每条条纹的宽度
     # image_width = 4 * stripe_width  # 图像的总宽度（这里设置为4条条纹的宽度）

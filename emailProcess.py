@@ -18,6 +18,7 @@ import imaplib
 import random
 import util
 import shutil
+import importlib
 
 from dicesDrawing import dicesDrawing
 from charDrawing import charDrawing
@@ -39,11 +40,12 @@ PROCESS_DICT = {
     "线稿": "sketchDrawing",
 }
 
-def msgOk(msg):
-    return [True, msg]
-
-def msgErr(msg):
-    return [False, msg]
+# 定义一个字典，映射输入字符串到对应的子目录中的模块和函数名
+subject_to_module_function = {
+    "光栅卡": ("rasterCard.rasterCard", "getRasterCard"),
+    # 添加更多的映射
+    # "输入类型": ("子目录.模块名", "函数名"),
+}
 
 def successMail():
     return
@@ -174,6 +176,7 @@ def diceDrawingProcess(msg) :
 具体教程见：https://www.codehandicraft.com/dicesdrawingtutorial/ \r\n
 演示视频见：todo \r\n
 tips：{tips} \r\n
+    在正文中可以输入骰子行数，如200，表示使用200行骰子，默认值为100\r\n
                                         ''',
                         'attachments':[dicesDrawingPath[:-4] + "_out.xls",dicesDrawingPath[:-4] + "_out.jpg"]
                     }
@@ -510,7 +513,7 @@ tips：
     
 
 def get_plain_param(msg):
-    '''解析邮件正文参数'''
+    '''解析邮件正文参数——整数'''
     param_int_list = []
     if 'plain' not in msg.body or len(msg.body['plain']) <= 0 or msg.body['plain'][0] == '':
         msg.body['plain'][0] = ''
@@ -657,6 +660,23 @@ def rasterBarProcess(msg):
     base_path_list = [os.path.basename(path) for path in out_path_list]
     return get_succ_mail(msg, in_param_list, out_path_list, tip_info)
 
+def subModuleProcess(msg, module_info):
+    module_name, function_name = module_info
+    # 解析参数和输入附件
+    param_int_list = get_plain_param(msg)
+    input_file_list = get_img_file(msg, module_name.split('.')[0])
+
+    # 动态导入模块,获取模块中的函数,调用函数并返回结果
+    ret = getattr(importlib.import_module(module_name), function_name)(input_file_list, param_int_list)
+    if (ret[0] == False):
+        return get_fail_mail(msg, ret[1], ret[2])
+        
+    # 返回结果
+    in_param_list = ret[1]['in_param_list']
+    out_path_list = ret[1]['out_path_list']
+    tip_info = ret[1]['tip_info']
+    return get_succ_mail(msg, in_param_list, out_path_list, tip_info)
+
 def error_mail(error=''):
     return {
                 'subject':'获取失败！',
@@ -751,10 +771,12 @@ def emailProcess():
                         mail = sketchDrawingProcess(messages)
                     elif "点画" in messages.subject:
                         mail = pointDrawingProcess(messages)
-                    elif "光栅条" in messages.subject:
+                    elif "光栅条" in messages.subject or "光栅画" in messages.subject:
                         mail = rasterBarProcess(messages)
                     # elif messages.subject in PROCESS_DICT.keys():
                         # mail = eval(PROCESS_DICT[messages.subject] + "Process")(messages)
+                    elif messages.subject in subject_to_module_function:
+                        mail = subModuleProcess(messages, subject_to_module_function[messages.subject])
                     else:
                         mail = default_mail(messages.subject)
 

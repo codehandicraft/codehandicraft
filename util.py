@@ -48,8 +48,8 @@ def get_empty_img(shape, one_channel = True):
 def msgOk(msg):
     return [True, msg]
 
-def msgErr(msg):
-    return [False, msg]
+def msgErr(msg, tips=''):
+    return [False, msg, tips]
 
 def gen_new_path(path, suffix, file_type=""):
     path_pair = os.path.splitext(path)
@@ -132,11 +132,12 @@ def unify_size_by_crop_img(imgs):
             min_h = h
         if w < min_w:
             min_w = w
-    print(f"unify_size: max_h={max_h}, max_w={max_w}, {min_h=}")
+    # print(f"unify_size_by_crop_img max_h={max_h}, max_w={max_w}, {min_h=}")
 
     for i in range(len(imgs)):
         # 统一高度
         imgs[i] = resize_img(imgs[i], max_h)
+        # print(f"unify_size_by_crop_img: unify h: {imgs[i].shape=}")
     
     min_h, min_w = imgs[0].shape[:2]
     for img in imgs:
@@ -156,8 +157,10 @@ def unify_size_by_crop_img(imgs):
         img1_new_h = img1.shape[0]
         img1_new_w = min_w
         # 统一宽度
-        imgs[i] = img1[(img1.shape[0]-img1_new_h)//2: img1.shape[0]-(img1.shape[0]-img1_new_h) //
-                2, (img1.shape[1]-img1_new_w)//2: img1.shape[1]-(img1.shape[1]-img1_new_w)//2]
+        left = math.ceil((img1.shape[1]-img1_new_w) / 2)
+        right = math.floor((img1.shape[1]-img1_new_w) / 2)
+        imgs[i] = img1[:, left : img1.shape[1]-right]
+        print(f"unify_size_by_crop_img: unify w: {imgs[i].shape=}")
 
 
 # 统一图片的高度 = 最大高度
