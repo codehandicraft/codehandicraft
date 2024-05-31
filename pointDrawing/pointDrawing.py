@@ -155,7 +155,7 @@ def getPointDrawing(path_list, para_list):
         point_img.convert("L")), cv2.COLOR_BGR2BGRA)
     cv_img = cv2.cvtColor(cv_img, cv2.COLOR_BGR2GRAY)
     cv_img = crop_empty(cv_img)
-    out_path_list.append(util.imwrite(path, "_out", cv_img))
+    out_path_list.append(util.imwrite(path, f"_{new_size}_out", cv_img))
     print("out img is ok")
 
     # point_img.save(path[:-4] + "_1.jpg")
@@ -173,10 +173,10 @@ def getPointDrawing(path_list, para_list):
     # ral_len = get_min_0_len(cv_img, 0)
     # col_len = get_min_0_len(cv_img, 1)
     
-    gray_img = cv2.imread(path[:-4] + "_out.jpg", 0)
+    gray_img = cv2.imread(path[:-4] + f"_{new_size}_out.jpg", 0)
     # only week
     gray_img2 = gray_img.copy()
-    _img = week_img(gray_img2, 242)
+    _img = week_img(gray_img2, week_pixel)
     util.imwrite(path, f"_only_week_{week_pixel}", _img)
 
     # 溶解
@@ -196,7 +196,10 @@ def getPointDrawing(path_list, para_list):
 
 
 if __name__ == "__main__":
-    path_list = ["./hte4.jpg"]
-    para_list = [470, 240]      # point
+    # A3打印：only_week 240灰度，week 230灰度
+    # A4打印：only_week 250灰度，week 245灰度
+    path_list = ["./bto2.jpg"]
+    para_list = [500, 250]      # point
+    # para_list = [500, 251]      # point
     # para_list = [320, 215]    # line
     getPointDrawing(path_list, para_list)
