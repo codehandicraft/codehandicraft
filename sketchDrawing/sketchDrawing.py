@@ -25,7 +25,7 @@ def custom_blur_demo(image):
     return image
 
 
-def getSketchDrawing(path_list, para_list=[127,0]):
+def getSketchDrawing(path_list, para_list=[200,0]):
     # 解析输入信息
     default_param = [200,0]
     para_list = util.merge_param(para_list, default_param)
@@ -92,7 +92,7 @@ def getSketchDrawing(path_list, para_list=[127,0]):
     return util.msgOk(out_msg)
 
 if __name__ == "__main__":
-    path_list = ["./huahuo4.jpg"]
+    path_list = ["./zgn.jpg"]
     # path_list = ["./input/20231008213132_539_101423/0.png"]
     para_list = [235, 0]
     getSketchDrawing(path_list, para_list)
