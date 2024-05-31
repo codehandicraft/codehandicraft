@@ -15,9 +15,20 @@ def custom_blur_demo(image):
     return image
 
 # 输出图像的宽度 = 空白部分的(ratio+1)倍
-def getCircleDrawing(path, circle_num = 12, thickness = 2, week_pixel=220):
-    # 打印输入参数
 
+def getCircleDrawing(path_list, para_list):
+    # -------------- 解析参数 -----------------#
+    para_list = util.merge_param(para_list, [100, 2, 240])
+    print(f"input param list={para_list}")
+    path = path_list[0]
+    circle_num = para_list[0]
+    thickness = para_list[1]
+    week_pixel = para_list[2]
+
+    out_path_list = []
+
+# def getCircleDrawing(path, circle_num = 12, thickness = 2, week_pixel=220):
+    # 打印输入参数
     print(f"{path=}, {circle_num=}, {thickness=}, {week_pixel=}")
     # 处理输入图片，翻转图片
     img = cv2.imread(path, 0)
@@ -26,9 +37,9 @@ def getCircleDrawing(path, circle_num = 12, thickness = 2, week_pixel=220):
         return util.msgErr("找不到待处理图片")
     _, img = cv2.threshold(img,60,255,cv2.THRESH_OTSU)
     img = custom_blur_demo(img)
-    cv2.imwrite(path[:-4] + "_tmp.jpg", img)
     print(f"img size = {img.shape}")
     img = util.resize_img(img, 5000)
+    cv2.imwrite(path[:-4] + "_tmp.jpg", img)
 
     # m, n = img.shape
     certer_point = (img.shape[1] // 2, img.shape[0] // 2)
@@ -54,30 +65,36 @@ def getCircleDrawing(path, circle_num = 12, thickness = 2, week_pixel=220):
     print("圆心画生成成功")
     # 保存输出图片
     cv2.circle(dst_img, certer_point, thickness, 0, -1)   
-    cv2.imwrite(path[:-4] + "_out.jpg", dst_img)
+    cv2.imwrite(path[:-4] + f"_out_{circle_num}.jpg", dst_img)
 
     # 顺时针旋转
     rotate_img = util.rotate_img(dst_img, 45)
     _, rotate_img = cv2.threshold(rotate_img,160,255,cv2.THRESH_OTSU)
-    out_path = util.imwrite(path, '_rotate', rotate_img)
+    out_path = util.imwrite(path, f'_rotate_{circle_num}', rotate_img)
+    out_path_list.append(out_path)
     print(f"顺时针旋转成功")
 
-    dst_img = util.under_pixel_to_dst(dst_img, week_pixel, week_pixel)
+    # dst_img = util.under_pixel_to_dst(dst_img, week_pixel, week_pixel)
+    dst_img = util.get_week_img(dst_img, week_pixel)
     # 标记圆心
     cv2.circle(dst_img, certer_point, thickness, 0, -1)   
-    cv2.imwrite(path[:-4] + "_week.jpg", dst_img)
+    cv2.imwrite(path[:-4] + f"_week_{circle_num}.jpg", dst_img)
     print(f"图像淡化成功, {week_pixel=}")
 
     # 顺时针旋转
     dst_img = util.rotate_img(dst_img, 45)
-    out_path = util.imwrite(path, '_week_rotate', dst_img)
+    out_path = util.imwrite(path, f'_week_rotate_{circle_num}', dst_img)
     print(f"顺时针旋转成功")
 
-    return util.msgOk([len(dst_img), len(dst_img[0])])
-    # return msgOk("")
+    tip_info = """"""
+    return util.msgOk({
+        "out_path_list":out_path_list, 
+        "in_param_list":para_list, 
+        "tip_info":tip_info,
+    })
 
 if __name__ == "__main__":
-    getCircleDrawing("./huahuo2.jpg", 105, 2, 240)
+    getCircleDrawing(["./bto.jpg"], [100, 2, 240])
     
     # img = cv2.imread('huahuoa_out_week.jpg', 0)  
     # print(img.shape) 

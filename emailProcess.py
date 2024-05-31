@@ -30,28 +30,13 @@ from sketchDrawing import sketchDrawing
 from pointDrawing import pointDrawing
 from rasterBar import rasterBar
 
-PROCESS_DICT = {
-    # "骰子画": "dicesDrawing",
-    # "字符画": "charDrawing",
-    # "反射画": "reflexDrawing",
-    # "光影画": "shadowDrawing",
-    # "龙鳞": "dragonScaleBinding",
-    "点画": "pointDrawing",
-    "线稿": "sketchDrawing",
-}
-
 # 定义一个字典，映射输入字符串到对应的子目录中的模块和函数名
-subject_to_module_function = {
-    "光栅卡": ("rasterCard.rasterCard", "getRasterCard"),
+SUBJECT_TO_MODULE_FUNCTION= {
+    # "光栅卡": ("rasterCard.rasterCard", "getRasterCard"),
+    "圆规画": ("circleDrawing.circleDrawing", "getCircleDrawing"),
     # 添加更多的映射
-    # "输入类型": ("子目录.模块名", "函数名"),
+    # "邮件主题": ("子目录.模块名", "函数名"),
 }
-
-def successMail():
-    return
-
-def failedMail(subject, content, attachment):
-    return 
 
 def getDicesDrawingPath(fileName) :
     return 'dicesDrawing/input/' + fileName
@@ -64,10 +49,6 @@ def getReflexDrawingPath(fileName) :
 
 def getShadowDrawingPath(fileName) :
     return 'shadowDrawing/input/' + fileName
-
-def getDragonScaleBindingPath(fileName, file_index) :
-    base_file_name = (os.path.splitext(fileName))[0].split("\\")[-1]
-    return f'dragonScaleBinding/input/{base_file_name}/{file_index}' + os.path.splitext(fileName)[1]
 
 def getDicesVideoPath(fileName) :
     return 'dicesVideo/input/' + fileName
@@ -244,7 +225,11 @@ def charDrawingProcess(msg) :
 演示视频见：todo \r\n
 tips：{tips} \r\n
                                         ''',
-                        'attachments':[dicesDrawingPath[:-4] + "_out.txt", dicesDrawingPath[:-4] + "_out.html"]
+                        'attachments':[dicesDrawingPath[:-4] + "_out.txt",
+                                         dicesDrawingPath[:-4] + "_out.html",
+                                        #  dicesDrawingPath[:-4] + "_out.xlsx",
+                                         dicesDrawingPath[:-4] + "_out.xls",
+                                         ]
                     }
         else :
             pass
@@ -394,12 +379,15 @@ def dragonScaleBindingProcess(msg):
         print("msg plain:", msg.body['plain'])
         plain = msg.body['plain'][0].split('\r\n')
         print("new plain=", plain)
-        if len(plain) == 1:
+        if len(plain) <= 3:
             plain = plain[0].split('\n')
             print("size=1, use '\\n' split. new plain=", plain)
-        if len(plain) == 1:
+        if len(plain) <= 3:
             plain = plain[0].split('&nbsp;')
             print("size=1, use '&nbsp;' split. new plain=", plain)
+        if len(plain) <= 3:
+            plain = plain[0].split(' ')
+            print("size=1, use ' ' split. new plain=", plain)
 
         param_list = plain
         for param in param_list:
@@ -441,7 +429,6 @@ def dragonScaleBindingProcess(msg):
                 newName = rename(attachment['filename'])
 
                 # 根据名字获取路径
-                # dicesDrawingPath = getDragonScaleBindingPath(newName, file_index)
                 dicesDrawingPath = new_dir + str(file_index) + os.path.splitext(oldpath)[1]
                 file_index += 1
                 # 将输入图片保存到对应的输入目录
@@ -524,13 +511,13 @@ def get_plain_param(msg):
         plain = msg.body['plain'][0].split('\r\n')
         print("new plain=", plain)
         if len(plain) == 1:
+            plain = plain[0].split(' ')
+            print("size=1, use ' ' split. new plain=", plain)
+        if len(plain) == 1:
             plain = plain[0].split('\n')
             print("size=1, use '\\n' split. new plain=", plain)
         if len(plain) == 1:
             plain = plain[0].split('&nbsp;')
-            print("size=1, use '&nbsp;' split. new plain=", plain)
-        if len(plain) == 1:
-            plain = plain[0].split(' ')
             print("size=1, use '&nbsp;' split. new plain=", plain)
 
         param_list = plain
@@ -742,6 +729,7 @@ def emailProcess():
                     sent_from = messages.sent_from
                     if sent_from[0]['email'] == 'dragon_0417@qq.com':
                         sent_from[0]['email'] = '1063068121@qq.com'
+                    print("\n====================================================== new email ====================================================== ")
                     print(datetime.datetime.strftime(datetime.datetime.now(),r'%Y.%m.%d %H:%M:%S : '), uid, '收到',sent_from,'的邮件，主题为：',title)
                     print(f"messages: {messages.__dict__.keys()}")
 
@@ -771,12 +759,10 @@ def emailProcess():
                         mail = sketchDrawingProcess(messages)
                     elif "点画" in messages.subject:
                         mail = pointDrawingProcess(messages)
-                    elif "光栅条" in messages.subject or "光栅画" in messages.subject:
+                    elif "光栅条" in messages.subject or "光栅画" in messages.subject or "光栅图" in messages.subject:
                         mail = rasterBarProcess(messages)
-                    # elif messages.subject in PROCESS_DICT.keys():
-                        # mail = eval(PROCESS_DICT[messages.subject] + "Process")(messages)
-                    elif messages.subject in subject_to_module_function:
-                        mail = subModuleProcess(messages, subject_to_module_function[messages.subject])
+                    elif messages.subject in SUBJECT_TO_MODULE_FUNCTION:
+                        mail = subModuleProcess(messages, SUBJECT_TO_MODULE_FUNCTION[messages.subject])
                     else:
                         mail = default_mail(messages.subject)
 
@@ -805,6 +791,14 @@ def emailProcess():
                 print(datetime.datetime.strftime(datetime.datetime.now(),r'%Y.%m.%d %H:%M:%S : ') + f"Error : {e}\n")
                 if 'Message too large' in str(e):
                     mail = error_mail("邮件结果过大，请降低图片大小，或将png图片格式改为jpg格式")
+                elif 'Mailbox unavailable or access denied' in str(e):
+                    print(f'『Mailbox unavailable or access denied』 in error info, will skip, message: {mail}\n')
+                    imbox.mark_seen(uid)
+                    continue
+                # elif 'Connection unexpectedly closed' in str(e):
+                #     print(f'『Connection unexpectedly closed』 in error info, will skip, message: {mail}\n')
+                #     imbox.mark_seen(uid)
+                #     continue
                 else:
                     mail = error_mail(e)
                 server.send_mail(sent_from[0]['email'], mail)
