@@ -98,7 +98,7 @@ def unify_h_w_ratio_by_crop_img(img1, h, w):
     print(f"crop_img: after  img_shape={img1.shape[:2]}, h={h}, w={w}, {img1_new_h=}, {img1_new_w=}")
     return img1
 
-def getCharDrawing(path, chars, edge = 200, is_color = False, is_white_back = False, char_BGR_color = []) :
+def getCharDrawing(path, chars, edge = 200, is_color = True, is_white_back = False, char_BGR_color = []) :
     print(f"path={path}, chars={chars}, edge={edge}, is_color={is_color}")
     # 打印文字解释原理
     line_list = ["\n"*19]
@@ -150,7 +150,19 @@ def getCharDrawing(path, chars, edge = 200, is_color = False, is_white_back = Fa
     img_color = cv2.resize(img_color, None, fx=ratio, fy=ratio)
     img = custom_blur_demo(img)
     cv2.imwrite(path[:-4] + "_out.jpg", img)
+    cv2.imwrite(path[:-4] + "_out_color.jpg", img_color)
 
+    # 指定坐标替换为指定文字
+    hack_info = {
+        # (117, 78): '我',
+        # (117, 79): '是',
+        # (117, 80): '流',
+        # (117, 81): '萤',
+        # (117, 82): '小',
+        # (117, 83): '姐',
+        # (117, 84): '的',
+        # (117, 85): '狗',
+    }
     # 根据图像计算所有骰子点数
     height, width = img.shape
     char_imgs_ret = [[0 for _ in range(width)] for _ in range(height)]
@@ -166,14 +178,8 @@ def getCharDrawing(path, chars, edge = 200, is_color = False, is_white_back = Fa
             if is_color:
                 color_char_img = np.zeros((30, 30, 3), np.uint8)
                 color_BGR = img_color[i, j]
-                if i==192 and j==151:
-                    chars_ret[i][j] = '流'
-                elif i==192 and j==152:
-                    chars_ret[i][j] = '萤'
-                elif i==193 and j==151:
-                    chars_ret[i][j] = '死'
-                elif i==193 and j==152:
-                    chars_ret[i][j] = '了'
+                if (i, j) in hack_info:
+                    chars_ret[i][j] = hack_info[(i, j)]
                 color_char_imgs_ret[i][j] = cv2AddChineseText(color_char_img, chars_ret[i][j], (0, 0), tuple([color_BGR[2], color_BGR[1], color_BGR[0]]), 30)
             if len(char_BGR_color):
                 color_char_img = np.zeros((30, 30, 3), np.uint8)
@@ -189,6 +195,11 @@ def getCharDrawing(path, chars, edge = 200, is_color = False, is_white_back = Fa
     gen_html(path, img_color, chars_ret)
     # 生成xls文件
     util.save_list_to_xls(chars_ret, path[:-4] + "_out.xls")
+    # 生成xlsx文件，，彩色Excel无法显示完全，因为内存不足，暂未解决
+    # util.set_xls_color(chars_ret, img_color, path[:-4] + "_out.xlsx")
+    # util.save_list_to_xlsx(chars_ret, img_color, path[:-4] + "_out.xlsx")
+    # util.save_list_to_shard_xlsx(chars_ret, img_color, path[:-4] + "_out_shard.xlsx")
+    # util.save_list_to_xlsxs(chars_ret, img_color, path[:-4] + "_out_s.xlsx")
 
     # 保存文字结果
     with open(path[:-4] + "_out.txt", 'w+') as file:    

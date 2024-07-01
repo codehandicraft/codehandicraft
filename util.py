@@ -5,7 +5,10 @@ import numpy as np
 import math
 import xlwt
 from PIL import Image, ImageDraw, ImageFont
-
+import openpyxl
+from openpyxl import Workbook
+from openpyxl.utils import get_column_letter
+from openpyxl.styles import PatternFill, Font, Alignment
 # height, width = img.shape[:2] 
 
 # 比week_pixel暗的设置为week_pixel
@@ -15,6 +18,11 @@ def week_img(path, ori_img, week_pixel):
     dst_img = 255 - dst_img
     print(f"图像淡化成功, {week_pixel=}")
     return imwrite(path, f"_week_{week_pixel}", dst_img)
+
+def get_week_img(ori_img, week_pixel):
+    dst_img = 255 - ori_img
+    _, dst_img = cv2.threshold(dst_img, 255-week_pixel, 255-week_pixel, cv2.THRESH_BINARY)
+    return 255 - dst_img
 
 def under_pixel_to_dst(img, src_pixel, dst_pixel):
     # 灰度图
@@ -38,6 +46,7 @@ def get_square_img(img):
     return img
 
 # 获得指定shape的空白图片
+# shape: (height, width)
 def get_empty_img(shape, one_channel = True):
     empty_img = np.zeros(shape, np.uint8)
     empty_img.fill(255)
@@ -64,6 +73,11 @@ def imwrite(path, suffix, img):
     # cv2.imwrite(path_pair[0] + suffix + path_pair[1], img)
     # return path_pair[0] + suffix + path_pair[1]
 
+def pil_save(path, suffix, img):
+    path_pair = os.path.splitext(path)
+    img.save(path_pair[0] + suffix + path_pair[1])
+    return path_pair[0] + suffix + path_pair[1]
+
 # 裁边，裁剪掉>=src_pixel的部分
 def crop_empty(img, src_pixel=255):
     # 灰度图
@@ -88,8 +102,33 @@ def crop_empty(img, src_pixel=255):
 
     return img
 
-import cv2  
-  
+def crop_top_empty(img, src_pixel=255):
+    # 灰度图
+    gray_img = img
+    if img.ndim != 2:
+        gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    for i in range(4):
+        for mm in range(gray_img.shape[0]):
+            if i == 2:
+                break
+            for nn in range(gray_img.shape[1]):
+                if gray_img[mm, nn] < src_pixel:
+                    if mm > 0:
+                        img = img[mm:img.shape[0], :]
+                        gray_img = gray_img[mm:gray_img.shape[0], :]
+                    break
+            else:
+                continue
+            break
+        # 顺时针90度
+        img = cv2.flip(cv2.transpose(img), 1)
+        gray_img = cv2.flip(cv2.transpose(gray_img), 1)
+        # break
+
+    return img
+
+
 def crop_white_border(img):  
     gray = img 
     # 转换为灰度图像 
@@ -179,7 +218,7 @@ def unify_h(imgs):
             min_h = h
         if w < min_w:
             min_w = w
-    print(f"unify_size: max_h={max_h}, max_w={max_w}, {min_h=}")
+    print(f"unify_h: max_h={max_h}, max_w={max_w}, {min_h=}")
 
     for i in range(len(imgs)):
         imgs[i] = resize_img(imgs[i], max_h)
@@ -195,6 +234,7 @@ def resize_img_w(img, dst_w):
 
 # 通过填充空白，统一尺寸
 def unify_size(imgs):
+    unify_h(imgs)
     print("unify size start")
     max_h = 0
     max_w = 0
@@ -305,6 +345,20 @@ def merge_param(input_param, default_param):
         default_param[i] = input_param[i]
     return default_param
 
+def get_img_list(path_list, min_img_num=2):
+    if len(path_list) < min_img_num:
+        print(f'input_file_num is too less, will return failed_mail')
+        return msgErr('输入图片数量小于2', '请上传2~10张图片；\n图片不要用超大附件发送；\n图片放在附件中')
+    img_list = []
+    for path in path_list:
+        img = cv2.imread(path)
+        if img is None:
+            print(f"找不到待处理图片, path={path}")
+            return msgErr("存在图片无法读取", "可以将图片发到qq重新保存再通过邮件发送过来")
+        img_list.append(img)
+        print(path, img.shape)
+    return img_list
+
 def get_file_size_MB(path):
     return os.path.getsize(path)/2**20
 def get_out_file_list(file_path_list):
@@ -321,14 +375,165 @@ def get_out_file_list(file_path_list):
             return []
         sum_size += file_size
         if sum_size >= MAX_FILE_SIZE_MB:
-            print(f'{left=}, {right=}, {sum_size=}MB')
+            print(f'{left=}, {right=}, {sum_size=:.2f}MB')
             out_file_list.append(file_path_list[left:right])
             left = right
             sum_size = file_size
         right += 1
-    print(f'{left=}, {right=}, {sum_size=}MB')
+    print(f'{left=}, {right=}, {sum_size=:.2f}MB')
     out_file_list.append(file_path_list[left:right])
     return out_file_list
+
+def set_xls_color(char_list, img_color, path):
+
+    # 打开现有的Excel文件
+    wb = openpyxl.load_workbook(path)
+    ws = wb.active  # 假设我们在第一个工作表上工作
+
+   # 遍历单元格，并使用二维数组中的颜色设置字体颜色
+    for i, row in enumerate(ws.iter_rows(min_row=1, max_row=ws.max_row, min_col=1, max_col=ws.max_column), start=0):
+        for j, cell in enumerate(row, start=0):
+            # if cell.value and i < len(color_array) and j < len(color_array[i]):  # 如果单元格有值，并且颜色数组中有对应的颜色
+                # 获取对应的RGB颜色值，并转换为十六进制颜色字符串
+                color_hex = "{:02X}{:02X}{:02X}".format(img_color[i, j][2], img_color[i, j][1], img_color[i, j][0])
+                # 设置单元格的字体颜色
+                cell.font = Font(color=color_hex)
+
+    # 保存修改后的工作簿
+    wb.save('colored_hanzi_excel.xlsx')
+
+
+def create_excel_file(hanzi_data, file_index, img_color):
+    # 创建一个新的工作簿和sheet
+    wb = openpyxl.Workbook()
+    ws = wb.active
+
+    # 汉字估计的宽度和高度（基于Excel的默认字体大小）
+    # 这些值可能需要根据您的实际使用的字体进行调整
+    cell_width = 3  # Excel列宽的单位是字符数
+    cell_height = 15  # Excel行高的单位是磅
+    for col in ws.iter_cols(min_col=1, max_col=len(hanzi_data[0]), max_row=len(hanzi_data)):
+        ws.column_dimensions[col[0].column_letter].width = cell_width
+    for row in ws.iter_rows(min_row=1, max_row=len(hanzi_data), max_col=len(hanzi_data[0])):
+        ws.row_dimensions[row[0].row].height = cell_height
+
+    # 写入数据到sheet
+    for i, row_data in enumerate(hanzi_data, start=0):
+        for j, hanzi in enumerate(row_data, start=0):
+            cell = ws.cell(row=i+1, column=j+1, value=hanzi)
+            # 设置字体颜色和背景色
+            font_color_rgb = "{:02X}{:02X}{:02X}".format(img_color[i, j][2], img_color[i, j][1], img_color[i, j][0])
+            cell.font = Font(color="00" + font_color_rgb)  # 示例中使用红色，你可以根据需要设置不同的RGB值
+            cell.fill = PatternFill(start_color="000000", end_color="000000", fill_type="solid")
+            cell.alignment = Alignment(horizontal="center", vertical="center")
+
+    # 保存到一个Excel文件
+    wb.save(f"hanzi_excel_{file_index}.xlsx")
+
+
+def save_list_to_xlsxs(char_list, img_color, path):
+
+    # 每20行数据写入一个新的Excel文件
+    for file_index, sheet_index in enumerate(range(0, len(char_list), 20)):
+        create_excel_file(char_list[sheet_index:sheet_index+20], file_index + 1, img_color[sheet_index:sheet_index+20])
+
+
+def save_list_to_shard_xlsx(char_list, img_color, path):
+
+    # def random_rgb():
+    #     return "{:02X}{:02X}{:02X}".format(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+
+    # 创建一个新的工作簿
+    wb = Workbook()
+
+    # 汉字二维数组示例
+    # char_list = [['字' for _ in range(100)] for _ in range(100)]
+
+    # 汉字估计的宽度和高度（基于Excel的默认字体大小）
+    # 这些值可能需要根据您的实际使用的字体进行调整
+    cell_width = 3  # Excel列宽的单位是字符数
+    cell_height = 15  # Excel行高的单位是磅
+
+    # 创建多个sheets，每个sheet包含20行
+    for sheet_index in range(0, len(char_list), 20):
+        if sheet_index == 0:
+            ws = wb.active
+            ws.title = f"Sheet{sheet_index // 20 + 1}"
+        else:
+            ws = wb.create_sheet(title=f"Sheet{sheet_index // 20 + 1}")
+
+        # 设置列宽度
+        for column in ws.iter_cols(1, 100):
+            ws.column_dimensions[column[0].column_letter].width = cell_width
+
+        # 写入汉字数组的一部分到当前sheet
+        for i in range(sheet_index, min(sheet_index + 20, len(char_list))):
+            for j in range(len(char_list[i])):
+                # 设置单元格的值、字体颜色和背景色
+                cell = ws.cell(row=i - sheet_index + 1, column=j + 1, value=char_list[i][j])
+                font_color_rgb = "{:02X}{:02X}{:02X}".format(img_color[i, j][2], img_color[i, j][1], img_color[i, j][0])
+                cell.font = Font(color="00" + font_color_rgb)
+                cell.fill = PatternFill(start_color="000000", end_color="000000", fill_type="solid")
+                cell.alignment = Alignment(horizontal="center", vertical="center")
+
+    # 设置行高度
+    for ws in wb.worksheets:
+        for row in ws.iter_rows(min_row=1, max_col=100, max_row=20):
+            for cell in row:
+                ws.row_dimensions[cell.row].height = cell_height
+
+    # 保存到一个Excel文件
+    wb.save(path)
+
+
+def save_list_to_xlsx(char_list, img_color, path, sheet_name = 'sheet1'):
+
+    # 创建工作簿
+    wb = Workbook()
+    # 激活工作表
+    ws = wb.active
+
+    # 汉字二维数组示例
+    # char_list = [
+    #     ['汉', '字', '演', '示'],
+    #     ['文', '本', '样', '例'],
+    #     ['数', '据', '填', '充']
+    # ]
+
+    # 汉字估计的宽度和高度（基于Excel的默认字体大小）
+    # 这些值可能需要根据您的实际使用的字体进行调整
+    cell_width = 3  # Excel列宽的单位是字符数
+    cell_height = 15  # Excel行高的单位是磅
+
+    # 设置行高
+    for i in range(1, len(char_list) + 1):
+        ws.row_dimensions[i].height = cell_height
+
+    # 设置列宽
+    for i in range(1, len(char_list[0]) + 1):
+        ws.column_dimensions[get_column_letter(i)].width = cell_width
+
+    # 设置背景颜色为黑色
+    bg_color = PatternFill(start_color="00000000", end_color="00000000", fill_type="solid")
+
+    # 写入汉字并设置颜色
+    for i, row in enumerate(char_list, start=0):
+        for j, hanzi in enumerate(row, start=0):
+            # 随机生成一个RGB颜色代码
+            font_color_rgb = "{:02X}{:02X}{:02X}".format(img_color[i, j][2], img_color[i, j][1], img_color[i, j][0])
+            # 创建一个字体对象，包括字体颜色
+            font_color = Font(color="00" + font_color_rgb)
+            # 创建单元格
+            cell = ws.cell(row=i+1, column=j+1, value=hanzi)
+            # 设置单元格字体
+            cell.font = font_color
+            # 设置单元格背景颜色
+            cell.fill = bg_color
+            # print(i,j,img_color.shape,img_color[i, j],font_color_rgb)
+
+    # 保存工作簿
+    wb.save(path)
+
 
 def save_list_to_xls(char_list, path, sheet_name = 'sheet1'):
     dicesDrawingXls = xlwt.Workbook(encoding='utf-8')
@@ -455,4 +660,8 @@ def crop_img(img1, h, w):
     img1 = img1[(img1.shape[0]-img1_new_h)//2: (img1.shape[0]-img1_new_h)//2 + img1_new_h, (img1.shape[1]-img1_new_w)//2: (img1.shape[1]-img1_new_w)//2 + img1_new_w]
     print(f"crop_img: img_shape={img1.shape[:2]}, gcd_h={h}, gcd_w={w}")
     return img1
-    
+
+if __name__ == "__main__":
+    path = "./sm.jpg"
+    img = cv2.imread(path)
+    week_img(path, img, 245)
