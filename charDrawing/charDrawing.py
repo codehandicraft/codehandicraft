@@ -98,15 +98,55 @@ def unify_h_w_ratio_by_crop_img(img1, h, w):
     print(f"crop_img: after  img_shape={img1.shape[:2]}, h={h}, w={w}, {img1_new_h=}, {img1_new_w=}")
     return img1
 
+def char_to_img(char, size=30):
+    img = np.zeros((size, size), np.uint8)
+    return cv2AddChineseText(img, char, (0, 0), (255, 255, 255), size)
+
+def char_to_img_matrix(char, num, size=30):
+    # 生成字符图片矩阵
+    char_img_list = []
+    for _ in range(num):
+        char_img_list_line = []
+        for _ in range(num):
+            char_img_list_line.append(char_to_img(char, size))
+        char_img_list.append(char_img_list_line)
+
+    # 合并矩阵
+    img_out = cv2.vconcat([cv2.hconcat([char_img for char_img in ral_imgs]) for ral_imgs in char_img_list])
+    return cv2.cvtColor(img_out, cv2.COLOR_BGR2GRAY)
+
 def getCharDrawing(path, chars, edge = 200, is_color = True, is_white_back = False, char_BGR_color = []) :
     print(f"path={path}, chars={chars}, edge={edge}, is_color={is_color}")
     # 打印文字解释原理
-    line_list = ["\n"*19]
+    # line_list = ["\n"*19]
+    # for i in [1,2,5,10,17,25]:
+    #     line_list.append((" "*10 + "   ".join([char*i for char in chars]) + '\n') * i + "\n"*65)
+    # with open(path[:-4] + "_demo.txt", 'w+') as file:    
+    #     # lines = [''.join(line) + "\n" for line in line_list]
+    #     file.writelines(line_list) 
+
+    # 生成文字图片-用于解释原理
+    demo_img_size = (1800,2880)
+    demo_img_hight = demo_img_size[0]
+    demo_img_width = demo_img_size[1]
     for i in [1,2,5,10,17,25]:
-        line_list.append((" "*10 + "   ".join([char*i for char in chars]) + '\n') * i + "\n"*65)
-    with open(path[:-4] + "_demo.txt", 'w+') as file:    
-        # lines = [''.join(line) + "\n" for line in line_list]
-        file.writelines(line_list) 
+        demo_img = np.zeros(demo_img_size, np.uint8)
+        demo_char_size = demo_img_width // (len(chars) + 1)
+        interval_size = demo_char_size // (len(chars) - 1 + 6)
+        chars_img = [char_to_img_matrix(char, i, demo_char_size//i) for char in chars]
+        for idx, char_img in enumerate(chars_img):
+            # util.imwrite(path, f"_demo_chars_img_{i}_{idx}.jpg", char_img)
+            char_img_size = char_img.shape[0]
+            # print(f"char_img.shape={char_img.shape}")
+            
+            start_x_pos = (demo_img_width - len(chars) * char_img_size - (len(chars)-1) * interval_size) // 2
+            y1=demo_img_hight//2-char_img_size//2
+            y2=y1+char_img_size
+            x1=start_x_pos + idx*(interval_size+char_img_size)
+            x2=x1+char_img_size
+            demo_img[y1:y2, x1:x2] = char_img
+        util.imwrite(path, f"_demo_{i}.jpg", demo_img)
+    print(f"文字demo图片生成完成。")
     
     # 字符_平均像素_字符图像
     char_avg_img = []
