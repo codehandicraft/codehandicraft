@@ -18,12 +18,13 @@ def custom_blur_demo(image):
 
 def getCircleDrawing(path_list, para_list):
     # -------------- 解析参数 -----------------#
-    para_list = util.merge_param(para_list, [100, 2, 240])
+    para_list = util.merge_param(para_list, [100, 2, 240, 0])
     print(f"input param list={para_list}")
     path = path_list[0]
     circle_num = para_list[0]
     thickness = para_list[1]
     week_pixel = para_list[2]
+    rotate_angle = para_list[3]
 
     out_path_list = []
 
@@ -49,6 +50,7 @@ def getCircleDrawing(path_list, para_list):
 
     # 生成同心圆圈
     circle_img = np.zeros(img.shape, np.uint8)
+    # circle_img = np.zeros((int(1.3*img.shape[0]),int(1.3*img.shape[1])), np.uint8)
     circle_img.fill(255)
     for i in range(circle_num):
         cv2.circle(circle_img, certer_point, i * interval, 0, thickness)
@@ -68,7 +70,7 @@ def getCircleDrawing(path_list, para_list):
     cv2.imwrite(path[:-4] + f"_out_{circle_num}.jpg", dst_img)
 
     # 顺时针旋转
-    rotate_img = util.rotate_img(dst_img, 45)
+    rotate_img = util.rotate_img(dst_img, rotate_angle)
     _, rotate_img = cv2.threshold(rotate_img,160,255,cv2.THRESH_OTSU)
     out_path = util.imwrite(path, f'_rotate_{circle_num}', rotate_img)
     out_path_list.append(out_path)
@@ -78,12 +80,12 @@ def getCircleDrawing(path_list, para_list):
     dst_img = util.get_week_img(dst_img, week_pixel)
     # 标记圆心
     cv2.circle(dst_img, certer_point, thickness, 0, -1)   
-    cv2.imwrite(path[:-4] + f"_week_{circle_num}.jpg", dst_img)
+    cv2.imwrite(path[:-4] + f"_week_{week_pixel}_{circle_num}.jpg", dst_img)
     print(f"图像淡化成功, {week_pixel=}")
 
     # 顺时针旋转
-    dst_img = util.rotate_img(dst_img, 45)
-    out_path = util.imwrite(path, f'_week_rotate_{circle_num}', dst_img)
+    dst_img = util.rotate_img(dst_img, rotate_angle)
+    out_path = util.imwrite(path, f'_week_{week_pixel}_rotate_{circle_num}', dst_img)
     print(f"顺时针旋转成功")
 
     tip_info = """"""
@@ -94,7 +96,7 @@ def getCircleDrawing(path_list, para_list):
     })
 
 if __name__ == "__main__":
-    getCircleDrawing(["./bto.jpg"], [100, 2, 240])
+    getCircleDrawing(["./fx2.jpg"], [100, 3, 237, 0])
     
     # img = cv2.imread('huahuoa_out_week.jpg', 0)  
     # print(img.shape) 
