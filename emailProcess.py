@@ -372,7 +372,7 @@ def dragonScaleBindingProcess(msg):
     param_int_list = []
     is_use_default_param = False
     if 'plain' not in msg.body or len(msg.body['plain']) <= 0 or msg.body['plain'][0] == '':
-        msg.body['plain'][0] = ''
+        msg.body['plain'] = ['']
         print("msg plain is empty")
     else:
         # plain = msg.body['plain'][0]
@@ -484,7 +484,7 @@ tips：
 7、如果有部分内容页为空白，可能是程序无法加载的图片格式，可以把这些图片发送到QQ重新保存一下，再发送过来；也可能是附件图片个数不够
 8、如果内容图片被裁剪，是因为正文参数和图片的尺寸不匹配。图方便可以再额外增加两行数字：第五行写0，第六行写1。这样就不会被裁剪了，但会有白边。
 9、如果封面图片被裁剪，是前两行参数和图片的尺寸不匹配导致的，请按需修改前两行参数。
-10、服务生效时间一般在10-22点
+10、服务生效时间一般在工作日的10-22点
 解释下各个参数的意思:
     假设前四行参数各位A、B、C、D，那么封面图片的高宽比=A:B；内容图片的高宽比=A:(2D-1)B/C；其中内容图片的个数=C-D-1
     另外，
@@ -667,7 +667,7 @@ def subModuleProcess(msg, module_info):
 def error_mail(error=''):
     return {
                 'subject':'获取失败！',
-                'content_text':f'''内部系统错误，错误信息[{error}]，建议使用qq邮箱发送邮件。请私信博主进行处理\r\n''',
+                'content_text':f'''内部系统错误，错误信息[{error}]，建议使用qq邮箱发送邮件。请重试几次，或私信博主进行处理\r\n''',
             }
 
 def default_mail(title, error=''):
@@ -719,11 +719,12 @@ def emailProcess():
     #     imap.logout()
 
     while True:
-        time.sleep(10)
         with Imbox('imap.qq.com', sender_qq, pwd, ssl=True) as imbox:
             try:
                 unread_mails = imbox.messages(unread=True)
+                print(f"{len(unread_mails) = }")
                 for uid, messages in unread_mails:
+                    # print(f"{uid = }")
                     # 邮件信息
                     title = messages.subject
                     sent_from = messages.sent_from
@@ -765,6 +766,9 @@ def emailProcess():
                         mail = subModuleProcess(messages, SUBJECT_TO_MODULE_FUNCTION[messages.subject])
                     else:
                         mail = default_mail(messages.subject)
+                        # imbox.mark_seen(uid)
+                        print(f'主题错误：[{title}] 暂不支持, will skip\n')
+                        continue
 
                     # 发送邮件
                     print('start send mail')
@@ -796,9 +800,13 @@ def emailProcess():
                     imbox.mark_seen(uid)
                     continue
                 # elif 'Connection unexpectedly closed' in str(e):
-                #     print(f'『Connection unexpectedly closed』 in error info, will skip, message: {mail}\n')
+                #     print(f'『Connection unexpectedly closed』 in error info, will skip, message: {e}\n')
                 #     imbox.mark_seen(uid)
                 #     continue
+                elif 'NO System busy!' in str(e):
+                    print(f'『NO System busy!』 in error info, will continue, message: {e}\n')
+                    # imbox.mark_seen(uid)
+                    continue
                 else:
                     mail = error_mail(e)
                 server.send_mail(sent_from[0]['email'], mail)
@@ -823,6 +831,8 @@ def emailProcess():
             #         print(datetime.datetime.strftime(datetime.datetime.now(),r'%Y.%m.%d %H:%M:%S : ') + f"Error : {e}\n")
             #         print(f"删除邮件：{uid=}, {messages.sent_from=}")
             #         imbox.delete(uid)
+        print(datetime.datetime.strftime(datetime.datetime.now(),r'%Y.%m.%d %H:%M:%S : ') + 'start sleep 300s')
+        time.sleep(300)
 
 if __name__ == "__main__":
     emailProcess()
