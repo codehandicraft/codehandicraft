@@ -38,7 +38,7 @@ def getRasterBar(path_list, para_list):
 
     if is_fill_blank_img:
         # 填充空白统一尺寸
-        util.unify_h(img_list)
+        # util.unify_h(img_list)
         util.unify_size(img_list)
     else:
         # 裁剪图片统一尺寸
@@ -80,7 +80,7 @@ tips:
 解释下各个参数的意思:
     目前支持的参数共有3个，列如：100 1 1
     第一个参数为光栅条的个数。（100表示每张图片会被分割成100份）
-    第二个参数（可选）为1时表示竖向条纹，为0时为纵向条纹
+    第二个参数（可选）为1时表示竖向条纹，为0时为横向条纹
     第三个参数（可选）为1时表示填充空白统一图片尺寸，为0时为裁剪图片
             """,
         })

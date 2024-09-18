@@ -57,6 +57,8 @@ def getSketchDrawing(path_list, para_list=[200,0]):
     # gray_image = cv2.resize(gray_image, None, fx=0.5, fy=0.5)
     util.imwrite(path, '_resize', gray_image)
     print(gray_image.shape)
+    gray_rett, gray_thr = cv2.threshold(gray_image, threshold, 255, cv2.THRESH_BINARY)
+    out_path_list.append(util.imwrite(path, '_gray_thr', gray_thr))
 
     # 图像反转
     inverted_image = 255 - gray_image
@@ -64,7 +66,7 @@ def getSketchDrawing(path_list, para_list=[200,0]):
     inverted_blurred = 255 - blurred
     pencil_sketch = cv2.divide(gray_image, inverted_blurred, scale=256.0)
     pencil_sketch = custom_blur_demo(pencil_sketch)
-    util.imwrite(path, '_pencil_sketch', gray_image)
+    util.imwrite(path, '_pencil_sketch', pencil_sketch)
 
     dst = pencil_sketch
     rett, th1 = cv2.threshold(dst, threshold, 255, cv2.THRESH_BINARY)
@@ -92,7 +94,7 @@ def getSketchDrawing(path_list, para_list=[200,0]):
     return util.msgOk(out_msg)
 
 if __name__ == "__main__":
-    path_list = ["./zgn.jpg"]
+    path_list = ["./fc.jpg"]
     # path_list = ["./input/20231008213132_539_101423/0.png"]
-    para_list = [235, 0]
+    para_list = [220, 0]
     getSketchDrawing(path_list, para_list)

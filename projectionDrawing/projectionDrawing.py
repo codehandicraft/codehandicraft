@@ -54,6 +54,7 @@ def getProjectionDrawing(front_path, side_path, edge = 200) :
     print(f"preprocess ok, {front_img.shape=}, {side_img.shape=}")
     util.imwrite(front_path, '_pre', front_img)
     util.imwrite(side_path, '_pre', side_img)
+    print(f"{front_img.shape=}, {side_img.shape=}")
 
     # 建立三维数组，层、行、列
     array_3d = np.zeros((front_img.shape[0], front_img.shape[1], side_img.shape[1]), dtype=int)
@@ -93,8 +94,12 @@ def getProjectionDrawing(front_path, side_path, edge = 200) :
                     if side_img[z, x] == 0:
                         side_img[z, x] = 255
                     point_num += 1
+        # for y in range(array_3d.shape[1]):
+        #     for x in range(array_3d.shape[2]): 
+        #         print(array_3d[z, y, x], end=' ')
+        #     print()
         # print(array_3d[z])
-        print(f'{array_3d.shape[0]=},{z=}--------------------------------------------------------')
+        # print(f'{array_3d.shape[0]=},{z=}--------------------------------------------------------')
     util.imwrite(front_path, '_post', front_img)
     util.imwrite(side_path, '_post', side_img)
     print(f"delete excess point ok, {delete_num=}, {point_num=}")
@@ -149,7 +154,7 @@ def getProjectionDrawing(front_path, side_path, edge = 200) :
     # return msgOk([len(chars_ret), len(chars_ret[0])])
    
 if __name__ == "__main__":
-    getProjectionDrawing("./yz2.jpg", "./yz1.jpg", 100)
+    getProjectionDrawing("./front.jpg", "./side.jpg", 100)
     # getProjectionDrawing("./front.jpg", "./side.jpg", 30)
 
 

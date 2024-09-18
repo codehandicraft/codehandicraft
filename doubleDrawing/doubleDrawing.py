@@ -29,8 +29,8 @@ def getDoubleDrawing(path1, path2, num):
     # if ret[0] == False:
     #     print("getReflexDrawing falied")
     #     return util.msgErr("获取反射画失败")
+    # reflex_img_path = util.imwrite(path2, '_reflex', img_out)
     reflex_img_path = path2
-    # # out_path = util.imwrite(reflex_img_path, '_reflex', img_out)
 
     # 处理输入图片，灰度并归一化
     normal_img = cv2.imread(path1)
@@ -39,12 +39,13 @@ def getDoubleDrawing(path1, path2, num):
     if normal_img is None or reflex_img is None:
         print("找不到待处理图片")
         return util.msgErr("找不到待处理图片")
-    reflex_img = util.crop_white_border(reflex_img)
+    # reflex_img = util.crop_white_border(reflex_img)
+    reflex_img = util.crop_empty(reflex_img)
     normal_img = util.crop_empty(normal_img)
     print(f"图片灰度 ok, {normal_img.shape}, {reflex_img.shape}")
 
     normal_img = cv2.rotate(normal_img, cv2.ROTATE_90_CLOCKWISE)
-    # reflex_img = cv2.rotate(reflex_img, cv2.ROTATE_90_COUNTERCLOCKWISE)
+    reflex_img = cv2.rotate(reflex_img, cv2.ROTATE_90_COUNTERCLOCKWISE)
     print(f"图片旋转 ok, {normal_img.shape}, {reflex_img.shape}")
 
     # 通过等比例缩放 统一高度
@@ -90,14 +91,14 @@ def getDoubleDrawing(path1, path2, num):
         img1 = normal_img[:, i * n1 // num : (i + 1) * n1 // num - 1, :]
         img1 = cv2.resize(img1, None, fx=1, fy=y_ratio1)
         imgs.append(img1)
-        util.imwrite(path1, f"_{i}", img1)
+        # util.imwrite(path1, f"_{i}", img1)
         imgs.append(empty_img)
 
         y_ratio2 = 1 + 1 - (i / num)
         img2 = reflex_img[:, i * n2 // num : (i + 1) * n2 // num - 1, :]
         img2 = cv2.resize(img2, None, fx=1, fy=y_ratio2)
         imgs.append(img2)
-        util.imwrite(path2, f"_{i}", img2)
+        # util.imwrite(path2, f"_{i}", img2)
         if i != num -1:
             imgs.append(empty_img)
     
@@ -109,10 +110,18 @@ def getDoubleDrawing(path1, path2, num):
     out_path = util.imwrite(path1, '_out', img_out)
     print(f"完成拼接 ok, {img_out.shape}, out_path={out_path}")
 
-    dst_img = util.under_pixel_to_dst(img_out, 240, 240)
-    out_path = util.imwrite(path1, '_week', dst_img)
+    week_pixel = 245
+    dst_img = util.get_week_img(img_out, week_pixel)
+    out_path = util.imwrite(path1, f'_week_{week_pixel}', dst_img)
+
+    week_pixel = 250
+    dst_img = util.get_week_img(img_out, week_pixel)
+    out_path = util.imwrite(path1, f'_week_{week_pixel}', dst_img)
     return
 
 if __name__ == "__main__":
     # getDoubleDrawing("./1.jpg", "./2.jpg", 10)
-    getDoubleDrawing("./hh1.jpg", "./hh2_reflex.jpg", 15)
+    getDoubleDrawing("./ly1.jpg", "./ly3.jpg", 15)
+    # normal_img = cv2.imread("sm.jpg")
+    # normal_img = util.get_week_img(normal_img, 250)
+    # util.imwrite("sm.jpg", f'_week_250', normal_img)

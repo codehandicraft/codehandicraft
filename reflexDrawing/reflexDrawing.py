@@ -76,7 +76,7 @@ def getReflexDrawing(path, angle = 270, ratio = 3):
     # 标记圆心
     cv2.circle(newimg, (m, m), 3, (0, 0, 0), -1)   
     # newimg = util.crop_empty(newimg)
-    # newimg = util.crop_white_border(newimg)
+    # newimg = util.rotate_img(newimg, 90)
 
     # 保存输出图片
     out_path = util.imwrite(path, '_out', newimg)
@@ -86,5 +86,6 @@ def getReflexDrawing(path, angle = 270, ratio = 3):
     # return msgOk("")
 
 if __name__ == "__main__":
-    getReflexDrawing("./huahuo2.jpg", 270, 3.5)
+    # getReflexDrawing("./ly2.jpg", 270, 4)
+    getReflexDrawing("./feixiao1.jpg", 270, 3)
 
