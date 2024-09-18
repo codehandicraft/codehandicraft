@@ -178,6 +178,10 @@ def getPointDrawing(path_list, para_list):
     gray_img2 = gray_img.copy()
     _img = week_img(gray_img2, week_pixel)
     util.imwrite(path, f"_only_week_{week_pixel}", _img)
+    _img = week_img(gray_img2, week_pixel+2)
+    util.imwrite(path, f"_only_week_{week_pixel+2}", _img)
+    _img = week_img(gray_img2, week_pixel+4)
+    util.imwrite(path, f"_only_week_{week_pixel+4}", _img)
 
     # 溶解
     kernel = np.ones((m//new_size//3*2+1, m//new_size//3*2+1), np.uint8)
@@ -186,7 +190,6 @@ def getPointDrawing(path_list, para_list):
 
     # 淡化
     gray_img = week_img(gray_img, week_pixel)
-    # gray_img = change_pixel(gray_img, week_pixel-1, 255)
     out_path_list.append(util.imwrite(path, f"_week_{week_pixel}", gray_img))
     print(f"save week img jpg OK!")
 
@@ -198,8 +201,9 @@ def getPointDrawing(path_list, para_list):
 if __name__ == "__main__":
     # A3打印：only_week 240灰度，week 230灰度
     # A4打印：only_week 250灰度，week 245灰度
-    path_list = ["./bto2.jpg"]
-    para_list = [500, 250]      # point
+    path_list = ["./feixiao1.jpg"]
+    # para_list = [530, 249]      # point
     # para_list = [500, 251]      # point
+    para_list = [500, 243]      # point
     # para_list = [320, 215]    # line
     getPointDrawing(path_list, para_list)
