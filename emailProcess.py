@@ -7,6 +7,7 @@ from fileinput import filename
 from smtplib import SMTP_SSL
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.application import MIMEApplication
 from email.header import Header
 import smtplib
 from imbox import Imbox
@@ -37,6 +38,10 @@ SUBJECT_TO_MODULE_FUNCTION= {
     # 添加更多的映射
     # "邮件主题": ("子目录.模块名", "函数名"),
 }
+
+imap_server = 'imap.qq.com'
+smtp_server = 'smtp.qq.com'
+smtp_port = 465
 
 def getDicesDrawingPath(fileName) :
     return 'dicesDrawing/input/' + fileName
@@ -694,13 +699,62 @@ def default_mail(title, error=''):
 # 正文: 
 # 效果演示: https://www.codehandicraft.com/reflexdrawingtutorial/ \r\n
 
+
+def send_reply_email(recipient_email, mail):
+    """
+        发送带有多个附件和正文的回复邮件
+
+        参数:
+        recipient_email (str): 收件人的电子邮件地址
+        subject (str): 邮件主题
+        body (str): 邮件正文
+        attachments (list): 附件文件路径的列表
+    """
+    sender_email = settings.sender_qq
+    sender_password = settings.authorization_code
+
+    # recipient_email = sender_email
+    subject = mail['subject']
+    body = mail['content_text']
+    attachments = mail.get('attachments', [])
+    # 创建一个邮件对象
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = recipient_email
+    msg['Subject'] = subject
+    print(f"From: {msg['From']}, To: {msg['To']}, Subject: {subject}")
+
+    # 添加邮件正文
+    msg.attach(MIMEText(body, 'plain'))
+
+    # 添加附件
+    for attachment in attachments:
+        # print(f"attachment: {attachment}")
+        if os.path.isfile(attachment):
+            part = MIMEApplication(open(attachment, 'rb').read(), Name=os.path.basename(attachment))
+            part['Content-Disposition'] = 'attachment; filename="%s"' % os.path.basename(attachment)
+            msg.attach(part)
+        else:
+            print(f"文件 {attachment} 不存在，请检查文件路径。")
+
+    # 连接到SMTP服务器并发送邮件
+    try:
+        server = smtplib.SMTP_SSL(smtp_server, smtp_port)  # QQ邮箱SMTP服务器及端口号
+        server.login(sender_email, sender_password)  # 登录到SMTP服务器
+        server.sendmail(sender_email, recipient_email, msg.as_string())  # 发送邮件
+        print("邮件发送成功！")
+    except Exception as e:
+        print(f"邮件发送失败: {e}")
+    finally:
+        server.quit()  # 断开与SMTP服务器的连接
+
 def emailProcess():
 
     print("\n\n" + datetime.datetime.strftime(datetime.datetime.now(),r'%Y.%m.%d %H:%M:%S : ') + "邮件自动回复已启动")
 
     sender_qq = settings.sender_qq
     pwd = settings.authorization_code
-    server = zmail.server(sender_qq, pwd)
+    # server = zmail.server(sender_qq, pwd)
     print('login Success')
     print('-----开始接收并处理邮件-----')
     delete_days_ago = datetime.date.fromtimestamp(time.time() - 30 * 24 * 60 * 60)
@@ -777,16 +831,17 @@ def emailProcess():
                         list_size = len(attachments_list)
                         if list_size == 0:
                             mail = error_mail("邮件结果过大，请降低图片大小")
-                            server.send_mail(sent_from[0]['email'], mail)
+                            # server.send_mail(sent_from[0]['email'], mail)
+                            send_reply_email(sent_from[0]['email'], mail)
                         mail_subject = mail['subject']
                         for i in range(list_size):
                             mail['subject'] = mail_subject + f'({i+1}/{list_size})'
                             mail['attachments'] = attachments_list[i]
-                            server.send_mail(sent_from[0]['email'], mail)
+                            send_reply_email(sent_from[0]['email'], mail)
                             print(f'({i+1}/{list_size}) send Success：{attachments_list[i]}')
                             print(mail)
                     else:
-                        server.send_mail(sent_from[0]['email'], mail)
+                        send_reply_email(sent_from[0]['email'], mail)
                         print(mail)
 
                     imbox.mark_seen(uid)
@@ -809,7 +864,7 @@ def emailProcess():
                     continue
                 else:
                     mail = error_mail(e)
-                server.send_mail(sent_from[0]['email'], mail)
+                send_reply_email(sent_from[0]['email'], mail)
                 print(f'send Success, message: {mail}\n')
                 imbox.mark_seen(uid)
                 continue
