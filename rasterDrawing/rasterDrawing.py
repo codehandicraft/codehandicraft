@@ -3,6 +3,7 @@
 import sys
 import cv2
 import numpy as np
+import random
 
 # Parameters
 imgRadius = 800     # Number of pixels that the image radius is resized to
@@ -11,8 +12,11 @@ initPin = 0         # Initial pin to start threading from
 numPins = 200       # Number of pins on the circular loom
 numLines = 1000     # Maximal number of lines
 
+# 前minLoop个点不可用
 minLoop = 3         # Disallow loops of less than minLoop lines
+# 线条粗细
 lineWidth = 3       # The number of pixels that represents the width of a thread
+# 线条灰度
 lineWeight = 15     # The weight a single thread has in terms of "darkness"
 
 helpMessage = """
@@ -186,6 +190,10 @@ if __name__=="__main__":
             if (lineSum > bestLine) and not(pin in previousPins):
                 bestLine = lineSum
                 bestPin = pin
+        # print(f"{bestLine=}")
+        # while bestPin == oldPin:
+        #     bestPin = random.randint(0, numPins - 1)
+        #     print(f"{oldPin=}, random {bestPin=}")
         # Update previous pins
         if len(previousPins) >= minLoop:
             previousPins.pop(0)
@@ -222,6 +230,7 @@ if __name__=="__main__":
         sys.stdout.flush()
 
     print("\n[+] Image threaded")
+    cv2.imwrite('./imgMasked.png', imgMasked)
 
     # Wait for user and save before exit
     cv2.waitKey(0)

@@ -87,5 +87,5 @@ def getReflexDrawing(path, angle = 270, ratio = 3):
 
 if __name__ == "__main__":
     # getReflexDrawing("./ly2.jpg", 270, 4)
-    getReflexDrawing("./feixiao1.jpg", 270, 3)
+    getReflexDrawing("./ls2.jpg", 270, 3)
 

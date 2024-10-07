@@ -201,9 +201,9 @@ def getPointDrawing(path_list, para_list):
 if __name__ == "__main__":
     # A3打印：only_week 240灰度，week 230灰度
     # A4打印：only_week 250灰度，week 245灰度
-    path_list = ["./feixiao1.jpg"]
+    path_list = ["./ls1.jpg"]
     # para_list = [530, 249]      # point
     # para_list = [500, 251]      # point
-    para_list = [500, 243]      # point
+    para_list = [400, 249]      # point
     # para_list = [320, 215]    # line
     getPointDrawing(path_list, para_list)

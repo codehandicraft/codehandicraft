@@ -94,7 +94,7 @@ def getSketchDrawing(path_list, para_list=[200,0]):
     return util.msgOk(out_msg)
 
 if __name__ == "__main__":
-    path_list = ["./fc.jpg"]
+    path_list = ["./qz.jpg"]
     # path_list = ["./input/20231008213132_539_101423/0.png"]
     para_list = [220, 0]
     getSketchDrawing(path_list, para_list)

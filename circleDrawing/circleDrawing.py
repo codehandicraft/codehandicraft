@@ -42,6 +42,11 @@ def getCircleDrawing(path_list, para_list):
     img = util.resize_img(img, 5000)
     cv2.imwrite(path[:-4] + "_tmp.jpg", img)
 
+    # 膨胀操作
+    # kernel = np.ones((9,9),np.uint8) 
+    # img = cv2.dilate(img,kernel,iterations = 1)
+    # cv2.imwrite(path[:-4] + "_pengzhang.jpg", img)
+
     # m, n = img.shape
     certer_point = (img.shape[1] // 2, img.shape[0] // 2)
     max_radius = max(img.shape[0], img.shape[1]) // 2
@@ -96,7 +101,7 @@ def getCircleDrawing(path_list, para_list):
     })
 
 if __name__ == "__main__":
-    getCircleDrawing(["./fx2.jpg"], [100, 3, 237, 0])
+    getCircleDrawing(["./ls4.jpg"], [100, 3, 247, 0])
     
     # img = cv2.imread('huahuoa_out_week.jpg', 0)  
     # print(img.shape) 

@@ -746,7 +746,10 @@ def send_reply_email(recipient_email, mail):
     except Exception as e:
         print(f"邮件发送失败: {e}")
     finally:
+        print(f"断开链接 start")
         server.quit()  # 断开与SMTP服务器的连接
+        print(f"断开链接成功")
+
 
 def emailProcess():
 
